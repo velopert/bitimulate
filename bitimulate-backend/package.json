@@ -1,0 +1,29 @@
+{
+  "name": "bitimulate-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "velopert",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "dotenv": "^4.0.0",
+    "koa": "^2.3.0",
+    "koa-router": "^7.2.1",
+    "mongoose": "^4.11.4",
+    "mongoose-double": "^0.0.1",
+    "ws": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.3.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "start:dev": "NODE_PATH=src nodemon --watch src/ src/index.js",
+    "crawler:dev": "NODE_PATH=src nodemon --watch src/crawler/ src/crawler/index.js"
+  }
+}
