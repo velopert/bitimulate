@@ -3,11 +3,12 @@ const WebSocket = require('ws');
 module.exports = (function() {
   let _client = null;
   let _messageHandler = (message) => { console.warn('messageHandler not defined'); };
+  let _refreshHandler = () => { console.warn('refereshHandler not defined'); };
 
   const handlers = {
-    open: () => {
+    open: async () => {
       console.log('connected to server');
-      // subscribe to ticker
+      await _refreshHandler();
       _client.send(`{"command": "subscribe", "channel": "1002"}`);
     },
     message: (message) => {
@@ -31,6 +32,9 @@ module.exports = (function() {
   return {
     set handleMessage(messageHandler) {
       _messageHandler = messageHandler;
+    },
+    set handleRefresh(refreshHandler) {
+      _refreshHandler = refreshHandler;
     },
     connect,
     get getClient() {
