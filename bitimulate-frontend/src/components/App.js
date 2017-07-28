@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import styles from './test.scss';
+import { Button } from 'components';
 
 class App extends Component {
   render() {
     return (
-      <div className={styles.test}>
-        hi
+      <div>
+        <Button/>
       </div>
     );
   }

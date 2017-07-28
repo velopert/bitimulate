@@ -26,6 +26,7 @@
     "file-loader": "0.11.2",
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
+    "include-media": "^1.4.9",
     "jest": "20.0.4",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
@@ -36,6 +37,7 @@
     "react-dev-utils": "^3.0.2",
     "react-dom": "next",
     "react-error-overlay": "^1.0.9",
+    "sass-material-colors": "^0.0.5",
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.3",
     "url-loader": "0.5.9",
@@ -45,8 +47,8 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "start": "NODE_PATH=src node scripts/start.js",
+    "build": "NODE_PATH=src node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
