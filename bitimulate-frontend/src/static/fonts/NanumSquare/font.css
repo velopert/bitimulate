@@ -1,0 +1,48 @@
+@font-face {
+  font-family: 'Nanum Square';
+  src: url('./fonts/NanumSquareL.eot'); /* IE9 Compat Modes */
+  src: url('./fonts/NanumSquareL.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('./fonts/NanumSquareL.woff') format('woff'), /* Modern Browsers */
+       url('./fonts/NanumSquareL.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('./fonts/NanumSquareOTFLight.svg#017f9c78318bcde3d1dc4451e8eaca0a') format('svg'); /* Legacy iOS */
+       
+  font-style:   normal;
+  font-weight:  300;
+}
+
+@font-face {
+  font-family: 'Nanum Square';
+  src: url('./fonts/NanumSquareR.eot'); /* IE9 Compat Modes */
+  src: url('./fonts/NanumSquareR.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('./fonts/NanumSquareR.woff') format('woff'), /* Modern Browsers */
+       url('./fonts/NanumSquareR.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('./fonts/NanumSquareOTFR.svg#9e23ceb0c858ca37642ba540402577eb') format('svg'); /* Legacy iOS */
+       
+  font-style:   normal;
+  font-weight:  400;
+}
+
+@font-face {
+  font-family: 'Nanum Square';
+  src: url('./fonts/NanumSquareB.eot'); /* IE9 Compat Modes */
+  src: url('./fonts/NanumSquareB.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('./fonts/NanumSquareB.woff') format('woff'), /* Modern Browsers */
+       url('./fonts/NanumSquareB.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('./fonts/NanumSquareOTFB.svg#a41a1fda1fdf3dafd3394867a156b1cf') format('svg'); /* Legacy iOS */
+       
+  font-style:   normal;
+  font-weight:  700;
+}
+
+@font-face {
+  font-family: 'Nanum Square';
+  src: url('./fonts/NanumSquareEB.eot'); /* IE9 Compat Modes */
+  src: url('./fonts/NanumSquareEB.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('./fonts/NanumSquareEB.woff') format('woff'), /* Modern Browsers */
+       url('./fonts/NanumSquareEB.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('./fonts/NanumSquareOTFExtraBold.svg#090d6763bc81b49309446d23fbd10e87') format('svg'); /* Legacy iOS */
+       
+  font-style:   normal;
+  font-weight:  900;
+}
+

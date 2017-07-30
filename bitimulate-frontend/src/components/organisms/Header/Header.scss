@@ -2,6 +2,7 @@
 
 .header {
   height: 3.5rem;
+
   // background: material-color('teal', '600');
   .responsive {
     padding-left: 1rem;
@@ -10,5 +11,17 @@
     display: flex;
     height: 100%;
     align-items: center;
+
+    .right-side {
+      display: flex;
+      margin-left: auto;
+    }
+  }
+
+  .login-button {
+    margin-left: 1rem;
+    &:hover {
+      color: material-color('teal', '500');
+    }
   }
 }

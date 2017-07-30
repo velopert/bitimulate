@@ -1,0 +1,39 @@
+@import 'utils';
+
+.button {
+  display: inline-block;
+  font-size: 1rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+
+  // default
+  background: material-color('grey', '300');
+  &:hover {
+    background: material-color('grey', '200');
+  }
+  &:active {
+    background: material-color('grey', '300');
+  }
+
+  &.invert {
+    border: 2px solid white;
+    color: white;
+    background: transparent;
+    transition: box-shadow .15s ease-in;
+    &:hover {
+      background: white;
+      color: material-color('grey', '800');
+      @include material-shadow(2);
+    }
+    &:active {
+      @include material-shadow(2, 2);
+    }
+  }
+
+
+}

@@ -1,0 +1,12 @@
+@import 'utils';
+
+.block {
+  background: white;
+  padding: 1rem;
+  &.center {
+    text-align: center;
+  }
+  &.shadow {
+    @include material-shadow(2);
+  }
+}
