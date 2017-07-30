@@ -1,6 +1,9 @@
-.logo {
-  font-family: 'Yanone Kaffeesatz', sans-serif;
-  font-size: 2rem;
-  color: white;
+@import url('https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz');
 
+.logo {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.5rem;
+  color: white;
+  user-select: none;
+  cursor: pointer;
 }

@@ -4,14 +4,14 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-const PageTemplate = ({header, children, responsive}) => {
+const PageTemplate = ({header, children, responsive, padding}) => {
   return (
     <div className={cx('page')}>
       <header>
         {header}
       </header>
       <main className={cx('content', {
-        'has-header': header, // if there is a header, gives 3.5 padding to top
+        padding: padding, // sets 3.5 rem padding-top
         responsive
       })}>
         {children}
