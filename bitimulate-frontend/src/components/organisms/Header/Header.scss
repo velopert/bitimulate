@@ -1,0 +1,14 @@
+@import 'utils';
+
+.header {
+  height: 3.5rem;
+  background: material-color('teal', '600');
+  .responsive {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    @include responsive();
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
+}
