@@ -6,13 +6,14 @@
   align-items: center;
   padding-left: 1rem;
   padding-right: 1rem;
-  font-weight: 300;
+  font-weight: 400;
   color: material-color('grey', '50');
   opacity: 0.9;
   cursor: pointer;
   transition: all .2s;
+  user-select: none;
   &:hover {
-    font-weight: 400;
+    font-weight: 700;
     opacity: 1;
   }
 }
