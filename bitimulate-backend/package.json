@@ -7,7 +7,10 @@
   "dependencies": {
     "axios": "^0.16.2",
     "dotenv": "^4.0.0",
+    "joi": "^10.6.0",
+    "jsonwebtoken": "^7.4.1",
     "koa": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
     "mongoose": "^4.11.4",
     "mongoose-double": "^0.0.1",
