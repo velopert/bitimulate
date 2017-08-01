@@ -43,12 +43,7 @@ exports.localRegister = async (ctx) => {
     });
 
     ctx.body = user;
-    const accessToken = await token.generateToken({
-      user: {
-        _id: user._id,
-        displayName
-      }
-    }, 'user');
+    const accessToken = await user.generateToken();
 
     // configure accessToken to httpOnly cookie
     ctx.cookies.set('access_token', accessToken, {
@@ -57,5 +52,50 @@ exports.localRegister = async (ctx) => {
     });
   } catch (e) {
     ctx.throw(500);
+  }
+};
+
+exports.localLogin = async (ctx) => {
+  const { body } = ctx.request;
+
+  const schema = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(6).max(30)
+  });
+
+  const result = Joi.validate(body, schema);
+
+  if(!result.error) {
+    ctx.status = 400;
+    return;
+  }
+
+  const { email, password } = body;
+
+  try {
+    // find user
+    const user = await User.findByEmail(email);
+    
+    if(!user) {
+      // user does not exist
+      ctx.status = 403;
+      return;
+    }
+
+    const validated = user.validatePassword(password);
+    if(!validated) {
+      // wrong password
+      ctx.status = 403;
+      return;
+    }
+
+    const accessToken = await user.generateToken();
+
+    ctx.cookies.set('access_token', accessToken, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7
+    });
+  } catch (e) {
+    ctx.throw(e);
   }
 };
