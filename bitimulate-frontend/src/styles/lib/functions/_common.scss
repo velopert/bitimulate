@@ -1,0 +1,3 @@
+@function z-index-for($key) {
+  @return map-get($z-indexes, $key);
+}
