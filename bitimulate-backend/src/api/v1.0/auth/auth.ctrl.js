@@ -1,6 +1,5 @@
 const Joi = require('joi');
 const User = require('db/models/User');
-const token = require('lib/token');
 
 exports.localRegister = async (ctx) => {
   const { body } = ctx.request;
@@ -42,7 +41,12 @@ exports.localRegister = async (ctx) => {
       displayName, email, password
     });
 
-    ctx.body = user;
+    ctx.body = {
+      displayName,
+      _id: user._id,
+      metaInfo: user.metaInfo
+    };
+    
     const accessToken = await user.generateToken();
 
     // configure accessToken to httpOnly cookie
@@ -65,7 +69,7 @@ exports.localLogin = async (ctx) => {
 
   const result = Joi.validate(body, schema);
 
-  if(!result.error) {
+  if(result.error) {
     ctx.status = 400;
     return;
   }
@@ -95,7 +99,28 @@ exports.localLogin = async (ctx) => {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7
     });
+
+    const { displayName, _id, metaInfo } = user;
+
+    ctx.body = {
+      displayName,
+      _id,
+      metaInfo
+    };
   } catch (e) {
     ctx.throw(e);
   }
+};
+
+exports.check = (ctx) => {
+  const { user } = ctx.request;
+  
+  if(!user) {
+    ctx.status = 403;
+    return;
+  }
+  
+  ctx.body = {
+    user
+  };
 };
