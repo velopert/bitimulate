@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 const ScreenMask = ({visible}) => {
   return (
     <div className={cx('screen-mask')}>
-
+      Hi...
     </div>
   );
 };
