@@ -4,8 +4,6 @@ import { HomePage, TradePage } from 'components';
 import { Route } from 'react-router-dom';
 import { ScreenMaskContainer } from 'containers';
 
-
-
 class App extends Component {
   render() {
     return (
