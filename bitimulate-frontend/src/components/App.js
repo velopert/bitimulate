@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { HomePage, TradePage } from 'components';
 import { Route } from 'react-router-dom';
+import { ScreenMaskContainer } from 'containers';
+
 
 
 class App extends Component {
@@ -10,6 +12,7 @@ class App extends Component {
       <div>
         <Route exact path ="/" component={HomePage}/>
         <Route path="/trade" component={TradePage}/>
+        <ScreenMaskContainer/>
       </div>
     );
   }

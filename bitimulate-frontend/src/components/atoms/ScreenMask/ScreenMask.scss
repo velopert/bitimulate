@@ -2,4 +2,10 @@
 
 .screen-mask {
   z-index: z-index-for('screen-mask');
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(200,200,200,0.70);
 }
