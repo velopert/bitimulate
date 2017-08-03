@@ -1,8 +1,19 @@
 @import 'utils';
 
-.wrapper { 
-
+.fade-enter {
+  animation-duration: .15s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in;
+  animation-name: fadeIn;
 }
+
+.fade-exit {
+  animation-duration: .3s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-out;
+  animation-name: fadeOut;
+}
+
 
 .screen-mask {
   z-index: z-index-for('screen-mask');
