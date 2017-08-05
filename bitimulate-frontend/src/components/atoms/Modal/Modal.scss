@@ -1,0 +1,29 @@
+@import 'utils';
+
+.enter {
+  animation-duration: .4s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+  animation-name: bounceUpIn;
+}
+
+.leave {
+  animation-duration: .4s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+  animation-name: bounceDownOut;
+}
+
+.modal-wrapper {
+  // places the modal at center
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: z-index-for('modal');
+
+  &.uncenter {
+    top: 1rem;
+    transform: translate(-50%);
+  }
+}

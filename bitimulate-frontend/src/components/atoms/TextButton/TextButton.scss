@@ -1,0 +1,18 @@
+@import 'utils';
+
+.text-button {
+  padding-bottom: 0.15rem;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+  &.right {
+    margin-left: auto;
+  }
+  &:hover {
+    color: material-color('teal', '400');
+    border-bottom: 1px solid material-color('teal', '600');
+  }
+  &:active {
+    color: material-color('teal', '700');
+    border-bottom: 1px solid material-color('teal', '700');
+  }
+}

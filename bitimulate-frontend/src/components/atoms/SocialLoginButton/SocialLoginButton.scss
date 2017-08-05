@@ -1,0 +1,48 @@
+@import 'utils';
+
+.social-login-button {
+  display: flex;
+  flex-direction: row;
+  height: 2.4rem;
+  & > div {
+    transition: all .1s ease-in;
+    cursor: pointer;
+    border-radius: 2px;
+    flex: 1;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    &.facebook {
+      border: 1px solid material-color('blue', '600');
+      color: material-color('blue', '600');
+      &:hover {
+        color: white;
+        background: material-color('blue', '500');
+        border: 1px solid material-color('blue', '500');
+      }
+      &:active {
+        border: 1px solid material-color('blue', '700');
+        background: material-color('blue', '700');
+      }
+    }
+    &.google {
+      border: 1px solid material-color('red', '600');
+      color: material-color('red', '600');
+      &:hover {
+        color: white;
+        background: material-color('red', '500');
+        border: 1px solid material-color('red', '500');
+      }
+      &:active {
+        border: 1px solid material-color('red', '700');
+        background: material-color('red', '700');
+      }
+    }
+  }
+
+  div + div {
+    margin-left: 0.5rem;
+  }
+}

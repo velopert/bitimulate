@@ -15,3 +15,33 @@
     opacity: 0;
   }
 }
+
+@keyframes bounceUpIn {
+  0% {
+    transform: translateY(250px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes bounceDownOut {
+  0% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-50px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(250px);
+    opacity: 0;
+  }
+}

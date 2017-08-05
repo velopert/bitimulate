@@ -1,0 +1,52 @@
+@import 'utils';
+
+.login-modal {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  @include material-shadow(2);
+  .bar {
+    height: 8px;
+    background: linear-gradient(to right,#30a1c1,#9dd5ba);
+  }
+
+
+  .content {
+    padding: 2rem;
+    h3 {
+      font-weight: 400;
+      color: material-color('grey', '700');
+      margin-top: 0;
+    }
+    .login {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .login-foot {
+      font-size: 0.85rem;
+      display: flex;
+    }
+    .separator { 
+      display: block;
+      background: material-color('grey', '200');
+      width: 100%;
+      height: 1px;
+      margin-top: 1rem;
+      position: relative;
+      margin-bottom: 1.5rem;
+      .or {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        font-weight: 900;
+        color: material-color('grey', '500');
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

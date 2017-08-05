@@ -35,5 +35,46 @@
     }
   }
 
+  &.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+
+  &.flex + &.flex {
+    margin-left: 1rem;
+  }
+
+  &.flat {
+    border-radius: 2px;
+    transition: all .15s ease-in;
+    &.white {
+      background: white;
+      border: 1px solid material-color('grey', '300');
+
+      &:hover {
+        background: material-color('grey', '100');
+      }
+      &:active {
+        background: material-color('grey', '200');
+      }
+    }
+    &.teal {
+      color: white;
+      background: material-color('teal', '300');
+      border: 1px solid material-color('teal', '400');
+      &:hover {
+        background: material-color('teal', '200');
+        border: 1px solid material-color('teal', '300');
+      }
+      &:active {
+        background: material-color('teal', '400');
+        border: 1px solid material-color('teal', '500');
+      }
+    }
+
+  }
+
 
 }

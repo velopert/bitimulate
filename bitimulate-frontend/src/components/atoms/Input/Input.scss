@@ -1,0 +1,24 @@
+@import 'utils';
+
+.input {
+  outline: none;
+  border-radius: 2px;
+  border: 1px solid material-color('grey', '400');
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  transition: all .3s;
+  &.full-width {
+    width: 100%;
+  }
+  &:focus {
+    border: 1px solid material-color('teal', '600');
+    color: material-color('teal', '500');
+    &::placeholder {
+       color: material-color('teal', '400');
+    }
+  }
+}
+
+.input + .input { 
+  margin-top: 0.5rem;
+}

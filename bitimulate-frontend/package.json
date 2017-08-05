@@ -39,6 +39,7 @@
     "react-dom": "next",
     "react-error-overlay": "^1.0.9",
     "react-hot-loader": "next",
+    "react-icons": "^2.2.5",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.2",
     "react-transition-group": "1^",
