@@ -38,6 +38,7 @@
     "react-dev-utils": "^3.0.2",
     "react-dom": "next",
     "react-error-overlay": "^1.0.9",
+    "react-hot-loader": "next",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.2",
     "react-transition-group": "1^",
@@ -95,7 +96,8 @@
   "babel": {
     "presets": [
       "react-app"
-    ]
+    ],
+    "plugins": ["react-hot-loader/babel"]
   },
   "eslintConfig": {
     "extends": "react-app"
