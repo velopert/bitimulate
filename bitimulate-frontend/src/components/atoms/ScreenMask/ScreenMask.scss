@@ -7,8 +7,8 @@
   animation-name: fadeIn;
 }
 
-.fade-exit {
-  animation-duration: .3s;
+.fade-leave {
+  animation-duration: .15s;
   animation-fill-mode: both;
   animation-timing-function: ease-out;
   animation-name: fadeOut;
@@ -22,5 +22,5 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(200,200,200,0.70);
+  background: rgba(255,255,255,0.70);
 }

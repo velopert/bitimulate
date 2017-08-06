@@ -4,11 +4,14 @@ import { Header } from 'components';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as baseActions from 'store/modules/base';
+import * as authActions from 'store/modules/auth';
 
 class HeaderContainer extends Component {
   handleLoginButtonClick = () => {
-    const { BaseActions } = this.props;
+    const { BaseActions, AuthActions } = this.props;
     BaseActions.setScreenMaskVisibility(true);
+    AuthActions.toggleLoginModal();
+    AuthActions.setModalMode('login');
   }
 
   render() {
@@ -27,6 +30,7 @@ export default connect(
 
     }),
     (dispatch) => ({
-        BaseActions: bindActionCreators(baseActions, dispatch)
+        BaseActions: bindActionCreators(baseActions, dispatch),
+        AuthActions: bindActionCreators(authActions, dispatch)
     })
 )(HeaderContainer);
