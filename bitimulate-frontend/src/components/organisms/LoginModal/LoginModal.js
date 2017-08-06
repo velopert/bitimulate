@@ -1,25 +1,34 @@
 import React from 'react';
 import styles from './LoginModal.scss';
 import classNames from 'classnames/bind';
-import { Modal, Input, Button, TextButton, SocialLoginButton } from 'components';
-
+import { Modal, Input, Button, TextButton, SocialLoginButton, InputError } from 'components';
 const cx = classNames.bind(styles);
 
 const LoginModal = ({
   visible, 
   mode, 
   forms,
+  error,
   onChangeInput,
-  onChangeMode
+  onChangeMode,
+  onLogin,
+  onRegister
 }) => {
-  const modeText = mode === 'login' ? '로그인' : '회원가입';
-  const invertedText = mode === 'login' ? '회원가입' : '로그인';
+  const isLogin = mode === 'login';
+  const modeText = isLogin ? '로그인' : '회원가입';
+  const invertedText = isLogin ? '회원가입' : '로그인';
   
   const {
     email,
     password,
-    displayName
-  } = forms.get(mode).toJS();
+  } = forms.toJS();
+
+  const {
+    email: emailError,
+    password: passwordError
+  } = error ? error.toJS() : { };
+
+  const onButtonClick = isLogin ? onLogin : onRegister;
 
   return (
     <Modal visible={visible}>
@@ -34,6 +43,7 @@ const LoginModal = ({
               name="email" 
               fullWidth big 
               placeholder="이메일"/>
+              <InputError error={emailError}/>
             <Input 
               value={password}
               onChange={onChangeInput}
@@ -41,16 +51,13 @@ const LoginModal = ({
               fullWidth big 
               placeholder="비밀번호" 
               type="password"/>
-            { mode === 'register' && (
-              <Input 
-                value={displayName}
-                onChange={onChangeInput}
-                name="displayName" 
-                fullWidth big 
-                placeholder="닉네임"/> 
-            )}
+              <InputError error={passwordError}/>
           </div>
-          <Button flat color="teal" flex padding="0.6rem" className={cx('login')}>{modeText}</Button>
+          <Button 
+            flat color="teal" 
+            flex padding="0.6rem" 
+            className={cx('login')}
+            onClick={onButtonClick}>{modeText}</Button>
           <div className={cx('login-foot')}>
             <TextButton>비밀번호 찾기</TextButton>
             <TextButton right onClick={onChangeMode}>{invertedText}</TextButton>

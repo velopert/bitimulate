@@ -1,16 +1,19 @@
 import { createAction, handleActions } from 'redux-actions';
 
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 
 // action types
 const TOGGLE_LOGIN_MODAL = 'auth/TOGGLE_LOGIN_MODAL';
 const SET_MODAL_MODE = 'auth/SET_MODAL_MODE';
 const CHANGE_INPUT = 'auth/CHANGE_INPUT';
+const SET_ERROR = 'auth/SET_ERROR';
 
 // action creator
 export const toggleLoginModal = createAction(TOGGLE_LOGIN_MODAL);
 export const setModalMode = createAction(SET_MODAL_MODE); // (mode)
-export const changeInput = createAction(CHANGE_INPUT); // ({form, name, value})
+export const changeInput = createAction(CHANGE_INPUT); // ({name, value})
+export const setError = createAction(SET_ERROR);  // ({ email, password }) [nullable]
+
 
 // initial state
 const initialState = Map({
@@ -18,17 +21,11 @@ const initialState = Map({
     visible: false,
     mode: 'login'
   }),
-  forms: Map({
-    login: Map({
-      email: '',
-      password: ''
-    }),
-    register: Map({
-      email: '',
-      password: '',
-      displayName: ''
-    })
-  })
+  form: Map({
+    email: '',
+    password: ''
+  }),
+  error: null
 });
 
 // reducer
@@ -38,10 +35,14 @@ export default handleActions({
     },
     [SET_MODAL_MODE]: (state, action) => {
       return state.setIn(['modal', 'mode'], action.payload)
-                  .set('forms', initialState.get('forms'));
+                  .set('form', initialState.get('form'))
+                  .set('error', null);
     },
     [CHANGE_INPUT]: (state, action) => {
-      const { form, name, value } = action.payload;
-      return state.setIn(['forms', form, name], value);
+      const { name, value } = action.payload;
+      return state.setIn(['form', name], value);
+    },
+    [SET_ERROR]: (state, action) => {
+      return state.set('error', fromJS(action.payload));
     }
 }, initialState);

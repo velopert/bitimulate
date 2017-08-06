@@ -1,0 +1,11 @@
+@import 'utils';
+
+.input-error {
+  background: material-color('red', '100');
+  border: 1px solid material-color('red', '200');
+  color: material-color('red', '700');
+  padding: 0.5rem;
+  font-size: 0.80rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
