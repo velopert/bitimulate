@@ -1,0 +1,22 @@
+@import 'utils';
+
+.register-screen {
+  z-index: z-index-for('register-screen');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.enter {
+  animation-duration: .4s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+  animation-name: fadeIn;
+}
+
+.leave {
+  animation-duration: .4s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+  animation-name: fadeOut;
+}

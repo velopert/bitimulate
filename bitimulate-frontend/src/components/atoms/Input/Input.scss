@@ -6,7 +6,7 @@
   border: 1px solid material-color('grey', '400');
   padding: 0.5rem;
   font-size: 1.25rem;
-  transition: all .3s;
+  transition: color .3s, border-color .3s;
   &.full-width {
     width: 100%;
   }

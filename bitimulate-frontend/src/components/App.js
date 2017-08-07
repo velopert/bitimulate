@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 
 import { HomePage, TradePage } from 'components';
 import { Route } from 'react-router-dom';
-import { ScreenMaskContainer, LoginModalContainer } from 'containers';
+import { 
+  ScreenMaskContainer, 
+  LoginModalContainer,
+  RegisterScreenContainer
+ } from 'containers';
 
 class App extends Component {
   render() {
@@ -12,6 +16,7 @@ class App extends Component {
         <Route path="/trade" component={TradePage}/>
         <ScreenMaskContainer/>
         <LoginModalContainer/>
+        <RegisterScreenContainer/>
       </div>
     );
   }
