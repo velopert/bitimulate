@@ -49,28 +49,31 @@
   &.flat {
     border-radius: 2px;
     transition: all .15s ease-in;
+    &:hover {
+      @include material-shadow(2);
+    }
     &.white {
       background: white;
-      border: 1px solid material-color('grey', '300');
+      border: 1px solid material-color('grey', '100');
 
       &:hover {
         background: material-color('grey', '100');
       }
       &:active {
-        background: material-color('grey', '200');
+        background: material-color('grey', '100');
       }
     }
     &.teal {
       color: white;
       background: material-color('teal', '300');
-      border: 1px solid material-color('teal', '400');
+      // border: 1px solid material-color('teal', '400');
       &:hover {
         background: material-color('teal', '200');
-        border: 1px solid material-color('teal', '300');
+        // border: 1px solid material-color('teal', '300');
       }
       &:active {
         background: material-color('teal', '400');
-        border: 1px solid material-color('teal', '500');
+        // border: 1px solid material-color('teal', '500');
       }
     }
 

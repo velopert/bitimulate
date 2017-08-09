@@ -1,0 +1,43 @@
+@import 'utils';
+
+.option {
+  display: flex;
+  align-items: center;
+
+  .check-box {
+    margin-right: 0.5rem;
+    font-size: 1.25rem;
+    .checked {
+      display: none;
+    }
+  }
+
+  .text {
+    transform: translateY(1px);
+  }
+
+  transition: all .15s;
+
+  &:hover {
+    color: material-color('teal', '500');
+  }
+  &:active, &.active {
+    .check-box {
+      .blank {
+        display: none;
+      }
+      .checked {
+        display: initial;
+      }
+    }
+  }
+
+  &.active {
+    color: material-color('teal', '500');
+    font-weight: 700;
+  }
+}
+
+.option + .option {
+  margin-top: 1rem;
+}

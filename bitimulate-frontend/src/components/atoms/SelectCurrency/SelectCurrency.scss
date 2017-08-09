@@ -1,0 +1,41 @@
+@import 'utils';
+
+.select-currency {
+  display: flex;
+  .currency {
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    width: 8rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 2px;
+    transition: all .3s;
+    background: material-color('grey', '200');
+    border-radius: 2px;
+    cursor: pointer;
+    font-weight: 700;
+    &:hover {
+      @include material-shadow(2);
+      background: material-color('grey', '100');
+    }
+    &.active, &:active {
+      border: 1px solid material-color('teal', '500');
+      background: white;
+      color: material-color('teal', '500');
+    }
+    .symbol {
+       font-size: 1.25rem;
+    }
+    .text { 
+      text-align: center;
+      flex: 1;
+      font-size: 0.9rem;
+    }
+  }
+
+  .currency + .currency { 
+    margin-left: 1rem;
+  }
+}

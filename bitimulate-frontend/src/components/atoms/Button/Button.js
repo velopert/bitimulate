@@ -13,9 +13,16 @@ const Button = ({
   flat, 
   color,
   padding="0.5rem",
+  xPadding,
   style,
   ...rest
 }) => {
+  const dynamicStyle = {
+    ...(xPadding ? {
+      paddingLeft: xPadding,
+      paddingRight: xPadding
+    } : {})
+  }
   return (
     <div className={
       cx('button', {
@@ -26,7 +33,8 @@ const Button = ({
     }
     style={{
       padding,
-      ...style
+      ...style,
+      ...dynamicStyle
     }}
      {...rest}>
       {children}

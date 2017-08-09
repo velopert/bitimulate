@@ -1,3 +1,5 @@
+@import 'utils';
+
 .poly-background {
   background: linear-gradient(to right bottom,#276caf,#30a1c1,#9dd5ba);
   width: 100%;
@@ -5,6 +7,14 @@
   overflow: hidden;
   clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
   position: relative;
+  transition: all .7s ease-in-out;
+  &.fixed {
+    position: fixed;
+  }
+  &.half {
+    transform: translateY(-70%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
   .image {
     transition: all 1s ease-in;
     background: url('static/images/background.png');

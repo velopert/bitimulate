@@ -1,0 +1,13 @@
+@import 'utils';
+
+.paper {
+  width: 768px;
+  padding: 2rem;
+  background: white;
+  @include material-shadow(3);
+  z-index: 10;
+  position: fixed;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%);
+}
