@@ -1,7 +1,19 @@
+@import 'utils';
+
 .register-form {
   .description {
     color: #757575;
     white-space: pre-wrap;
     margin-bottom: 0.5rem;
+  }
+
+  .exists {
+    background: material-color('red', '600');
+    color: white;
+    margin-bottom: 0.5rem;
+    display: table;
+    padding: 0.25rem; 
+    font-weight: 700;
+    font-size: 0.8rem;
   }
 }

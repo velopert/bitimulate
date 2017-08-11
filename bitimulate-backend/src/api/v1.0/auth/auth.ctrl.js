@@ -19,13 +19,35 @@ exports.checkEmail = async (ctx) => {
   }
 };
 
+exports.checkDisplayName = async (ctx) => {
+  const { displayName } = ctx.params;
+
+  if(!displayName) {
+    ctx.status = 400;
+    return;
+  }
+
+  try {
+    const account = await User.findByDisplayName(displayName);
+    ctx.body = {
+      exists: !!account
+    };
+  } catch (e) {
+    ctx.throw(e, 500);
+  }
+};
+
 exports.localRegister = async (ctx) => {
   const { body } = ctx.request;
 
   const schema = Joi.object({
     displayName: Joi.string().regex(/^[a-zA-Z0-9ㄱ-힣]{3,12}$/).required(),
     email: Joi.string().email().required(),
-    password: Joi.string().min(6).max(30)
+    password: Joi.string().min(6).max(30),
+    initialMoney: Joi.object({
+      currency: Joi.string().allow('BTC', 'USD', 'BTC').required(),
+      index: Joi.number().min(0).max(2).required()
+    }).required()
   });
 
   const result = Joi.validate(body, schema);
@@ -33,6 +55,7 @@ exports.localRegister = async (ctx) => {
   // Schema Error
   if(result.error) {
     ctx.status = 400;
+    ctx.body = result.error;
     return;
   }
 
@@ -64,6 +87,8 @@ exports.localRegister = async (ctx) => {
       _id: user._id,
       metaInfo: user.metaInfo
     };
+
+    console.log(body);
     
     const accessToken = await user.generateToken();
 

@@ -16,7 +16,7 @@ export const toggleLoginModal = createAction(TOGGLE_LOGIN_MODAL);
 export const setModalMode = createAction(SET_MODAL_MODE); // (mode)
 export const changeInput = createAction(CHANGE_INPUT); // ({name, value})
 export const setError = createAction(SET_ERROR);  // ({ email, password }) [nullable]
-export const checkEmail = createAction(CHECK_EMAIL, AuthAPI.checkEmail);
+export const checkEmail = createAction(CHECK_EMAIL, AuthAPI.checkEmail); // (email)
 
 
 // initial state

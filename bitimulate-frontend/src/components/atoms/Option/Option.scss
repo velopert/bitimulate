@@ -1,6 +1,20 @@
 @import 'utils';
 
+@keyframes pop {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.2, 1.2);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+
 .option {
+  cursor: pointer;
   display: flex;
   align-items: center;
 
@@ -35,6 +49,13 @@
   &.active {
     color: material-color('teal', '500');
     font-weight: 700;
+
+    .check-box {
+      animation-duration: .2s;
+      animation-fill-mode: both;
+      animation-timing-function: ease-in-out;
+      animation-name: pop;
+    }
   }
 }
 
