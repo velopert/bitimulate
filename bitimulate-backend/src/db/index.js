@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+require('mongoose-double')(mongoose);
 
 const {
   MONGO_URI: mongoURI
