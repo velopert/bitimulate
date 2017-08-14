@@ -1,0 +1,33 @@
+@import 'utils';
+
+.user-button {
+  user-select: none;
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  border: 2px solid rgba(255,255,255,0.3);
+  transition: all .3s;
+  cursor: pointer;
+  svg {
+    font-size: 1.25rem;
+    margin-right: 0.25rem;
+  }
+  .display-name {
+    font-weight: 700;
+  }
+  &:hover {
+    background: white;
+    color: material-color('teal', '600');
+    border: 2px solid white;
+    @include material-shadow(2);
+  }
+  &:active {
+    background: material-color('grey', '200');
+  }
+}

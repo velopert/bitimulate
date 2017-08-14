@@ -8,6 +8,7 @@ import * as baseActions from 'store/modules/base';
 import * as authActions from 'store/modules/auth';
 import * as registerActions from 'store/modules/register';
 import * as userActions from 'store/modules/user';
+import storage from 'lib/storage';
 
 import validate from 'validate.js';
 
@@ -53,6 +54,7 @@ class LoginModalContainer extends Component {
         email, password
       });
       const { loginResult } = this.props;
+      storage.set('__BTM_USER__', loginResult);
       UserActions.setUser(loginResult);
       AuthActions.setError(null);
       this.handleClose();
