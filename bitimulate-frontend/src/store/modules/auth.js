@@ -12,7 +12,6 @@ const SET_ERROR = 'auth/SET_ERROR';
 const CHECK_EMAIL = 'auth/CHECK_EMAIL';
 const LOCAL_LOGIN  = 'auth/LOCAL_LOGIN';
 
-
 // action creator
 export const toggleLoginModal = createAction(TOGGLE_LOGIN_MODAL);
 export const setModalMode = createAction(SET_MODAL_MODE); // (mode)
@@ -20,7 +19,6 @@ export const changeInput = createAction(CHANGE_INPUT); // ({name, value})
 export const setError = createAction(SET_ERROR);  // ({ email, password }) [nullable]
 export const checkEmail = createAction(CHECK_EMAIL, AuthAPI.checkEmail); // (email)
 export const localLogin = createAction(LOCAL_LOGIN, AuthAPI.localLogin); // ({email, password})
-
 
 
 // initial state
