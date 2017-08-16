@@ -63,6 +63,14 @@ User.statics.findExistancy = function({email, displayName}) {
   }).exec();
 };
 
+User.statics.findSocialId = function({provider, id}) {
+  const key = `social.${provider}.id`;
+
+  return this.findOne({
+    [key]: id
+  });
+};
+
 User.statics.localRegister = function({ displayName, email, password, initial }) {
   const user = new this({
     displayName, 
