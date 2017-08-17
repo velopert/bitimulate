@@ -187,9 +187,138 @@ exports.socialLogin = async (ctx) => {
     return;
   }
 
-  ctx.body = {
-    profile
+  if(!profile) {
+    ctx.status = 403;
+    return;
+  }
+
+  const { 
+    id, email
+  } = profile;
+
+  // check acount existancy  
+  let user = null;
+  try {
+    user = await User.findSocialId({provider, id});
+  } catch (e) {
+    ctx.throw(e, 500);
+  }
+
+  if(user) {
+    // TODO: if account exists, set JWT and return userInfo
+    return;
+  }
+
+  if(!user && profile.email) {
+    let duplicated = null;
+    try {
+      duplicated = await User.findByEmail(email);
+    } catch (e) {
+      ctx.throw(e, 500);
+    }
+    
+    // if there is a duplicated email, merges the user account
+    if(duplicated) {
+      duplicated.social[provider] = {
+        id,
+        accessToken
+      };
+      try {
+        await duplicated.save();
+      } catch (e) {
+        ctx.throw(e, 500);
+      }
+      // TODO: set JWT and return account info
+    }
+  }
+
+  if(!user) {
+    ctx.status = 204;
+  }
+};
+
+exports.socialRegister = async (ctx) => {
+  const { body } = ctx.request;
+  // check schema
+  const schema = Joi.object({
+    displayName: Joi.string().regex(/^[a-zA-Z0-9ㄱ-힣]{3,12}$/).required(),
+    provider: Joi.string().allow('facebook', 'google').required(),
+    accessToken: Joi.string().required(),
+    initialMoney: Joi.object({
+      currency: Joi.string().allow('BTC', 'USD', 'BTC').required(),
+      index: Joi.number().min(0).max(2).required()
+    }).required()
+  }); 
+
+  const result = Joi.valildate(body, schema);
+  
+  if(result.error) {
+    ctx.status = 400;
+    ctx.body = result.error;
+    return;
+  }
+
+  const { 
+    displayName,
+    provider,
+    accessToken,
+    initialMoney
+  } = ctx.body;
+
+  // get social info
+  let profile = null;
+  try {
+    profile = await getProfile(provider, accessToken);
+  } catch (e) {
+    ctx.status = 403;
+    return;
+  }
+  if(!profile) {
+    ctx.status = 403;
+    return;
+  }
+
+  // check email (+1 time)
+  if(profile.email) {
+    // will check only email exists
+    // service allows social accounts without email .. for now
+    try {
+      const exists = await User.findByEmail(profile.email);
+      if(exists) {
+        ctx.body = {
+          key: 'email'
+        }
+        ctx.status = 409;
+        return;
+      }
+    } catch (e) {
+      ctx.throw(e, 500);
+    }
+  } 
+
+  // check displayName existancy
+  try {
+    const exists = await User.findByDisplayName(displayName);
+    if(exists) {
+      ctx.body = {
+        key: 'displayName'
+      };
+      ctx.status = 409;
+    }
+  } catch (e) {
+    ctx.throw(e, 500);
+  }
+
+  // initialMoney setting
+  const { currency, index } = initialMoney;
+  const value = optionsPerCurrency[currency].initialValue * Math.pow(10, index);
+  const initial = {
+    currency,
+    value
   };
+  // create user account
+  // generate accessToken
+  // set cookie
 };
 
 exports.check = (ctx) => {

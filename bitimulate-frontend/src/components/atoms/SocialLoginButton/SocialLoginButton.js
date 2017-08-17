@@ -6,13 +6,13 @@ import GoogleIcon from 'react-icons/lib/io/social-googleplus';
 
 const cx = classNames.bind(styles);
 
-const SocialLoginButton = () => {
+const SocialLoginButton = ({onSocialLogin}) => {
   return (
     <div className={cx('social-login-button')}>
-      <div className={cx('facebook')}>
+      <div className={cx('facebook')} onClick={() => {onSocialLogin('facebook')}}>
         <FacebookIcon/>
       </div>
-      <div className={cx('google')}>
+      <div className={cx('google')} onClick={() => {onSocialLogin('google')}}>
         <GoogleIcon/>
       </div>
     </div>

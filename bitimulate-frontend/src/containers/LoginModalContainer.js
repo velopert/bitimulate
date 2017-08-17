@@ -105,7 +105,37 @@ class LoginModalContainer extends Component {
     setTimeout(() => {
       history.push('/register');
     }, 400)
-    
+  }
+
+  handleSocialLogin = async (provider) => {
+    const { AuthActions } = this.props;
+
+    try {
+      await AuthActions.providerLogin(provider);
+
+      const { socialInfo } = this.props;
+
+      await AuthActions.socialLogin({
+        provider,
+        accessToken: socialInfo.get('accessToken')
+      });
+
+      const { redirectToRegister } = this.props;
+      
+      if(redirectToRegister) {
+        this.handleClose();
+        const { history } = this.props;
+        setTimeout(() => {
+          history.push('/register');
+        }, 400)
+      }
+
+      // TODO: process login...
+
+    } catch (e) {
+      return;
+    }
+
     
   }
   render() {
@@ -114,7 +144,8 @@ class LoginModalContainer extends Component {
       handleChangeMode, 
       handleChangeInput,
       handleLogin,
-      handleRegister
+      handleRegister,
+      handleSocialLogin
     } = this;
 
     return (
@@ -126,7 +157,9 @@ class LoginModalContainer extends Component {
         onChangeInput={handleChangeInput}
         onChangeMode={handleChangeMode}
         onLogin={handleLogin}
-        onRegister={handleRegister}/>
+        onRegister={handleRegister}
+        onSocialLogin={handleSocialLogin}
+      />
     );
   }
 }
@@ -137,7 +170,9 @@ export default connect(
       mode: state.auth.getIn(['modal', 'mode']),
       form: state.auth.get('form'),
       error: state.auth.get('error'),
-      loginResult: state.auth.get('loginResult')
+      loginResult: state.auth.get('loginResult'),
+      socialInfo: state.auth.get('socialInfo'),
+      redirectToRegister: state.auth.get('redirectToRegister')
     }),
     (dispatch) => ({
         BaseActions: bindActionCreators(baseActions, dispatch),
