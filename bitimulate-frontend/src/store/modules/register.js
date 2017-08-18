@@ -10,6 +10,7 @@ const SET_CURRENCY = 'register/SET_CURRENCY';
 const SELECT_OPTION_INDEX = 'SELECT_OPTION_INDEX';
 const CHECK_DISPLAY_NAME = 'CHECK_DISPLAY_NAME';
 const SUBMIT = 'SUBMIT';
+const SOCIAL_REGISTER = 'SOCIAL_REGISTER';
 const SET_ERROR = 'SET_ERROR';
 
 
@@ -20,6 +21,7 @@ export const selectOptionIndex = createAction(SELECT_OPTION_INDEX);
 export const checkDisplayName = createAction(CHECK_DISPLAY_NAME, AuthAPI.checkDisplayName);
 export const submit = createAction(SUBMIT, AuthAPI.localRegister);
 export const setError = createAction(SET_ERROR);
+export const socialRegister = createAction(SOCIAL_REGISTER, AuthAPI.socialRegister);
 
 // initial state
 const initialState = Map({
@@ -70,6 +72,28 @@ export default handleActions({
         }
       };
 
+      if(status === 409 && key) return handler(key);
+      
+      return state;
+    }
+  }),
+  ...pender({
+    type: SOCIAL_REGISTER,
+    onSuccess: (state, action) => {
+      const { data: user } = action.payload;
+      return state.set('result', user);
+    },
+    onFailure: (state, action) => {
+      const { status, data: { key } } = action.payload;
+      
+      const handler = {
+        displayName: () => {
+          return state.set('displayNameExists', true);
+        },
+        email: () => {
+          return state.set('redo', true);
+        }
+      };
       if(status === 409 && key) return handler(key);
       
       return state;
