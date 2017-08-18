@@ -239,10 +239,11 @@ exports.socialLogin = async (ctx) => {
 
 exports.socialRegister = async (ctx) => {
   const { body } = ctx.request;
+  const { provider } = ctx.params;
+
   // check schema
   const schema = Joi.object({
     displayName: Joi.string().regex(/^[a-zA-Z0-9ㄱ-힣]{3,12}$/).required(),
-    provider: Joi.string().allow('facebook', 'google').required(),
     accessToken: Joi.string().required(),
     initialMoney: Joi.object({
       currency: Joi.string().allow('BTC', 'USD', 'BTC').required(),
@@ -250,7 +251,7 @@ exports.socialRegister = async (ctx) => {
     }).required()
   }); 
 
-  const result = Joi.valildate(body, schema);
+  const result = Joi.validate(body, schema);
   
   if(result.error) {
     ctx.status = 400;
@@ -260,10 +261,9 @@ exports.socialRegister = async (ctx) => {
 
   const { 
     displayName,
-    provider,
     accessToken,
     initialMoney
-  } = ctx.body;
+  } = body;
 
   // get social info
   let profile = null;
@@ -325,7 +325,7 @@ exports.socialRegister = async (ctx) => {
   // create user account
   let user = null;
   try {
-    user = User.socialRegister({
+    user = await User.socialRegister({
       displayName,
       email,
       provider,
