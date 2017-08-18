@@ -102,7 +102,8 @@ export default connect(
       optionIndex: state.register.get('optionIndex'),
       displayNameExists: state.register.get('displayNameExists'),
       error: state.register.get('error'),
-      result: state.register.get('result')
+      result: state.register.get('result'),
+      socialInfo: state.auth.get('socialInfo')
     }),
     (dispatch) => ({
         RegisterActions: bindActionCreators(registerActions, dispatch),

@@ -278,6 +278,11 @@ exports.socialRegister = async (ctx) => {
     return;
   }
 
+  const { 
+    email, 
+    id: socialId
+  } = profile;
+
   // check email (+1 time)
   if(profile.email) {
     // will check only email exists
@@ -287,7 +292,7 @@ exports.socialRegister = async (ctx) => {
       if(exists) {
         ctx.body = {
           key: 'email'
-        }
+        };
         ctx.status = 409;
         return;
       }
@@ -316,9 +321,36 @@ exports.socialRegister = async (ctx) => {
     currency,
     value
   };
+  
   // create user account
-  // generate accessToken
-  // set cookie
+  let user = null;
+  try {
+    user = User.socialRegister({
+      displayName,
+      email,
+      provider,
+      accessToken,
+      socialId,
+      initial
+    });
+  } catch (e) {
+    ctx.throw(e, 500);
+  }
+
+  ctx.body = {
+    displayName,
+    _id: user._id
+  };
+  
+  try {
+    const btmToken = await user.generateToken();
+    ctx.cookies.set('access_token', btmToken, { 
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7
+    });
+  } catch (e) {
+    ctx.throw(e, 500);
+  }
 };
 
 exports.check = (ctx) => {
