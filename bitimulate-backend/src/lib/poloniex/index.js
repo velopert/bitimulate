@@ -3,6 +3,9 @@ const axios = require('axios');
 
 module.exports = (function () {
   function getCurrencyPairName(id) {
+    if(id > 193) { 
+      return 'NULL_NULL';
+    }
     return currencyPairMap[id.toString()];
   }
 

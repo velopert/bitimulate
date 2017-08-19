@@ -88,5 +88,10 @@ module.exports = {
   '185': 'BTC_GNT',
   '186': 'ETH_GNT',
   '187': 'BTC_GNO',
-  '188': 'ETH_GNO'
+  '188': 'ETH_GNO',
+  '189': 'BTC_BCH',
+  '190': 'ETH_BCH',
+  '191': 'USDT_BCH',
+  '192': 'BTC_ZRX',
+  '193': 'ETH_ZRX'
 };
