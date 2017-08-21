@@ -2,6 +2,12 @@ const currencyPairMap = require('./currencyPairMap');
 const axios = require('axios');
 
 module.exports = (function () {
+  function getChartData(currencyPair, period = 86400, start = 1420070400) {
+    return axios.get(`https://poloniex.com/public?command=returnChartData&currencyPair=${currencyPair}&start=${start}&end=9999999999&period=${period}`).then(
+      response => response.data
+    );
+  }
+
   function getCurrencyPairName(id) {
     if(id > 193) { 
       return 'NULL_NULL';
@@ -45,6 +51,7 @@ module.exports = (function () {
   return {
     getCurrencyPairName,
     getTickers,
-    convertToTickerObject
+    convertToTickerObject,
+    getChartData
   };
 })();

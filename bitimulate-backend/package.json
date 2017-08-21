@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2",
+    "cli-progress": "^1.5.0",
     "dotenv": "^4.0.0",
     "fb": "^2.0.0",
     "googleapis": "^20.1.0",
