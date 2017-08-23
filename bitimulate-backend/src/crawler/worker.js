@@ -23,7 +23,7 @@ Worker.prototype.work = function() {
       if(this.index >= works.length) {
         return resolve();
       }
-      repeat();
+      setTimeout(repeat, 1000);
     };
     
     repeat();

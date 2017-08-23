@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2",
+    "chalk": "^2.1.0",
     "cli-progress": "^1.5.0",
     "dotenv": "^4.0.0",
     "fb": "^2.0.0",
@@ -15,6 +16,7 @@
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
+    "moment": "^2.18.1",
     "mongoose": "^4.11.4",
     "mongoose-double": "^0.0.1",
     "ws": "^3.1.0"
@@ -30,6 +32,6 @@
   },
   "scripts": {
     "start:dev": "NODE_PATH=src nodemon --watch src/ src/index.js",
-    "crawler:dev": "NODE_PATH=src nodemon --watch src/crawler/ src/crawler/index.js"
+    "crawler:dev": "NODE_PATH=src nodemon --watch src/crawler/ src/crawler/index.js --ignore src/crawler/*.json"
   }
 }
