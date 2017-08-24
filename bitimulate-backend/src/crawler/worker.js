@@ -10,6 +10,7 @@ Worker.prototype.reset = function() {
 
 Worker.prototype.work = function() {
   const { works, notify } = this;
+  if(works.length === 0) return Promise.resolve();
 
   const promise = new Promise((resolve, reject) => {
     const repeat = async () => {
@@ -17,7 +18,12 @@ Worker.prototype.work = function() {
         await works[this.index++]();
         notify();
       } catch (e) {
-        console.log(e);
+        // console.log(e);
+        if(e.code !== 'ECONNABORTED') {
+          console.error(e);
+        }
+        this.index--;
+        return;
       }
 
       if(this.index >= works.length) {

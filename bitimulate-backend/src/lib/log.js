@@ -10,7 +10,7 @@ function getTime() {
 function log(...message) {
   const time = getTime();
   const type = chalk.bold('[LOG]');
-  console.log(`${time}${type}}`, ...message);
+  console.log(`${time}${type}`, ...message);
 }
 
 log.info = (...message) => {

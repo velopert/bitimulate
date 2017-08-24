@@ -3,7 +3,7 @@ const axios = require('axios');
 
 module.exports = (function () {
   function getChartData(currencyPair, period = 86400, start = 1420070400) {
-    return axios.get(`https://poloniex.com/public?command=returnChartData&currencyPair=${currencyPair}&start=${start}&end=9999999999&period=${period}`).then(
+    return axios.get(`https://poloniex.com/public?command=returnChartData&currencyPair=${currencyPair}&start=${start}&end=9999999999&period=${period}`, { timeout: 60000 }).then(
       response => response.data
     );
   }
