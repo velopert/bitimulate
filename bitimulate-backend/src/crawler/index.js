@@ -33,17 +33,17 @@ const initialize = async () => {
 
   if(!lastUpdatedDate) {
     await ChartData.drop();
-    log('dropped ChartData');
+    log.info('dropped ChartData');
   }
 
   const from = {
     yearly: lastUpdatedDate ? lastUpdatedDate / 1000 : 1420070400,
-    monthly: lastUpdatedDate ? lastUpdatedDate / 1000 : (new Date() / 1000) - 60 * 60 * 24 * 30
+    weekly: lastUpdatedDate ? lastUpdatedDate / 1000 : (new Date() / 1000) - 60 * 60 * 24 * 7
   };
   
   await importData(undefined, from.yearly);
   const current = (new Date()) / 1000;
-  await importData(300, from.monthly);
+  await importData(300, from.weekly);
   await importData(300, current);
 
   updateDate();
@@ -81,7 +81,9 @@ async function importData(period = 86400, start) {
 
   // create the list of requests
   const requests = currencyPairs.map((currencyPair) => () => poloniex.getChartData(currencyPair, period, start).then(
-    (data) => ChartData.massImport(currencyPair, data, period)
+    (data) => {
+      ChartData.massImport(currencyPair, data, period);
+    }
   ));
 
   // initialize progressbar

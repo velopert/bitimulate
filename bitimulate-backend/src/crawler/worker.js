@@ -21,8 +21,11 @@ Worker.prototype.work = function() {
         // console.log(e);
         if(e.code !== 'ECONNABORTED') {
           console.error(e);
+        } else {
+          console.log('timed out');
         }
         this.index--;
+        setTimeout(repeat, 1000);
         return;
       }
 

@@ -30,10 +30,17 @@ ChartData.statics.massImport = function (name, data, period) {
 };
 
 ChartData.statics.findByNameAndPeriod = function(name, period) {
-  return this.find({
-    name,
-    period
-  }).sort({
+  const weekly = { 
+    date: { 
+      '$lt': new Date() - 1000 * 60 * 60 * 24 * 7
+    } 
+  };
+
+  const query = Object.assign({
+    name, period
+  }, period === 300 ? weekly : { });
+
+  return this.find(query).sort({
     date: 1
   });
 };
