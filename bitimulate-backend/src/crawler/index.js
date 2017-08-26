@@ -41,15 +41,65 @@ const initialize = async () => {
     weekly: lastUpdatedDate ? lastUpdatedDate / 1000 : (new Date() / 1000) - 60 * 60 * 24 * 7
   };
   
-  await importData(undefined, from.yearly);
+  // await importData(undefined, from.yearly);
   const current = (new Date()) / 1000;
-  await importData(300, from.weekly);
-  await importData(300, current);
+  // await importData(300, from.weekly);
+  // await importData(300, current);
+  startChartDataListener(new Date() / 1000);
 
   updateDate();
 
   socket.connect();
 };
+
+function startChartDataListener(initialTime) {
+  let start = initialTime;
+  log.info('ChartDataListener is started');
+  
+  const work = async () => {
+    try {
+      await waitForNewChartData(start);
+      log.info('poloniex chart data is updated');
+      await importData(300, start + 1, true);
+      start = (new Date()) / 1000;
+      work();
+    } catch (e) {
+      setTimeout(() => {
+        work();
+      }, 5000);
+    }
+  };
+
+  work();
+}
+
+function waitForNewChartData(lastTime) {
+  return new Promise((resolve, reject) => {
+    // poloniex.getChartData(currencyPair, period, start)
+    const checkForNew = () => {
+      poloniex.getChartData('ETH_ZRX', 300, lastTime + 1).then(
+        (data) => {
+          log(JSON.stringify(data));
+          // data is empty
+          if(!data || !data[0] || data[0].date === 0) {
+            setTimeout(() => {
+              checkForNew();
+            }, 1000);
+            return;
+          }
+
+          resolve();
+        }
+      ).catch(e => {
+        setTimeout(() => {
+          checkForNew();
+        }, 1000);
+      });
+    };
+
+    checkForNew(3);
+  });
+}
 
 async function registerInitialExchangeRate() {
   const tickers = await poloniex.getTickers();
@@ -76,11 +126,11 @@ async function registerInitialExchangeRate() {
   console.log('succeed!');
 }
 
-async function importData(period = 86400, start) {
+async function importData(period = 86400, start, retry) {
   log('loading ChartData...');
 
   // create the list of requests
-  const requests = currencyPairs.map((currencyPair) => () => poloniex.getChartData(currencyPair, period, start).then(
+  const requests = currencyPairs.map((currencyPair) => () => poloniex.getChartData(currencyPair, period, start, retry).then(
     (data) => {
       ChartData.massImport(currencyPair, data, period);
     }

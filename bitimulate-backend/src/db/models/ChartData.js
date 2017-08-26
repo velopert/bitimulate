@@ -21,6 +21,10 @@ ChartData.statics.drop = function () {
 };
 
 ChartData.statics.massImport = function (name, data, period) {
+  if(data.length === 1 && data[0].date === 0) {
+    return Promise.resolve();
+  }
+
   const converted = data.map(data => Object.assign({}, data, {
     date: data.date * 1000,
     name,
