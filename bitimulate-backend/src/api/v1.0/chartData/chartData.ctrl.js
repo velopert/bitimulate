@@ -50,7 +50,7 @@ exports.getChartData = async (ctx) => {
 
   const lastTimebase = await cache.get(cacheKeys.lastTimebase);
   
-  if (lastTimebase) {
+  if (lastTimebase === timebase) {
     const data = await cache.get(cacheKeys.chartData);
     if(data) {
       log('loading from cache');

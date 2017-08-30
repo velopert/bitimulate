@@ -5,9 +5,11 @@ const ExchangeRate = require('db/models/ExchangeRate');
 const socket = require('./socket');
 const { parseJSON, polyfill } = require('lib/common');
 const log = require('lib/log');
+const currencyMap = require('lib/poloniex/currencyPairMap');
 
 const initialize = async () => {
   await db.connect();
+  // await registerInitialExchangeRate();
   socket.connect();
 };
 
@@ -21,6 +23,11 @@ async function registerInitialExchangeRate() {
   const promises = keys.map(
     key => {
       const ticker = tickers[key];
+      
+      if (!currencyMap[ticker.id.toString()]) {
+        return Promise.resolve();
+      }
+
       const data = Object.assign({name: key}, ticker);
       const exchangeRate = new ExchangeRate(data);
       return exchangeRate.save();
