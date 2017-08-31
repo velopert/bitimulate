@@ -32,4 +32,8 @@ ExchangeRate.statics.updateTicker = function(name, data) {
   return this.findOneAndUpdate({name}, {data, lastUpdated: new Date()}, { upsert: false, new: true }).exec();
 };
 
+ExchangeRate.statics.showAll = function() {
+  return this.find({});
+}
+
 module.exports = mongoose.model('ExchangeRate', ExchangeRate);
