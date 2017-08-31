@@ -16,12 +16,13 @@ class HeaderContainer extends Component {
 
   render() {
     const { handleLoginButtonClick } = this;
-    const { user } = this.props;
+    const { user, solid } = this.props;
 
     return (
       <Header 
         onLoginButtonClick={handleLoginButtonClick}
         user={user}
+        solid={solid}
       />
     );
   }

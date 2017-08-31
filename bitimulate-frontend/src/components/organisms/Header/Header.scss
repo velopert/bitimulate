@@ -2,7 +2,9 @@
 
 .header {
   height: 3.5rem;
-
+  &.solid {
+    background: linear-gradient(to right bottom, #276caf, #30a1c1);
+  }
   // background: material-color('teal', '600');
   .responsive {
     padding-left: 1rem;

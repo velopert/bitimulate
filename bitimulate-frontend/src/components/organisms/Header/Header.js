@@ -7,10 +7,11 @@ const cx = classNames.bind(styles);
 
 const Header = ({
   onLoginButtonClick,
-  user
+  user,
+  solid
 }) => {
   return (
-    <div className={cx('header')}>
+    <div className={cx('header', { solid })}>
       <div className={cx('responsive')}>
         <div className={cx('logo-wrapper')}>
           <Logo/>

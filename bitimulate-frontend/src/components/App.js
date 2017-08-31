@@ -5,7 +5,8 @@ import { Route } from 'react-router-dom';
 import { 
   ScreenMaskContainer, 
   LoginModalContainer,
-  UserLoader
+  UserLoader,
+  Core
  } from 'containers';
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
         <ScreenMaskContainer/>
         <LoginModalContainer/>
         <UserLoader/>
+        <Core/>
       </div>
     );
   }
