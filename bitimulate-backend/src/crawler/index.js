@@ -68,6 +68,7 @@ const messageHandler = {
     if (!data) return;
     const converted = poloniex.convertToTickerObject(data);
     const { name } = converted;
+    if(!name) return;
     const rest = polyfill.objectWithoutProperties(converted, 'name');
     
     try {
