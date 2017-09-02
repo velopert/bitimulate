@@ -1,0 +1,56 @@
+@import 'utils';
+
+.wrapper {
+  padding: 0.5rem;
+  width: calc(100% / 6);
+
+  .rate-info-card {
+    padding: 0.75rem;
+    .head {
+      display: flex;
+      align-items: center;
+      .short-name {
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+      .pin-wrapper {
+        font-size: 1.15rem;
+        color: material-color('grey', '500');
+        margin-left: auto;
+        &.active {
+          color: material-color('red', '600');
+        }
+      }
+    }
+    .percentage {
+      margin-top: 0.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: material-color('red', '600');
+      &.positive {
+        color: material-color('green', '600');
+      }
+      &.neutral {
+        color: material-color('grey', '600');
+      }
+    }
+    .value {
+      margin-top: 0.25rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.15rem;
+    }
+    .name {
+      margin-top: 0.5rem;
+    }
+    .volume {
+      margin-top: 0.15rem;
+    }
+    .name, .volume {
+      text-align: right;
+      font-size: 0.8rem;
+      color: material-color('grey', '500');
+    }
+
+  }
+}

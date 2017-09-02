@@ -1,0 +1,9 @@
+@import 'utils';
+
+.hover-card {
+  background: white;
+  transition: .3s ease-in;
+  &:hover {
+    @include material-shadow(2);
+  }
+}
