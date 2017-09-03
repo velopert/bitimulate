@@ -29,7 +29,7 @@ ExchangeRate.statics.drop = function () {
 };
 
 ExchangeRate.statics.updateTicker = function(name, data) {
-  return this.findOneAndUpdate({name}, {data, lastUpdated: new Date()}, { upsert: false, new: true }).exec();
+  return this.findOneAndUpdate({name}, Object.assign({}, data, {lastUpdated: new Date()}), { upsert: false, new: true }).exec();
 };
 
 ExchangeRate.statics.showAll = function() {

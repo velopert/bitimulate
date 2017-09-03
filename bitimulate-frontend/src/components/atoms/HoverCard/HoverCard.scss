@@ -4,6 +4,6 @@
   background: white;
   transition: .3s ease-in;
   &:hover {
-    @include material-shadow(2);
+    @include material-shadow(4, 0.5);
   }
 }

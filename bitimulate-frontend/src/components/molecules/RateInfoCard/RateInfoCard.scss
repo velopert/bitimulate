@@ -17,8 +17,19 @@
         font-size: 1.15rem;
         color: material-color('grey', '500');
         margin-left: auto;
-        &.active {
+        &:hover {
+          color: material-color('grey', '800');
+        }
+        &:active, &.active {
           color: material-color('red', '600');
+        }
+        &.active {
+          &:hover {
+            color: material-color('red', '500');
+          }
+          &:active {
+            color: material-color('grey', '800');
+          }
         }
       }
     }
