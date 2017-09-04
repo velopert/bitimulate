@@ -1,0 +1,53 @@
+@import 'utils';
+
+.selector-wrapper {
+  position: relative;
+  .selector {
+    padding: 0.5rem;
+    min-width: 7rem;
+    background: rgba(255,255,255, 0.9);
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    border: 1px solid material-color('grey', '400');
+    cursor: pointer;
+    &:hover {
+      background: white;
+      border: 1px solid material-color('grey', '500');
+    }
+    svg {
+      margin-left: auto;
+    }
+  }
+  .options-enter {
+    animation-duration: .1s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in;
+    animation-name: popFadeIn;
+  }
+  
+  .options-leave {
+    animation-duration: .1s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in;
+    animation-name: popFadeOut;
+  }
+
+  .options {
+    width: 120%;
+    right: 0px;
+    position: absolute;
+    background: white;
+    z-index: 5;
+    @include material-shadow(3, 0.8);
+    .selector-option {
+      cursor: default;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      &:hover {
+        background: material-color('grey', '100');
+      }
+    }
+  }
+}
