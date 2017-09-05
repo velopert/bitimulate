@@ -3,10 +3,14 @@
   cursor: pointer;
   font-size: 1.1rem;
   color: material-color('grey', '600');
+  transition: all .15s ease-in;
   &:hover {
     color: material-color('grey', '800');
   }
   &:hover {
     color: material-color('grey', '900');
+  }
+  &.asc {
+    transform: rotate(180deg);
   }
 }
