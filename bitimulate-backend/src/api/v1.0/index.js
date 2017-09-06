@@ -4,6 +4,7 @@ const wallet = require('./wallet');
 const chartData = require('./chartData');
 const common = require('./common');
 const exchange = require('./exchange');
+const user = require('./user');
 
 const api = new Router();
 
@@ -12,5 +13,6 @@ api.use('/wallet', wallet.routes());
 api.use('/chart-data', chartData.routes());
 api.use('/common', common.routes());
 api.use('/exchange', exchange.routes());
+api.use('/user', user.routes());
 
 module.exports = api;

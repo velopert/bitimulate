@@ -34,7 +34,7 @@ const User = new Schema({
     default: Date.now
   },
   metaInfo: {
-
+    pinned: [String]
   },
   wallet: {
     type: Wallet,
