@@ -8,10 +8,8 @@ const cx = classNames.bind(styles);
 
 const SortReverser = ({asc, onToggle}) => {
   return (
-    <div className={cx('sort-reverser', {
-      asc
-    })} onClick={onToggle}>
-      <DescIcon/>
+    <div className={cx('sort-reverser')} onClick={onToggle}>
+      {asc ? <AscIcon/> : <DescIcon/>}
     </div>
   );
 };

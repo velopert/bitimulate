@@ -10,10 +10,11 @@ const TradeIndex = ({rate}) => {
     (info) => (
       <RateInfoCard 
         key={info.get('name')}
-        keyPair={info.get('name')}
+        currencyKey={info.get('currencyKey')}
         percentage={info.get('percentChange')}
         volume={info.get('baseVolume')}
         last={info.get('last')}
+        currencyName={info.get('currencyName')}
       />
     )
   )

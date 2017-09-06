@@ -3,6 +3,7 @@ import { createAction, handleActions } from 'redux-actions';
 import { Map, List, fromJS } from 'immutable';
 
 import { pender } from 'redux-pender';
+import {getCurrency} from 'lib/utils';
 
 import * as ExchangeAPI from 'lib/api/exchange';
 
@@ -32,7 +33,20 @@ export default handleActions({
       type: GET_INITIAL_RATE,
       onSuccess: (state, action) => {
         const { data: rate } = action.payload;
-        return state.set('rate', fromJS(rate));
+
+        const insertCurrencyName = (r) => {
+          const currency = getCurrency(r.name);
+          if(!currency) return r;
+
+
+          return {
+            ...r,
+            currencyName: currency.get('name'),
+            currencyKey: currency.get('key')
+          }
+        };
+
+        return state.set('rate', fromJS(rate.map(insertCurrencyName)));
       }
     }),
     [SET_INDEX_OPTION]: (state, action) => {
