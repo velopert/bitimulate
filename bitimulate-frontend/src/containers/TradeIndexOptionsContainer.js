@@ -22,17 +22,24 @@ class TradeIndexOptionsContainer extends Component {
     });
   }
 
+  handleToggleShowPinned = () => {
+    const { TradeActions } = this.props;
+    TradeActions.toggleShowPinned();
+  }
+
   render() {
-    const { handleToggleAsc, handleSelectSort } = this;
+    const { handleToggleAsc, handleSelectSort, handleToggleShowPinned } = this;
     const { options } = this.props;
-    const { sortBy, asc } = options.toJS();
+    const { sortBy, asc, showPinned } = options.toJS();
 
     return (
       <TradeIndexOptions 
         sortBy={sortBy} 
         asc={asc}
+        showPinned={showPinned}
         onToggleAsc={handleToggleAsc}
         onSelectSort={handleSelectSort}
+        onToggleShowPinned={handleToggleShowPinned}
       />
     );
   }
@@ -40,7 +47,7 @@ class TradeIndexOptionsContainer extends Component {
 
 export default connect(
   (state) => ({
-    options: state.trade.getIn(['index', 'options'])
+    options: state.trade.getIn(['index', 'options']),
   }),
   (dispatch) => ({
     TradeActions: bindActionCreators(tradeActions, dispatch)

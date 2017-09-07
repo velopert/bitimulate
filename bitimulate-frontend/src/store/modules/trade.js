@@ -10,16 +10,21 @@ import * as ExchangeAPI from 'lib/api/exchange';
 // action types
 const GET_INITIAL_RATE = 'trade/GET_INITIAL_RATE';
 const SET_INDEX_OPTION = 'trade/SET_INDEX_OPTION';
+const TOGGLE_SHOW_PINNED = 'trade/TOGGLE_SHOW_PINNED';
+
+
 
 
 // action creator
 export const getInitialRate = createAction(GET_INITIAL_RATE, ExchangeAPI.getInitialRate);
 export const setIndexOption = createAction(SET_INDEX_OPTION);
+export const toggleShowPinned = createAction(TOGGLE_SHOW_PINNED);
 
 // initial state
 const initialState = Map({
   index: Map({
     options: Map({
+      showPinned: false,
       sortBy: 'alphabet',
       asc: true
     })
@@ -52,5 +57,8 @@ export default handleActions({
     [SET_INDEX_OPTION]: (state, action) => {
       const { name, value } = action.payload;
       return state.setIn(['index', 'options', name], value);
+    },
+    [TOGGLE_SHOW_PINNED]: (state, action) => {
+      return state.updateIn(['index', 'options', 'showPinned'], value => !value);
     }
 }, initialState);

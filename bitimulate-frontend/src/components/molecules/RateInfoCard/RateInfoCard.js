@@ -7,7 +7,7 @@ import { getCurrency } from 'lib/utils';
 
 const cx = classNames.bind(styles);
 
-const RateInfoCard = ({currencyKey="ETH", last=4.7e-7, volume="125543", percentage="0.01", currencyName="Ethereum" }) => {
+const RateInfoCard = ({currencyKey="ETH", last=4.7e-7, volume="125543", percentage="0.01", currencyName="Ethereum", onTogglePin, pinned }) => {
 
   if(!currencyName) return null;
 
@@ -20,7 +20,7 @@ const RateInfoCard = ({currencyKey="ETH", last=4.7e-7, volume="125543", percenta
       <HoverCard className={cx('rate-info-card')}>
         <div className={cx('head')}>
           <div className={cx('short-name')}>{currencyKey}</div>
-          <div className={cx('pin-wrapper')}><PinIcon/></div>
+          <div className={cx('pin-wrapper', { active: pinned })}><PinIcon onClick={onTogglePin}/></div>
         </div>
         <div className={cx('percentage', { positive: parsedPercentage > 0, netural: parsedPercentage === 0 })}>({parsedPercentage.toFixed(2)}%)</div>
         <div className={cx('value')}>{value}</div>

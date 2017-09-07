@@ -1,7 +1,9 @@
 import React from 'react';
 import styles from './TradeIndexOptions.scss';
 import classNames from 'classnames/bind';
-import { Selector, SortReverser } from 'components';
+import PinIcon from 'react-icons/lib/ti/pin';
+
+import { Selector, SortReverser, Option } from 'components';
 
 const sorterOptions = [
   {
@@ -27,11 +29,18 @@ const cx = classNames.bind(styles);
 const TradeIndexOptions = ({
   sortBy,
   asc,
+  showPinned,
   onToggleAsc,
-  onSelectSort
+  onSelectSort,
+  onToggleShowPinned
 }) => {
   return (
     <div className={cx('options')}>
+      <div className={cx('show-pinned')}>
+        <Option onClick={onToggleShowPinned} active={showPinned}>
+          핀만 보기
+        </Option>
+      </div>
       <div className={cx('selector')}><Selector onSelect={onSelectSort} value={sortBy} options={sorterOptions}/></div>
       <div className={cx('reverser')}><SortReverser asc={asc} onToggle={onToggleAsc}/></div>
     </div>

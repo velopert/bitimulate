@@ -17,6 +17,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  user-select: none;
 
   .check-box {
     margin-right: 0.5rem;

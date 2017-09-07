@@ -34,6 +34,10 @@ const User = new Schema({
     default: Date.now
   },
   metaInfo: {
+    initial: {
+      currency: String,
+      value: Schema.Types.Double
+    },
     pinned: [String]
   },
   wallet: {
