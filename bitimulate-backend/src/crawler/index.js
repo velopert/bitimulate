@@ -6,6 +6,9 @@ const socket = require('./socket');
 const { parseJSON, polyfill } = require('lib/common');
 const log = require('lib/log');
 const currencyMap = require('lib/poloniex/currencyPairMap');
+const redis = require('redis');
+
+const publisher = redis.createClient();
 
 const initialize = async () => {
   await db.connect();
@@ -67,12 +70,13 @@ const messageHandler = {
   1002: async (data) => {
     if (!data) return;
     const converted = poloniex.convertToTickerObject(data);
-    const { name } = converted;
+    const { name, ...rest } = converted;
     if(!name) return;
-    const rest = polyfill.objectWithoutProperties(converted, 'name');
     
     try {
       await ExchangeRate.updateTicker(name, rest);
+      const str = JSON.stringify({...converted, lastUpdated: new Date()});
+      publisher.publish('tickers', str);
       log('Updated', name);
       // console.log('[Update]', name, new Date());
     } catch (e) {
