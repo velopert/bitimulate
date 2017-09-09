@@ -21,6 +21,7 @@ const TradeIndex = ({rate, pinMap, onTogglePin, showPinned}) => {
         currencyName={info.get('currencyName')}
         onTogglePin={() => onTogglePin(info.get('currencyKey'))}
         pinned={pinMap[info.get('currencyKey')]}
+        info={info}
       />
     )
   )

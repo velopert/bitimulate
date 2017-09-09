@@ -5,6 +5,15 @@
   width: calc(100% / 6);
 
   .rate-info-card {
+    border: 1px solid transparent;
+    &.green {
+      border: 1px solid material-color('green', '300');
+      background: material-color('green', '50')
+    }
+    &.red {
+      border: 1px solid material-color('red', '300');
+      background: material-color('red', '50');
+    }
     padding: 0.75rem;
     .head {
       display: flex;

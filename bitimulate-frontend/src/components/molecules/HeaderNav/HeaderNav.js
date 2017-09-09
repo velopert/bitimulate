@@ -9,7 +9,7 @@ const HeaderNav = () => {
   return (
     <FlexBox row
       className={cx('header-nav')}>
-      <NavItem>
+      <NavItem to="/trade">
         거래소
       </NavItem>
       <NavItem>
