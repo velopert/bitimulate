@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as tradeActions from 'store/modules/trade';
 import * as userActions from 'store/modules/user';
+import socket from 'lib/socket';
 
 const sortKey = {
   alphabet: 'currencyKey',
@@ -32,7 +33,13 @@ class TradeIndexContainer extends Component {
 
   componentDidMount() {
     this.initialize();
+    socket.subscribe('tickers');
   }
+
+  componentWillUnmount() {
+    socket.unsubscribe('tickers');
+  }
+  
 
   savePin = () => {
     const { UserActions, pinned } = this.props;

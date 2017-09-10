@@ -12,6 +12,12 @@ const parseJSON = (str) => {
   return parsed;
 }
 
+const msgTypes = {
+  ticker: 1,
+  subscribe: 2,
+  unsubscribe: 3
+};
+
 function decompress(data) {
   return new Promise((resolve, reject) => {
     LZUTF8.decompressAsync(data, {
@@ -32,6 +38,7 @@ export default (function() {
   let _socket = null;
   let _uri = null;
   let _retry = false;
+  let _subscribed = [];
 
   function handlePacket(message) {
     const { code, data } = message;
@@ -72,8 +79,41 @@ export default (function() {
     _socket.onopen = () => {
       console.log('connected to', uri);
       _retry = false;
+      resubscribe();
     }
     _socket.onclose = reconnect;
+  }
+
+  const subscribe = (key) => {
+    if(_subscribed.indexOf(key) === -1) {
+      _subscribed.push(key);
+    }
+
+    if(_socket.readyState !== _socket.OPEN) return;
+
+    console.log('subscribing to ' + key);
+    _socket.send(JSON.stringify({
+      code: msgTypes.subscribe,
+      data: key
+    }));
+  }
+
+  const unsubscribe = (key) => {
+    const index = _subscribed.indexOf(key);
+    if(index === -1) return;
+
+    _subscribed.splice(index, 1);
+    console.log('unscribing ' + key);
+
+    _socket.send(JSON.stringify({
+      code: msgTypes.unsubscribe,
+      data: key
+    }));
+  }
+
+  const resubscribe = () => {
+    console.log('resubscribing...');
+    _subscribed.forEach(subscribe);
   }
 
   const reconnect = () => {
@@ -91,6 +131,8 @@ export default (function() {
     initialize: (store, uri) => {
       _store = store;
       connect(uri);
-    }
+    },
+    subscribe,
+    unsubscribe
   }
 })();

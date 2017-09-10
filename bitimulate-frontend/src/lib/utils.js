@@ -7,3 +7,14 @@ export function getCurrency(key) {
   const currency = currencyInfo.find(c => c.get('key') === temp);
   return currency;
 }
+
+export function scrollTo(elementY, duration=1000) { 
+  var startingY = window.pageYOffset  
+  var diff = elementY - startingY  
+  var start;
+  
+
+  if(!window.requestAnimationFrame || duration === 0) {
+      return window.scrollTo(0, elementY);
+  }
+}

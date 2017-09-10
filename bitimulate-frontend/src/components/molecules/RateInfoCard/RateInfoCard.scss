@@ -5,6 +5,7 @@
   width: calc(100% / 6);
 
   .rate-info-card {
+    cursor: pointer;
     border: 1px solid transparent;
     &.green {
       border: 1px solid material-color('green', '300');
