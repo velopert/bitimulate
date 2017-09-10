@@ -16,7 +16,7 @@ exports.getChartData = async (ctx) => {
   }
 
   const day = 60 * 60 * 24;
-  const today = (new Date() / 1000);
+  const today = Math.round((new Date() / 1000));
 
   const Option = (start, period) => ({start, period});
 
@@ -49,8 +49,8 @@ exports.getChartData = async (ctx) => {
   };
 
   const lastTimebase = await cache.get(cacheKeys.lastTimebase);
-  
-  if (lastTimebase === timebase) {
+
+  if (lastTimebase - timebase < period) {
     const data = await cache.get(cacheKeys.chartData);
     if(data) {
       log('loading from cache');
