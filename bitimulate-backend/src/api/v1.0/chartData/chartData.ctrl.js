@@ -23,7 +23,7 @@ exports.getChartData = async (ctx) => {
   const options = {
     all: Option(0, 86400),
     year: Option(today - 365 * day, 14400),
-    month: Option(today - 30 * day, 1800),
+    month: Option(today - 30 * day, 7200),
     week: Option(today - 7 * day, 300)
   };
 
@@ -40,7 +40,7 @@ exports.getChartData = async (ctx) => {
   const { name } = ctx.params;
   const { start, period } = options[type];
 
-  const timebase = today % period;
+  const timebase = today;
 
   const cacheKeys = {
     lastTimebase: `chart.data:${name}:${type}:last.timebase`,
@@ -50,7 +50,7 @@ exports.getChartData = async (ctx) => {
 
   const lastTimebase = await cache.get(cacheKeys.lastTimebase);
 
-  if (lastTimebase - timebase < period) {
+  if (lastTimebase && lastTimebase - timebase < period) {
     const data = await cache.get(cacheKeys.chartData);
     if(data) {
       log('loading from cache');
