@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styles from './TradeDetailSubpage.scss';
 import classNames from 'classnames/bind';
+import { TradeChartContainer } from 'containers';
 
 const cx = classNames.bind(styles);
 
-const TradeDetailSubpage = () => {
-  return (
-    <div>
-      나에 대한 자세한 정보를 알고파?
-    </div>
-  );
-};
+class TradeDetailSubpage extends Component { 
+  scrollToTop = () => {
+    document.body.scrollTop = 0;
+  }
+  componentDidMount() {
+    this.scrollToTop();
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.match.params.currencyKey !== this.props.match.params.currencyKey) {
+      this.scrollToTop();
+    }
+  }
+  
+  
+  render() {
+    const { currencyKey } = this.props.match.params;
+
+    return (
+        <TradeChartContainer currencyKey={currencyKey}/>
+    );
+  }
+}
+
 
 export default TradeDetailSubpage;

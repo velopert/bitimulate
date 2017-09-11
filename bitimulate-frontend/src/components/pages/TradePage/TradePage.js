@@ -6,7 +6,7 @@ import { Route } from 'react-router-dom';
 const TradePage = ({match}) => {
   return (
     <PageTemplate header={<HeaderContainer solid/>} padding responsive>
-      <Route path={`${match.url}/:currencyKey`}/>
+      <Route path={`${match.url}/:currencyKey`} component={TradeDetailSubpage}/>
       <Route path={match.url} component={TradeIndexSubpage}/>
     </PageTemplate>
   )

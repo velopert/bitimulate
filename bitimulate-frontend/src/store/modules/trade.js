@@ -6,6 +6,7 @@ import { pender } from 'redux-pender';
 import {getCurrency} from 'lib/utils';
 
 import * as ExchangeAPI from 'lib/api/exchange';
+import * as ChartDataAPI from 'lib/api/chartData';
 
 // action types
 const GET_INITIAL_RATE = 'trade/GET_INITIAL_RATE';
@@ -13,7 +14,7 @@ const SET_INDEX_OPTION = 'trade/SET_INDEX_OPTION';
 const TOGGLE_SHOW_PINNED = 'trade/TOGGLE_SHOW_PINNED';
 const UPDATE_TICKER = 'trade/UPDATE_TICKER';
 
-
+const GET_CHART_DATA = 'trade/GET_CHART_DATA';
 
 
 // action creator
@@ -21,6 +22,8 @@ export const getInitialRate = createAction(GET_INITIAL_RATE, ExchangeAPI.getInit
 export const setIndexOption = createAction(SET_INDEX_OPTION);
 export const toggleShowPinned = createAction(TOGGLE_SHOW_PINNED);
 export const updateTicker = createAction(UPDATE_TICKER);
+export const getChartData = createAction(GET_CHART_DATA, ChartDataAPI.getChartData);
+
 
 // initial state
 const initialState = Map({
@@ -31,7 +34,10 @@ const initialState = Map({
       asc: true
     })
   }),
-  rate: List([])
+  rate: List([]),
+  detail: Map({
+    chartData: List([])
+  })
 });
 
 // reducer
@@ -67,5 +73,15 @@ export default handleActions({
       const { payload: data } = action;
       const index = state.get('rate').findIndex((ticker) => ticker.get('name') === data.name);
       return state.mergeIn(['rate', index], data);
-    }
+    },
+    ...pender({
+      type: GET_CHART_DATA,
+      onPending: (state, action) => {
+        return state.setIn(['detail', 'chartData'], List([]))
+      },
+      onSuccess: (state, action) => {
+        const { data: chartData } = action.payload;
+        return state.setIn(['detail', 'chartData'], fromJS(chartData));
+      }
+    })
 }, initialState);
