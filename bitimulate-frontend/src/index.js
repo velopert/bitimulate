@@ -15,6 +15,8 @@ const socketURI = process.env.NODE_ENV === 'production'
 console.log(socketURI);
 socket.initialize(store, socketURI);
 
+window.socket = socket;
+
 const render = (Component) => ReactDOM.render(
   (
     <AppContainer>

@@ -28,14 +28,17 @@ class TradeChartContainer extends Component {
   
   
   render() {
+    const { chartData } = this.props;
     return (
-      <TradeChart></TradeChart>
+      <TradeChart data={chartData}></TradeChart>
     )
   }
 }
 
 export default connect(
-  (state) => ({}),
+  (state) => ({
+    chartData: state.trade.getIn(['detail', 'chartData'])
+  }),
   (dispatch) => ({
     TradeActions: bindActionCreators(tradeActions, dispatch)
   })
