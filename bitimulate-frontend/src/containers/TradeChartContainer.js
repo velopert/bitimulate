@@ -28,15 +28,16 @@ class TradeChartContainer extends Component {
   
   
   render() {
-    const { chartData } = this.props;
+    const { chartData, loading } = this.props;
     return (
-      <TradeChart data={chartData}></TradeChart>
+      <TradeChart data={chartData} loading={loading}></TradeChart>
     )
   }
 }
 
 export default connect(
   (state) => ({
+    loading: state.pender.pending['trade/GET_CHART_DATA'],
     chartData: state.trade.getIn(['detail', 'chartData'])
   }),
   (dispatch) => ({
