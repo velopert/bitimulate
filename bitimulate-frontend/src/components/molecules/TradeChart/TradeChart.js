@@ -38,13 +38,21 @@ class TradeChart extends Component {
     this.echart = myChart;
     const {data} = this.props;
 
-    const dates = data.map(info => moment(new Date(info.get('date') * 1000)).format('MMM DD HH:mm')).toJS();
+    const dates = data.map(info => moment(new Date(info.get('date') * 1000)).format('YY. MMM DD HH:mm')).toJS();
     const candleStickData = data.map(info => {
       return [
-        info.get('open').toFixed(10),
-        info.get('close').toFixed(10),
-        info.get('low').toFixed(10),
-        info.get('high').toFixed(10)
+        info
+          .get('open')
+          .toFixed(10),
+        info
+          .get('close')
+          .toFixed(10),
+        info
+          .get('low')
+          .toFixed(10),
+        info
+          .get('high')
+          .toFixed(10)
       ];
     }).toJS();
     const volumes = data
@@ -74,94 +82,155 @@ class TradeChart extends Component {
       return result;
     }
 
-    console.log(calculateMA(5));
-
     var option = {
-      backgroundColor: '#424242',
-      // legend: {
-      //   data: [
-      //     { name: '가치변화', icon: 'rect' },
-      //     { name: 'MA5', icon: 'rect' },
-      //     { name: 'MA15', icon: 'rect' },
-      //     { name: 'MA50', icon: 'rect' }
-      //   ],
-      //   inactiveColor: '#777',
-      //   textStyle: {
-      //     color: '#fff'
-      //   }
-      // },
+      backgroundColor: '#eeeeee',
+      legend: {
+        top: 0,
+        data: [
+          {
+            name: '가치변화',
+            icon: 'rect'
+          }, {
+            name: 'MA5',
+            icon: 'rect'
+          }, {
+            name: 'MA15',
+            icon: 'rect'
+          }, {
+            name: 'MA50',
+            icon: 'rect'
+          }
+        ],
+        inactiveColor: '#777'
+      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
-          animation: false,
-          type: 'cross',
-          lineStyle: {
-            color: '#376df4',
-            width: 2,
-            opacity: 1
-          }
-        }
-      },
-      xAxis: {
-        type: 'category',
-        data: dates,
-        axisLine: {
-          lineStyle: {
-            color: '#8392A5'
-          }
-        }
-      },
-      yAxis: {
-        scale: true,
-        axisLine: {
-          lineStyle: {
-            color: '#8392A5'
-          }
+          type: 'cross'
         },
-        splitLine: {
-          show: false
-        }
+        backgroundColor: 'rgba(245, 245, 245, 0.8)',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        padding: 10,
+        textStyle: {
+          color: '#000'
+        },
+        position: function (pos, params, el, elRect, size) {
+          var obj = {
+            top: 10
+          };
+          obj[
+            ['left', 'right'][+ (pos[0] < size.viewSize[0] / 2)]
+          ] = 30;
+          return obj;
+        },
+        extraCssText: 'width: 170px'
       },
-      grid: [
-          {
-              left: '0',
-              right: '0',
-              height: '60%'
-          },
-          {
-              left: '0%',
-              right: '0%',
-              bottom: '10%',
-              height: '15%'
+      axisPointer: {
+        link: {xAxisIndex: 'all'},
+        label: {
+            backgroundColor: '#777'
           }
+      },
+
+      grid: [
+        {
+          top: '10%',
+          left: '0',
+          right: '0',
+          height: '65%'
+        }, {
+          left: '0',
+          right: '0',
+          bottom: '5%',
+          height: '15%'
+        }
+      ],
+      // xAxis: {   type: 'category',   data: dates,   axisLine: {     lineStyle: {
+      //    color: '#8392A5'     }   } },
+      xAxis: [
+        {
+          type: 'category',
+          data: dates,
+          scale: true,
+          boundaryGap: false,
+          axisLine: {
+            onZero: false
+          },
+          splitLine: {
+            show: false
+          },
+          splitNumber: 20,
+          min: 'dataMin',
+          max: 'dataMax',
+          axisPointer: {
+            z: 100
+          }
+        }, {
+          type: 'category',
+          gridIndex: 1,
+          data: dates,
+          scale: true,
+          boundaryGap: false,
+          axisLine: {
+            onZero: false
+          },
+          axisTick: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          splitNumber: 20,
+          min: 'dataMin',
+          max: 'dataMax'
+        }
+      ],
+      yAxis: [
+        {
+          scale: true,
+          splitArea: {
+            show: true
+          }
+        }, {
+          scale: true,
+          gridIndex: 1,
+          splitNumber: 2,
+          axisLabel: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          }
+        }
       ],
       dataZoom: [
         {
-          textStyle: {
-            color: '#8392A5'
-          },
-          handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.' +
-              '3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V2' +
-              '4.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
-          handleSize: '80%',
-          dataBackground: {
-            areaStyle: {
-              color: '#8392A5'
-            },
-            lineStyle: {
-              opacity: 0.8,
-              color: '#8392A5'
-            }
-          },
-          handleStyle: {
-            color: '#fff',
-            shadowBlur: 3,
-            shadowColor: 'rgba(0, 0, 0, 0.6)',
-            shadowOffsetX: 2,
-            shadowOffsetY: 2
-          }
+          type: 'inside',
+          xAxisIndex: [
+            0, 1
+          ],
+          start: 60,
+          end: 100
         }, {
-          type: 'inside'
+          show: true,
+          xAxisIndex: [
+            0, 1
+          ],
+          type: 'slider',
+          bottom: '0%',
+          height: '5%',
+          start: 60,
+          end: 100
         }
       ],
       animation: false,
@@ -185,19 +254,17 @@ class TradeChart extends Component {
           smooth: true,
           lineStyle: {
             normal: {
-              width: 2,
-              color: '#ffbc62',
+              width: 2
             }
           }
-        },{
+        }, {
           name: 'MA15',
           type: 'line',
           data: calculateMA(15),
           smooth: true,
           lineStyle: {
             normal: {
-              width: 2,
-              color: '#3eabff',
+              width: 2
             }
           }
         }, {
@@ -207,10 +274,15 @@ class TradeChart extends Component {
           smooth: true,
           lineStyle: {
             normal: {
-              width: 2,
-              color: '#26ffc5'
+              width: 2
             }
           }
+        }, {
+          name: 'Volume',
+          type: 'bar',
+          xAxisIndex: 1,
+          yAxisIndex: 1,
+          data: volumes
         }
         //   {     name: 'Volume',     type: 'bar',     xAxisIndex: 1,     yAxisIndex:
         // 1,     data: data.volumes }
@@ -228,7 +300,7 @@ class TradeChart extends Component {
     return (
       <div className={cx('trade-chart')}>
         {loading
-          ? <Spinner/>
+          ? <Spinner color="#a1a1a1"/>
           : <div
             className={cx('chart')}
             ref={ref => {

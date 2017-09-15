@@ -6,7 +6,7 @@ const DimmerSpinner = ({visible}) => {
   if(!visible) return null;
   return (
     <Dimmer>
-      <Spinner/>
+      <Spinner color="#ffffff"/>
     </Dimmer>
   );
 };
