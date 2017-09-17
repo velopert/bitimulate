@@ -3,9 +3,12 @@ import styles from './TradeChart.scss';
 import classNames from 'classnames/bind';
 import echarts from 'echarts';
 import moment from 'moment';
-import {Spinner} from 'components';
+import {Spinner, ButtonSelector} from 'components';
+import debounce from 'lodash/debounce';
+import { chartTypes } from 'lib/variables';
 
 const cx = classNames.bind(styles);
+
 class TradeChart extends Component {
 
   echart = null
@@ -23,6 +26,7 @@ class TradeChart extends Component {
         .dispose();
       this.echart = null;
     }
+    window.removeEventListener('resize', this.handleResize)
   }
 
   drawChart = () => {
@@ -38,7 +42,7 @@ class TradeChart extends Component {
     this.echart = myChart;
     const {data} = this.props;
 
-    const dates = data.map(info => moment(new Date(info.get('date') * 1000)).format('YY. MMM DD HH:mm')).toJS();
+    const dates = data.map(info => new Date(info.get('date') * 1000)).toJS();
     const candleStickData = data.map(info => {
       return [
         info
@@ -106,6 +110,14 @@ class TradeChart extends Component {
       tooltip: {
         trigger: 'axis',
         axisPointer: {
+          label: {
+            formatter: (object) => {
+              
+              return isNaN(object.value)
+                ? moment(object.value).format('YYYY MMM DD HH:mm')
+                : object.value
+            }
+          },
           type: 'cross'
         },
         backgroundColor: 'rgba(245, 245, 245, 0.8)',
@@ -127,10 +139,12 @@ class TradeChart extends Component {
         extraCssText: 'width: 170px'
       },
       axisPointer: {
-        link: {xAxisIndex: 'all'},
+        link: {
+          xAxisIndex: 'all'
+        },
         label: {
-            backgroundColor: '#777'
-          }
+          backgroundColor: '#777'
+        }
       },
 
       grid: [
@@ -147,13 +161,16 @@ class TradeChart extends Component {
         }
       ],
       // xAxis: {   type: 'category',   data: dates,   axisLine: {     lineStyle: {
-      //    color: '#8392A5'     }   } },
+      // color: '#8392A5'     }   } },
       xAxis: [
         {
           type: 'category',
           data: dates,
           scale: true,
           boundaryGap: false,
+          axisLabel: {
+            formatter: (date) => moment(date).format('MMM DD HH:mm')
+          },
           axisLine: {
             onZero: false
           },
@@ -230,7 +247,8 @@ class TradeChart extends Component {
           bottom: '0%',
           height: '5%',
           start: 60,
-          end: 100
+          end: 100,
+          showDetail: false
         }
       ],
       animation: false,
@@ -241,6 +259,7 @@ class TradeChart extends Component {
           data: candleStickData,
           itemStyle: {
             normal: {
+              opacity: 0.5,
               color: '#0CF49B',
               color0: '#FD1050',
               borderColor: '#0CF49B',
@@ -256,15 +275,32 @@ class TradeChart extends Component {
             normal: {
               width: 2
             }
+          },
+          areaStyle: {
+            normal: {
+              color: new echarts
+                .graphic
+                .LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: 'rgba(255, 158, 68, 0.25)'
+                  }, {
+                    offset: 1,
+                    color: 'rgba(255, 70, 131, 0.25)'
+                  }
+                ])
+            }
           }
         }, {
           name: 'MA15',
           type: 'line',
           data: calculateMA(15),
+          enabled: false,
           smooth: true,
           lineStyle: {
             normal: {
-              width: 2
+              width: 1,
+              opacity: 0.7
             }
           }
         }, {
@@ -274,11 +310,12 @@ class TradeChart extends Component {
           smooth: true,
           lineStyle: {
             normal: {
-              width: 2
+              width: 1,
+              opacity: 0.7
             }
           }
         }, {
-          name: 'Volume',
+          name: '거래량',
           type: 'bar',
           xAxisIndex: 1,
           yAxisIndex: 1,
@@ -291,21 +328,34 @@ class TradeChart extends Component {
 
     myChart.setOption(option);
   }
+
+  handleResize = debounce(() => {
+    if(this.echart) {
+      this.echart.resize();
+    }
+  }, 100);
+
   componentDidMount() {
     this.drawChart();
-  }
+    window.addEventListener('resize', this.handleResize);
+  }  
 
   render() {
-    const {loading} = this.props;
+    const {loading, onSelectChartType, chartType, data} = this.props;
+    const empty = data.isEmpty();
     return (
-      <div className={cx('trade-chart')}>
-        {loading
-          ? <Spinner color="#a1a1a1"/>
-          : <div
-            className={cx('chart')}
-            ref={ref => {
-            this.chart = ref
-          }}></div>}
+      <div className={cx('trade-chart-wrapper')}>
+        <ButtonSelector options={chartTypes} value={chartType} onSelect={onSelectChartType}/>
+        <div className={cx('trade-chart')}>
+          <div className={cx('unit')}><b>단위:</b> {chartTypes.find(c=>c.name === chartType).unit}</div>
+          {loading
+            ? <Spinner color="#a1a1a1"/>
+            : <div
+              className={cx('chart')}
+              ref={ref => {
+              this.chart = ref
+            }}></div>}
+        </div>
       </div>
     )
   }

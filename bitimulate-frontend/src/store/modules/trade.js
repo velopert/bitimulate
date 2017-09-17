@@ -15,6 +15,7 @@ const TOGGLE_SHOW_PINNED = 'trade/TOGGLE_SHOW_PINNED';
 const UPDATE_TICKER = 'trade/UPDATE_TICKER';
 
 const GET_CHART_DATA = 'trade/GET_CHART_DATA';
+const SET_CHART_TYPE = 'trade/SET_CHART_TYPE';
 
 
 // action creator
@@ -23,6 +24,7 @@ export const setIndexOption = createAction(SET_INDEX_OPTION);
 export const toggleShowPinned = createAction(TOGGLE_SHOW_PINNED);
 export const updateTicker = createAction(UPDATE_TICKER);
 export const getChartData = createAction(GET_CHART_DATA, ChartDataAPI.getChartData);
+export const setChartType = createAction(SET_CHART_TYPE);
 
 
 // initial state
@@ -36,7 +38,8 @@ const initialState = Map({
   }),
   rate: List([]),
   detail: Map({
-    chartData: List([])
+    chartData: List([]),
+    chartType: 'year'
   })
 });
 
@@ -83,5 +86,9 @@ export default handleActions({
         const { data: chartData } = action.payload;
         return state.setIn(['detail', 'chartData'], fromJS(chartData));
       }
-    })
+    }),
+    [SET_CHART_TYPE]: (state, action) => {
+      const { payload: chartType } = action;
+      return state.setIn(['detail', 'chartType'], chartType);
+    }
 }, initialState);

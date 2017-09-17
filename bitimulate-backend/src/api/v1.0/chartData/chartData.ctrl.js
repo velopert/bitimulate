@@ -22,9 +22,10 @@ exports.getChartData = async (ctx) => {
 
   const options = {
     all: Option(0, 86400),
-    year: Option(today - 365 * day, 14400),
+    year: Option(today - 365 * day, 86400),
     month: Option(today - 30 * day, 7200),
-    week: Option(today - 7 * day, 300)
+    week: Option(today - 7 * day, 1800),
+    day: Option(today - day, 300)
   };
 
   const exists = Object.keys(options).includes(type);

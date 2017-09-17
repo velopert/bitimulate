@@ -1,0 +1,37 @@
+@import 'utils';
+
+
+.button-selector {
+  display: flex;
+  flex-direction: row;
+
+  .option {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: 0.75rem;
+    background: material-color('grey', '100');
+    color: material-color('grey', '400');
+    border-radius: 4px;
+    transition: box-shadow 0.15s;
+    user-select: none;
+    cursor: pointer;
+    &:hover {
+      background: white;
+      @include material-shadow(1, 0.25);
+      color: material-color('grey', '600');
+    }
+    &.active {
+      transform: scale(1.1, 1.1);
+      @include material-shadow(2, 0.5);
+      font-weight: bold;
+      background: white;
+      color: material-color('cyan', '600');
+    }
+  }
+
+  .option + .option {
+    margin-left: 0.5rem;
+  }
+}

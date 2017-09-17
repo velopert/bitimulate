@@ -1,14 +1,27 @@
 @import 'utils';
 
-.trade-chart {
+.trade-chart-wrapper {
   margin-top: 2rem;
+}
+.trade-chart {
+  margin-top: 0.5rem;
   padding-top: 1rem;
   background: material-color('grey', '200');
-  @include material-shadow(2,2);
+  @include material-shadow(1,0.8);
   height: 450px;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+  .unit {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    z-index: 5;
+    font-size: 0.75rem;
+    color: material-color('grey', '600');
+  }
   .chart {
     width: 100%;
     height: 100%;
