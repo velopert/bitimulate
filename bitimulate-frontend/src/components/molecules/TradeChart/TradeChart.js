@@ -9,6 +9,26 @@ import { chartTypes } from 'lib/variables';
 
 const cx = classNames.bind(styles);
 
+function calculateMA(data, count) {
+  const result = [];
+  for (let i = 0; i < data.size; i++) {
+    if (i < count) {
+      result.push('-');
+      continue;
+    }
+    let sum = 0;
+    for (let j = 0; j < count; j++) {
+      sum += data.getIn([
+        i - j,
+        'weightedAverage'
+      ]);
+    }
+
+    result.push((sum / count).toFixed(10));
+  }
+  return result;
+}
+
 class TradeChart extends Component {
 
   echart = null
@@ -17,32 +37,22 @@ class TradeChart extends Component {
     if (prevProps.loading && !this.props.loading) {
       this.drawChart();
     }
-  }
 
-  componentWillUnmount() {
-    if (this.echart) {
-      this
-        .echart
-        .dispose();
-      this.echart = null;
+    if(prevProps.data !== this.props.data) {
+      this.updateChart();
     }
-    window.removeEventListener('resize', this.handleResize)
   }
 
-  drawChart = () => {
-    if (this.props.loading) 
+  updateChart = () => {
+    if(!this.echart || !this.series) {
       return;
-    if (this.echart) {
-      this
-        .echart
-        .dispose();
-      this.echart = null;
     }
-    const myChart = echarts.init(this.chart);
-    this.echart = myChart;
-    const {data} = this.props;
 
-    const dates = data.map(info => new Date(info.get('date') * 1000)).toJS();
+    console.log('updating..');
+
+    const { series } = this;
+    const { data } = this.props;
+
     const candleStickData = data.map(info => {
       return [
         info
@@ -59,34 +69,63 @@ class TradeChart extends Component {
           .toFixed(10)
       ];
     }).toJS();
+
+    series[0].data = candleStickData;
+    this.echart.setOption({
+      series
+    });
+  }
+
+  componentWillUnmount() {
+    if (this.echart) {
+      this.echart.dispose();
+      this.echart = null;
+    }
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+  drawChart = () => {
+    if(this.props.loading)  return;
+
+    if(this.echart) {
+      this.echart.dispose();
+      this.echart = null;
+    }
+
+
+    const myChart = echarts.init(this.chart);
+    this.echart = myChart;
+    const {data} = this.props;
+
+    if(data.isEmpty()) return;
+
+
+    const dates = data.map(info => new Date(info.get('date') * 1000)).toJS();
+    dates.push(new Date(dates[dates.length - 1].getTime() + dates[1].getTime() - dates[0].getTime()));
+
+    const candleStickData = data.map(info => {
+      return [
+        info
+          .get('open')
+          .toFixed(10),
+        info
+          .get('close')
+          .toFixed(10),
+        info
+          .get('low')
+          .toFixed(10),
+        info
+          .get('high')
+          .toFixed(10)
+      ];
+    }).toJS();
+
     const volumes = data
       .map(info => info.get('volume'))
       .toJS();
-    const avgs = data
-      .map(info => info.get('close'))
-      .toJS();
 
-    function calculateMA(count) {
-      const result = [];
-      for (let i = 0; i < data.size; i++) {
-        if (i < count) {
-          result.push('-');
-          continue;
-        }
-        let sum = 0;
-        for (let j = 0; j < count; j++) {
-          sum += data.getIn([
-            i - j,
-            'weightedAverage'
-          ]);
-        }
 
-        result.push((sum / count).toFixed(10));
-      }
-      return result;
-    }
-
-    var option = {
+    const option = {
       backgroundColor: '#eeeeee',
       legend: {
         top: 0,
@@ -269,7 +308,7 @@ class TradeChart extends Component {
         }, {
           name: 'MA5',
           type: 'line',
-          data: calculateMA(5),
+          data: calculateMA(data, 5),
           smooth: true,
           lineStyle: {
             normal: {
@@ -294,7 +333,7 @@ class TradeChart extends Component {
         }, {
           name: 'MA15',
           type: 'line',
-          data: calculateMA(15),
+          data: calculateMA(data, 15),
           enabled: false,
           smooth: true,
           lineStyle: {
@@ -306,7 +345,7 @@ class TradeChart extends Component {
         }, {
           name: 'MA50',
           type: 'line',
-          data: calculateMA(50),
+          data: calculateMA(data, 50),
           smooth: true,
           lineStyle: {
             normal: {
@@ -321,11 +360,10 @@ class TradeChart extends Component {
           yAxisIndex: 1,
           data: volumes
         }
-        //   {     name: 'Volume',     type: 'bar',     xAxisIndex: 1,     yAxisIndex:
-        // 1,     data: data.volumes }
       ]
     };
 
+    this.series = option.series;
     myChart.setOption(option);
   }
 

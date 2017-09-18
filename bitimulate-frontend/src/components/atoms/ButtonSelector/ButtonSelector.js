@@ -23,7 +23,8 @@ const ButtonSelector = ({
     ({name, text}) => (
       <Option 
         onClick={() => onSelect(name)}
-        active={value===name}>
+        active={value===name}
+        key={name}>
         {text}
       </Option>
     )

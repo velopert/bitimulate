@@ -9,7 +9,7 @@ class TradeChartContainer extends Component {
 
   loadChartData = () => {
     const { TradeActions, currencyKey, chartType } = this.props;
-    
+    TradeActions.setCurrencyType(currencyKey);
     TradeActions.getChartData({
       name: `BTC_${currencyKey}`,
       type: chartType // defaultValue, for now

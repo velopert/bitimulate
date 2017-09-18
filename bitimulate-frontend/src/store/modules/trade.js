@@ -16,7 +16,8 @@ const UPDATE_TICKER = 'trade/UPDATE_TICKER';
 
 const GET_CHART_DATA = 'trade/GET_CHART_DATA';
 const SET_CHART_TYPE = 'trade/SET_CHART_TYPE';
-
+const SET_CURRENCY_TYPE = 'trade/SET_CURRENCY_TYPE';
+const UPDATE_LAST_CANDLE = 'trade/UPDATE_LAST_CANDLE';
 
 // action creator
 export const getInitialRate = createAction(GET_INITIAL_RATE, ExchangeAPI.getInitialRate);
@@ -25,7 +26,8 @@ export const toggleShowPinned = createAction(TOGGLE_SHOW_PINNED);
 export const updateTicker = createAction(UPDATE_TICKER);
 export const getChartData = createAction(GET_CHART_DATA, ChartDataAPI.getChartData);
 export const setChartType = createAction(SET_CHART_TYPE);
-
+export const setCurrencyType = createAction(SET_CURRENCY_TYPE);
+export const updateLastCandle = createAction(UPDATE_LAST_CANDLE);
 
 // initial state
 const initialState = Map({
@@ -39,7 +41,8 @@ const initialState = Map({
   rate: List([]),
   detail: Map({
     chartData: List([]),
-    chartType: 'year'
+    chartType: 'year',
+    currencyType: null
   })
 });
 
@@ -90,5 +93,35 @@ export default handleActions({
     [SET_CHART_TYPE]: (state, action) => {
       const { payload: chartType } = action;
       return state.setIn(['detail', 'chartType'], chartType);
+    },
+    [SET_CURRENCY_TYPE]: (state, action) => {
+      const { payload: currencyType } = action;
+      return state.setIn(['detail', 'currencyType'], currencyType);
+    },
+    [UPDATE_LAST_CANDLE]: (state, action) => {
+      const { payload: value } = action;
+
+      let chartData = state.getIn(['detail', 'chartData']);
+      if(chartData.isEmpty()) return state;
+
+      let lastCandle = chartData.get(chartData.size - 1);
+      const { high, low, close } = lastCandle.toJS();
+
+      // lower
+      if(value > high) {
+        lastCandle = lastCandle.set('high', value);
+      }
+
+      // higher
+      if(value < low) {
+        lastCandle = lastCandle.set('low', value);
+      }
+
+      // same
+      if(value === close) return state;
+      lastCandle = lastCandle.set('close', value);
+
+      chartData = chartData.set(chartData.size - 1, lastCandle);
+      return state.setIn(['detail', 'chartData'], chartData);
     }
 }, initialState);

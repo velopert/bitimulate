@@ -1,6 +1,6 @@
 import LZUTF8 from 'lzutf8';
 
-import { updateTicker } from 'store/modules/trade';
+import { updateTicker, updateLastCandle } from 'store/modules/trade';
 
 const parseJSON = (str) => {
   let parsed = null;
@@ -50,6 +50,11 @@ export default (function() {
     const handlers = {
       [UPDATE_TICKER]: () => {
         _store.dispatch(updateTicker(parsed));
+        const c = _store.getState().trade.getIn(['detail', 'currencyType']);
+        if(parsed.name.indexOf('_') < 0 || !c) return;
+        if(parsed.name.split('_')[1] === c) {
+          _store.dispatch(updateLastCandle(parsed.last));
+        }
       }
     }
     
