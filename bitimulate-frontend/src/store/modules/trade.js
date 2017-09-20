@@ -18,6 +18,7 @@ const GET_CHART_DATA = 'trade/GET_CHART_DATA';
 const SET_CHART_TYPE = 'trade/SET_CHART_TYPE';
 const SET_CURRENCY_TYPE = 'trade/SET_CURRENCY_TYPE';
 const UPDATE_LAST_CANDLE = 'trade/UPDATE_LAST_CANDLE';
+const REGULAR_UPDATE = 'trade/REGULAR_UPDATE';
 
 // action creator
 export const getInitialRate = createAction(GET_INITIAL_RATE, ExchangeAPI.getInitialRate);
@@ -28,6 +29,7 @@ export const getChartData = createAction(GET_CHART_DATA, ChartDataAPI.getChartDa
 export const setChartType = createAction(SET_CHART_TYPE);
 export const setCurrencyType = createAction(SET_CURRENCY_TYPE);
 export const updateLastCandle = createAction(UPDATE_LAST_CANDLE);
+export const regularUpdate = createAction(REGULAR_UPDATE, ChartDataAPI.getChartData);
 
 // initial state
 const initialState = Map({
@@ -42,7 +44,8 @@ const initialState = Map({
   detail: Map({
     chartData: List([]),
     chartType: 'year',
-    currencyType: null
+    currencyType: null,
+    timebase: null
   })
 });
 
@@ -84,10 +87,30 @@ export default handleActions({
       type: GET_CHART_DATA,
       onPending: (state, action) => {
         return state.setIn(['detail', 'chartData'], List([]))
+                    .setIn(['detail', 'timebase'], null);
       },
       onSuccess: (state, action) => {
         const { data: chartData } = action.payload;
-        return state.setIn(['detail', 'chartData'], fromJS(chartData));
+        const { 'x-timebase': timebase } = action.payload.headers;
+        
+        return state.setIn(['detail', 'chartData'], fromJS(chartData))
+                    .setIn(['detail', 'timebase'], timebase)
+      }
+    }),
+    ...pender({
+      type: REGULAR_UPDATE,
+      onSuccess: (state, action) => {
+        const { data: chartData } = action.payload;
+        const { 'x-timebase': timebase } = action.payload.headers;
+
+        return state.setIn(['detail', 'chartData'], fromJS(chartData))
+                    .setIn(['detail', 'timebase'], timebase)
+      },
+      onError: (state, action) => {
+        if(action.payload.status === 304) {
+          console.log('not modified..');
+          return state;
+        }
       }
     }),
     [SET_CHART_TYPE]: (state, action) => {

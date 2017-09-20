@@ -52,7 +52,12 @@ exports.getChartData = async (ctx) => {
   const lastTimebase = await cache.get(cacheKeys.lastTimebase);
 
   if (lastTimebase && timebase - lastTimebase < period) {
-    console.log(lastTimebase, timebase, period);
+    if(parseInt(ctx.headers['x-timebase']) === lastTimebase) {
+      ctx.status = 304;
+      console.log('not modified');
+      return;
+    }
+    ctx.set('x-timebase', lastTimebase);
     const data = await cache.get(cacheKeys.chartData);
     if(data) {
       log('loading from cache');
@@ -64,6 +69,7 @@ exports.getChartData = async (ctx) => {
   try {
     log('loading new one');
     const data = await poloniex.getChartData(name, period, start);
+    ctx.set('x-timebase', timebase);
     ctx.body = data;
     cache.set(cacheKeys.lastTimebase, timebase);
     cache.set(cacheKeys.chartData, data);

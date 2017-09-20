@@ -7,13 +7,36 @@ import { TradeChart } from 'components';
 
 class TradeChartContainer extends Component {
 
-  loadChartData = () => {
+  timeoutId = null
+
+  loadChartData = async () => {
     const { TradeActions, currencyKey, chartType } = this.props;
     TradeActions.setCurrencyType(currencyKey);
-    TradeActions.getChartData({
-      name: `BTC_${currencyKey}`,
-      type: chartType // defaultValue, for now
-    })
+    try {
+      await TradeActions.getChartData({
+        name: `BTC_${currencyKey}`,
+        type: chartType
+      });
+    } catch (e) {
+      console.log(e);
+    }
+    clearTimeout(this.timeoutId);
+    this.timeoutId = setTimeout(this.regularUpdate, 1000 * 60 * 2.5);
+  }
+
+  regularUpdate = async () => {
+    const { TradeActions, currencyKey, chartType, timebase } = this.props;
+
+    try {
+      await TradeActions.regularUpdate({
+        name: `BTC_${currencyKey}`,
+        type: chartType,
+        timebase
+      });
+    } catch (e) {
+
+    }
+    this.timeoutId = setTimeout(this.regularUpdate, 1000 * 60 * 2.5);
   }
 
   handleSelectChartType = (type) => {
@@ -32,6 +55,11 @@ class TradeChartContainer extends Component {
       this.loadChartData();
     }
   }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeoutId);
+  }
+  
   
   
   render() {
@@ -51,7 +79,8 @@ export default connect(
   (state) => ({
     loading: state.pender.pending['trade/GET_CHART_DATA'],
     chartData: state.trade.getIn(['detail', 'chartData']),
-    chartType: state.trade.getIn(['detail', 'chartType'])
+    chartType: state.trade.getIn(['detail', 'chartType']),
+    timebase: state.trade.getIn(['detail', 'timebase'])
   }),
   (dispatch) => ({
     TradeActions: bindActionCreators(tradeActions, dispatch)
