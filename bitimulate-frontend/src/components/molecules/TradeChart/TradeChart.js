@@ -9,7 +9,7 @@ import { chartTypes } from 'lib/variables';
 
 const cx = classNames.bind(styles);
 
-function calculateMA(data, count) {
+function calculateMA(data, count, isBTC) {
   const result = [];
   for (let i = 0; i < data.size; i++) {
     if (i < count) {
@@ -24,7 +24,7 @@ function calculateMA(data, count) {
       ]);
     }
 
-    result.push((sum / count).toFixed(10));
+    result.push((sum / count).toFixed(isBTC ? 4 : 10));
   }
   return result;
 }
@@ -49,7 +49,7 @@ class TradeChart extends Component {
       return;
     }
 
-    const { data } = this.props;
+    const { data, currencyKey } = this.props;
 
     if(data.isEmpty()) return;
     console.log('updating..');
@@ -59,23 +59,24 @@ class TradeChart extends Component {
     const dates = data.map(info => new Date(info.get('date') * 1000)).toJS();
     dates.push(new Date(dates[dates.length - 1].getTime() + dates[1].getTime() - dates[0].getTime()));
 
+    const digits = currencyKey === 'BTC' ? 2 : 10;
     const candleStickData = data.map(info => {
       return [
-        info.get('open').toFixed(10),
-        info.get('close').toFixed(10),
-        info.get('low').toFixed(10),
-        info.get('high').toFixed(10)
+        info.get('open').toFixed(digits),
+        info.get('close').toFixed(digits),
+        info.get('low').toFixed(digits),
+        info.get('high').toFixed(digits)
       ];
     }).toJS();
 
-    const volumes = data.map(info => info.get('volume')).toJS();
+    const volumes = data.map(info => info.get('volume').toFixed(currencyKey === 'BTC' ? 2 : 3)).toJS();
 
     xAxis[0].data = dates;
     xAxis[1].data = dates;
     series[0].data = candleStickData;
-    series[1].data = calculateMA(data, 5);
-    series[2].data = calculateMA(data, 15);
-    series[3].data = calculateMA(data, 50);
+    series[1].data = calculateMA(data, 5, currencyKey === 'BTC');
+    series[2].data = calculateMA(data, 15, currencyKey === 'BTC');
+    series[3].data = calculateMA(data, 50, currencyKey === 'BTC');
     series[4].data = volumes;
 
 
@@ -84,8 +85,6 @@ class TradeChart extends Component {
       series,
       xAxis
     });
-
-    console.log('그리고 있당. 참고해둬');
   }
 
   componentWillUnmount() {
@@ -107,7 +106,7 @@ class TradeChart extends Component {
 
     const myChart = echarts.init(this.chart);
     this.echart = myChart;
-    const {data} = this.props;
+    const {data, currencyKey} = this.props;
 
     if(data.isEmpty()) return;
 
@@ -115,26 +114,26 @@ class TradeChart extends Component {
     const dates = data.map(info => new Date(info.get('date') * 1000)).toJS();
     dates.push(new Date(dates[dates.length - 1].getTime() + dates[1].getTime() - dates[0].getTime()));
 
+    const digits = currencyKey === 'BTC' ? 2 : 10;
+
     const candleStickData = data.map(info => {
       return [
         info
           .get('open')
-          .toFixed(10),
+          .toFixed(digits),
         info
           .get('close')
-          .toFixed(10),
+          .toFixed(digits),
         info
           .get('low')
-          .toFixed(10),
+          .toFixed(digits),
         info
           .get('high')
-          .toFixed(10)
+          .toFixed(digits)
       ];
     }).toJS();
 
-    const volumes = data
-      .map(info => info.get('volume'))
-      .toJS();
+    const volumes = data.map(info => info.get('volume').toFixed(currencyKey === 'BTC' ? 2 : 3)).toJS();
 
 
     const option = {
@@ -320,7 +319,7 @@ class TradeChart extends Component {
         }, {
           name: 'MA5',
           type: 'line',
-          data: calculateMA(data, 5),
+          data: calculateMA(data, 5, currencyKey === 'BTC'),
           smooth: true,
           lineStyle: {
             normal: {
@@ -345,7 +344,7 @@ class TradeChart extends Component {
         }, {
           name: 'MA15',
           type: 'line',
-          data: calculateMA(data, 15),
+          data: calculateMA(data, 15, currencyKey === 'BTC'),
           enabled: false,
           smooth: true,
           lineStyle: {
@@ -357,7 +356,7 @@ class TradeChart extends Component {
         }, {
           name: 'MA50',
           type: 'line',
-          data: calculateMA(data, 50),
+          data: calculateMA(data, 50, currencyKey === 'BTC'),
           smooth: true,
           lineStyle: {
             normal: {

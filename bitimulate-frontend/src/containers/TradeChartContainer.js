@@ -14,7 +14,7 @@ class TradeChartContainer extends Component {
     TradeActions.setCurrencyType(currencyKey);
     try {
       await TradeActions.getChartData({
-        name: `BTC_${currencyKey}`,
+        name: currencyKey === 'BTC' ? 'USDT_BTC' : `BTC_${currencyKey}`,
         type: chartType
       });
     } catch (e) {
@@ -63,13 +63,14 @@ class TradeChartContainer extends Component {
   
   
   render() {
-    const { chartData, chartType, loading } = this.props;
+    const { chartData, chartType, loading, currencyKey } = this.props;
     const { handleSelectChartType } = this;
     return (
       <TradeChart 
         data={chartData} 
         loading={loading} 
         chartType={chartType}
+        currencyKey={currencyKey}
         onSelectChartType={handleSelectChartType}/>
     )
   }

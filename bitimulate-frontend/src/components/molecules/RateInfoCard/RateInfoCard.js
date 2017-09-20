@@ -72,6 +72,7 @@ class RateInfoCard extends Component {
     const { handleOpenCurrency } = this;
 
     if(!currencyName) return null;
+    if(currencyKey === 'BTC') return null;
     
       const parsedPercentage = Math.round(parseFloat(percentage) * 10000) / 100;
       const parsedVolume = Math.round(parseFloat(volume) * 100) / 100;

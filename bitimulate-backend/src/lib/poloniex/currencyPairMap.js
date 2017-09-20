@@ -42,6 +42,7 @@ module.exports = {
   '114': 'BTC_XMR',
   '116': 'BTC_XPM',
   '117': 'BTC_XRP',
+  '121': 'USDT_BTC',
   '148': 'BTC_ETH',
   '150': 'BTC_SC',
   '151': 'BTC_BCY',

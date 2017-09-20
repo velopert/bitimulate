@@ -26,8 +26,24 @@ function generatePinMap(list) {
 
 
 class TradeIndexContainer extends Component {
-  initialize = () => { 
+  initialize = async () => { 
     const { TradeActions } = this.props;
+    await new Promise((resolve, reject) => {
+      const check = () => {
+        let timeoutId = null;
+        setTimeout(() => {
+          clearTimeout(timeoutId);
+          reject()
+        }, 10000);
+        if(this.props.currencyInfo.isEmpty()) {
+          timeoutId = setTimeout(check, 0);
+          return;
+        }
+        resolve();
+      }
+      check();
+    });
+    
     TradeActions.getInitialRate();
   }
 
@@ -86,7 +102,8 @@ export default connect(
     (state) => ({
       options: state.trade.getIn(['index', 'options']),
       rate: state.trade.get('rate'),
-      pinned: state.user.getIn(['metaInfo', 'pinned'])
+      pinned: state.user.getIn(['metaInfo', 'pinned']),
+      currencyInfo: state.common.get('currencyInfo')
     }),
     (dispatch) => ({
         TradeActions: bindActionCreators(tradeActions, dispatch),

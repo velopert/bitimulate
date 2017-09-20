@@ -39,6 +39,7 @@ exports.getChartData = async (ctx) => {
   }
 
   const { name } = ctx.params;
+  
   const { start, period } = options[type];
 
   const timebase = today;
