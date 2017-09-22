@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './TradeIndex.scss';
 import classNames from 'classnames/bind';
-import { RateInfoCard } from 'components';
+import { RateInfoCard, BitcoinInfoCard } from 'components';
 
 const cx = classNames.bind(styles);
 
@@ -9,6 +9,8 @@ const TradeIndex = ({rate, pinMap, onTogglePin, showPinned}) => {
   let filtered = showPinned ? (
     rate.filter((info) => pinMap[info.get('currencyKey')])
   ) : rate;
+  const btcInfo = rate.find(info => info.get('currencyName') === 'Bitcoin');
+
 
   const rateInfoCardList = filtered.map(
     (info) => (
@@ -27,6 +29,13 @@ const TradeIndex = ({rate, pinMap, onTogglePin, showPinned}) => {
   )
   return (
     <div className={cx('trade-index')}>
+      { btcInfo && (
+        <BitcoinInfoCard 
+          percentage={btcInfo.get('percentChange')}
+          last={btcInfo.get('last')}
+          info={btcInfo}
+        />
+      ) }
       <div className={cx('inner')}>
         {rateInfoCardList}
       </div>

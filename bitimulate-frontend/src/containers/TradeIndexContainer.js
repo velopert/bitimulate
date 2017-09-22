@@ -84,7 +84,7 @@ class TradeIndexContainer extends Component {
     const { rate, options, pinned } = this.props;
     const { showPinned, sortBy, asc } = options.toJS();
 
-    let processedRate = rate.sortBy(r=>r.get(sortKey[sortBy]))
+    let processedRate = rate.sortBy(r=>r.get(sortKey[sortBy]));
     
     if(!asc) {
       processedRate = processedRate.reverse();

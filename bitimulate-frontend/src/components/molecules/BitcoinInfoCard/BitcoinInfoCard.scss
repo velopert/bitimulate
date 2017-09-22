@@ -1,0 +1,53 @@
+@import 'utils';
+
+.wrapper {
+  margin-top: 1rem;
+  .bitcoin-info-card {
+    background: material-color('grey', '100');
+    border: 1px solid transparent;
+    &.green {
+      border: 1px solid material-color('green', '300');
+      background: material-color('green', '50')
+    }
+    &.red {
+      border: 1px solid material-color('red', '300');
+      background: material-color('red', '50');
+    }
+    cursor: pointer;
+    @include material-shadow(1, 0.25);
+    &:hover {
+      @include material-shadow(2, 0.5);
+    }
+    width: 500px;
+    margin: 0 auto;
+    padding: 1rem;
+    .bitcoin {
+      align-items: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+    .percentage {
+      margin-top: 0.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: material-color('red', '600');
+      &.positive {
+        color: material-color('green', '600');
+      }
+      &.neutral {
+        color: material-color('grey', '600');
+      }
+    }
+    .value {
+      margin-top: 0.25rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.15rem;
+    }
+    .name {
+      text-align: right;
+      font-size: 0.8rem;
+      color: material-color('grey', '500');
+    }
+  }
+}
