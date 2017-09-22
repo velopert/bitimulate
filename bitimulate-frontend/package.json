@@ -52,7 +52,7 @@
     "react-transition-group": "1^",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
-    "redux-pender": "^1.0.24",
+    "redux-pender": "^1.1.6",
     "redux-thunk": "^2.2.0",
     "sass-material-colors": "^0.0.5",
     "style-loader": "0.18.2",

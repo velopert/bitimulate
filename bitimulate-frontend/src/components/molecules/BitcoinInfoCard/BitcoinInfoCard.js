@@ -63,7 +63,8 @@ class BitcoinInfoCard extends Component {
       percentage="0.01", 
       currencyName="Ethereum", 
       onTogglePin, 
-      pinned
+      pinned,
+      krwRate
     } = this.props;
     const { highlight, greater } = this.state;
     const { handleOpenCurrency } = this;
@@ -73,7 +74,7 @@ class BitcoinInfoCard extends Component {
     
       const parsedPercentage = Math.round(parseFloat(percentage) * 10000) / 100;
       const value = last.toFixed(2);
-    
+
       return (
         <div className={cx('wrapper')}>
           <HoverCard className={cx('bitcoin-info-card', highlight && (greater ? 'green' : 'red'))} onClick={handleOpenCurrency}>
@@ -81,7 +82,8 @@ class BitcoinInfoCard extends Component {
               BTC
             </div>
             <div className={cx('percentage')}>({parsedPercentage}%)</div>
-            <div className={cx('value')}>${value}</div>
+            <div className={cx('value')}>${parseFloat(value).toLocaleString()}</div>
+            { krwRate && <div className={cx('value')}>₩{(value*krwRate).toLocaleString()}</div> }
             <div className={cx('name')}>Bitcoin</div>
           </HoverCard>
         </div>

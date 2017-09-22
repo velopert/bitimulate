@@ -18,3 +18,23 @@ export function scrollTo(elementY, duration=1000) {
       return window.scrollTo(0, elementY);
   }
 }
+
+export function waitUntil(fn, timeout) {
+  return new Promise((resolve, reject) => {
+    if(timeout) {
+      setTimeout(() => {
+        reject();
+      }, timeout);
+    }
+
+    const check = () => {
+      if(fn()) {
+        resolve();
+        return;
+      }
+      setTimeout(check, 0);
+    };
+
+    check();
+  })
+}

@@ -8,15 +8,22 @@ import { TradeChart } from 'components';
 class TradeChartContainer extends Component {
 
   timeoutId = null
+  cancelLastRequest = null
 
   loadChartData = async () => {
     const { TradeActions, currencyKey, chartType } = this.props;
     TradeActions.setCurrencyType(currencyKey);
+    if(this.cancelLastRequest) {
+      this.cancelLastRequest();
+      this.cancelLastRequest = null;
+    }
     try {
-      await TradeActions.getChartData({
+      const request = TradeActions.getChartData({
         name: currencyKey === 'BTC' ? 'USDT_BTC' : `BTC_${currencyKey}`,
         type: chartType
       });
+      this.cancelLastRequest = request.cancel;
+      await request;
     } catch (e) {
       console.log(e);
     }

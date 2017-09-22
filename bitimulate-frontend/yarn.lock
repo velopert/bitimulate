@@ -2738,6 +2738,10 @@ eventemitter3@1.x.x:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-1.2.0.tgz#1c86991d816ad1e504750e73874224ecf3bec508"
 
+eventemitter3@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-2.0.3.tgz#b5e1079b59fb5e1ba2771c0a993be060a58c99ba"
+
 events@^1.0.0, events@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
@@ -6199,9 +6203,11 @@ redux-actions@^2.2.1:
     lodash-es "^4.17.4"
     reduce-reducers "^0.1.0"
 
-redux-pender@^1.0.24:
-  version "1.0.24"
-  resolved "https://registry.yarnpkg.com/redux-pender/-/redux-pender-1.0.24.tgz#8d53ee5b34d22cd95dcfdeeab34e7ce02c174a34"
+redux-pender@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/redux-pender/-/redux-pender-1.1.6.tgz#6a16c3914fa7f6412d7b3bf1d788f10a00193eee"
+  dependencies:
+    eventemitter3 "^2.0.3"
 
 redux-thunk@^2.2.0:
   version "2.2.0"

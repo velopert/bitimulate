@@ -11,7 +11,10 @@ module.exports = (function() {
     get client() {
       return client;
     },
-    set(key, value) {
+    set(key, value, exp) {
+      if(exp) {
+        return client.setAsync(key, JSON.stringify(value), 'EX', exp);
+      }
       return client.setAsync(key, JSON.stringify(value));
     },
     get(key) {

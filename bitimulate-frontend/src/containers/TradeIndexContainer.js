@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as tradeActions from 'store/modules/trade';
 import * as userActions from 'store/modules/user';
+import * as commonActions from 'store/modules/common';
+
 import socket from 'lib/socket';
 
 const sortKey = {
@@ -27,7 +29,12 @@ function generatePinMap(list) {
 
 class TradeIndexContainer extends Component {
   initialize = async () => { 
-    const { TradeActions } = this.props;
+    const { TradeActions, CommonActions, krwRate } = this.props;
+    
+    if(!krwRate) {
+      CommonActions.getKrwRate();
+    }
+
     await new Promise((resolve, reject) => {
       const check = () => {
         let timeoutId = null;
@@ -81,7 +88,7 @@ class TradeIndexContainer extends Component {
 
   render() {
     const { handleTogglePin } = this;
-    const { rate, options, pinned } = this.props;
+    const { rate, options, pinned, krwRate } = this.props;
     const { showPinned, sortBy, asc } = options.toJS();
 
     let processedRate = rate.sortBy(r=>r.get(sortKey[sortBy]));
@@ -93,7 +100,13 @@ class TradeIndexContainer extends Component {
     const pinMap = generatePinMap(pinned);
     
     return (
-      <TradeIndex rate={processedRate} onTogglePin={handleTogglePin} pinMap={pinMap} showPinned={showPinned}/>
+      <TradeIndex 
+        rate={processedRate} 
+        onTogglePin={handleTogglePin} 
+        pinMap={pinMap}
+        showPinned={showPinned} 
+        krwRate={krwRate}
+      />
     );
   }
 }
@@ -103,10 +116,12 @@ export default connect(
       options: state.trade.getIn(['index', 'options']),
       rate: state.trade.get('rate'),
       pinned: state.user.getIn(['metaInfo', 'pinned']),
-      currencyInfo: state.common.get('currencyInfo')
+      currencyInfo: state.common.get('currencyInfo'),
+      krwRate: state.common.get('krwRate')
     }),
     (dispatch) => ({
         TradeActions: bindActionCreators(tradeActions, dispatch),
-        UserActions: bindActionCreators(userActions, dispatch)
+        UserActions: bindActionCreators(userActions, dispatch),
+        CommonActions: bindActionCreators(commonActions, dispatch)
     })
 )(TradeIndexContainer);
