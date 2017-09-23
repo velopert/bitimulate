@@ -70,7 +70,7 @@ class TradeChartContainer extends Component {
   
   
   render() {
-    const { chartData, chartType, loading, currencyKey } = this.props;
+    const { chartData, chartType, loading, currencyKey, selectedRate } = this.props;
     const { handleSelectChartType } = this;
     return (
       <TradeChart 
@@ -78,17 +78,19 @@ class TradeChartContainer extends Component {
         loading={loading} 
         chartType={chartType}
         currencyKey={currencyKey}
-        onSelectChartType={handleSelectChartType}/>
+        onSelectChartType={handleSelectChartType}
+        selectedRate={selectedRate}/>
     )
   }
 }
 
 export default connect(
-  (state) => ({
+  (state, ownProps) => ({
     loading: state.pender.pending['trade/GET_CHART_DATA'],
     chartData: state.trade.getIn(['detail', 'chartData']),
     chartType: state.trade.getIn(['detail', 'chartType']),
-    timebase: state.trade.getIn(['detail', 'timebase'])
+    timebase: state.trade.getIn(['detail', 'timebase']),
+    selectedRate: state.trade.get('rate').find(r=>r.get('currencyKey') === ownProps.currencyKey)
   }),
   (dispatch) => ({
     TradeActions: bindActionCreators(tradeActions, dispatch)

@@ -81,7 +81,7 @@ class BitcoinInfoCard extends Component {
             <div className={cx('bitcoin')}>
               BTC
             </div>
-            <div className={cx('percentage')}>({parsedPercentage}%)</div>
+            <div className={cx('percentage', { positive: parsedPercentage > 0, netural: parsedPercentage === 0 })}>({parsedPercentage}%)</div>
             <div className={cx('value')}>${parseFloat(value).toLocaleString()}</div>
             { krwRate && <div className={cx('value')}>₩{(value*krwRate).toLocaleString()}</div> }
             <div className={cx('name')}>Bitcoin</div>

@@ -1,0 +1,21 @@
+@import 'utils';
+
+.label-block {
+  display: flex;
+  flex-direction: column;
+
+  .label {
+    font-size: 0.65rem;
+    font-weight: bold;
+    color: material-color('grey', '800');
+  }
+  .content {
+    color: material-color('grey', '600');
+    font-size: 0.95rem;
+    font-weight: 300;
+  }
+}
+
+.label-block + .label-block {
+  margin-left: 1rem;
+}

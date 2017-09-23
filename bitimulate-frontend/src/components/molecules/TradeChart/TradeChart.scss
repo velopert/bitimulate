@@ -3,6 +3,25 @@
 .trade-chart-wrapper {
   margin-top: 2rem;
 }
+
+.currency-head {
+  padding-top: 0.25rem;
+  padding-bottom: 0.45rem;
+  padding-left: 0.65rem;
+  border-left: 8px solid material-color('cyan', '600');
+  margin-bottom: 1rem;
+  .title {
+    font-size: 2rem;
+    font-weight: 300;
+    color: material-color('grey', '900');
+  }
+  .desc {
+    margin-top: 0.25rem;
+    color: material-color('grey', '700');
+    font-size: 0.85rem;
+  }
+}
+
 .trade-chart {
   margin-top: 0.5rem;
   padding-top: 1rem;

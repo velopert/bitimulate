@@ -105,12 +105,6 @@ export default handleActions({
 
         return state.setIn(['detail', 'chartData'], fromJS(chartData))
                     .setIn(['detail', 'timebase'], timebase)
-      },
-      onError: (state, action) => {
-        if(action.payload.status === 304) {
-          console.log('not modified..');
-          return state;
-        }
       }
     }),
     [SET_CHART_TYPE]: (state, action) => {
