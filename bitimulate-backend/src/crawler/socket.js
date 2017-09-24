@@ -1,4 +1,5 @@
 const WebSocket = require('ws');
+const currencyPairs = require('lib/poloniex/currencyPairs');
 
 module.exports = (function() {
   let _client = null;
@@ -10,6 +11,9 @@ module.exports = (function() {
       console.log('connected to server');
       await _refreshHandler();
       _client.send(`{"command": "subscribe", "channel": "1002"}`);
+      // currencyPairs.forEach(pair => {
+      //   _client.send(`{"command": "subscribe", "channel": "${pair}"}`);
+      // });
     },
     message: (message) => {
       _messageHandler(message);

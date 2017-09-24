@@ -29,6 +29,7 @@ const TradeIndex = ({rate, pinMap, onTogglePin, showPinned, krwRate}) => {
   )
   return (
     <div className={cx('trade-index')}>
+      <div className={cx('inner')}>
       { btcInfo && (
         <BitcoinInfoCard 
           percentage={btcInfo.get('percentChange')}
@@ -37,7 +38,6 @@ const TradeIndex = ({rate, pinMap, onTogglePin, showPinned, krwRate}) => {
           krwRate={krwRate}
         />
       ) }
-      <div className={cx('inner')}>
         {rateInfoCardList}
       </div>
     </div>

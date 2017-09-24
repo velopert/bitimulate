@@ -1,7 +1,10 @@
+@import 'utils';
+
 .current-info {
   margin-top: 1rem;
   background: white;
   padding: 1rem;
   display: flex;
   flex-direction: row;
+  @include material-shadow(1, 0.5);
 }

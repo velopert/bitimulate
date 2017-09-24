@@ -7,8 +7,16 @@ const cx = classNames.bind(styles);
 
 const CurrentInfo = ({info}) => {
   const { 
-    lastUpdate
+    lastUpdate,
+    last,
+    low24hr,
+    high24hr,
+    highestBid,
+    lowestAsk,
+    baseVolume
   } = info.toJS();
+
+  console.log(info.toJS())
 
   return (
     <div className={cx('current-info')}>
@@ -16,14 +24,23 @@ const CurrentInfo = ({info}) => {
       <LabelBlock label="업데이트 날짜">
         {moment(lastUpdate).format('YYYY MMM DD HH:mm')}
       </LabelBlock>
-      <LabelBlock label="가치2">
-        피곤한건지
+      <LabelBlock label="거래량 (24h)">
+        {baseVolume}
       </LabelBlock>
-      <LabelBlock label="가치3">
-        잘 모르겠다
+      <LabelBlock label="현재가">
+        {last.toFixed(10)}
       </LabelBlock>
-      <LabelBlock label="가치4">
-        한시되면 자러가야지~
+      <LabelBlock label="최저가 (24h)">
+        {low24hr.toFixed(10)}
+      </LabelBlock>
+      <LabelBlock label="최고가 (24h)">
+        {high24hr.toFixed(10)}
+      </LabelBlock>
+      <LabelBlock label="매수호가">
+        {lowestAsk.toFixed(10)}
+      </LabelBlock>
+      <LabelBlock label="매도호가">
+        {highestBid.toFixed(10)}
       </LabelBlock>
     </div>
   );
