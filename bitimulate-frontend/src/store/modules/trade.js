@@ -7,6 +7,7 @@ import {getCurrency} from 'lib/utils';
 
 import * as ExchangeAPI from 'lib/api/exchange';
 import * as ChartDataAPI from 'lib/api/chartData';
+import * as PoloniexAPI from 'lib/api/poloniex';
 
 // action types
 const GET_INITIAL_RATE = 'trade/GET_INITIAL_RATE';
@@ -20,6 +21,9 @@ const SET_CURRENCY_TYPE = 'trade/SET_CURRENCY_TYPE';
 const UPDATE_LAST_CANDLE = 'trade/UPDATE_LAST_CANDLE';
 const REGULAR_UPDATE = 'trade/REGULAR_UPDATE';
 
+const GET_ORDER_BOOK = 'trade/GET_ORDER_BOOK';
+
+
 // action creator
 export const getInitialRate = createAction(GET_INITIAL_RATE, ExchangeAPI.getInitialRate);
 export const setIndexOption = createAction(SET_INDEX_OPTION);
@@ -30,6 +34,7 @@ export const setChartType = createAction(SET_CHART_TYPE);
 export const setCurrencyType = createAction(SET_CURRENCY_TYPE);
 export const updateLastCandle = createAction(UPDATE_LAST_CANDLE);
 export const regularUpdate = createAction(REGULAR_UPDATE, ChartDataAPI.getChartData);
+export const getOrderBook = createAction(GET_ORDER_BOOK, PoloniexAPI.getOrderBook);
 
 // initial state
 const initialState = Map({
@@ -45,7 +50,11 @@ const initialState = Map({
     chartData: List([]),
     chartType: 'year',
     currencyType: null,
-    timebase: null
+    timebase: null,
+    orderBook: Map({
+      buy: List(),
+      sell: List()
+    })
   })
 });
 
@@ -140,5 +149,20 @@ export default handleActions({
 
       chartData = chartData.set(chartData.size - 1, lastCandle);
       return state.setIn(['detail', 'chartData'], chartData);
-    }
+    },
+
+    ...pender({
+      type: GET_ORDER_BOOK,
+      onSuccess: (state, action) => {
+        const { 
+          bid: buy, 
+          asks: sell 
+        } = action.payload.data;
+
+        return state.setIn(['detail', 'orderbook'], Map({
+          buy: fromJS(buy),
+          sell: fromJS(sell)
+        }))
+      }
+    })
 }, initialState);
