@@ -16,8 +16,16 @@ const CurrentInfo = ({info}) => {
     baseVolume
   } = info.toJS();
 
-  console.log(info.toJS())
-
+  function limitDigit(value) {
+    const digits = (10 - Math.round(Math.log10(value)));
+    const fixed = value.toFixed(digits > 10 ? 10 : digits);
+    const float = parseFloat(fixed)
+    if(float > 1000) {
+      return float.toLocaleString();
+    }
+    return fixed;
+  }
+  
   return (
     <div className={cx('current-info')}>
       <div className={cx('')}></div>
@@ -25,22 +33,22 @@ const CurrentInfo = ({info}) => {
         {moment(lastUpdate).format('YYYY MMM DD HH:mm')}
       </LabelBlock>
       <LabelBlock label="거래량 (24h)">
-        {baseVolume}
+        {limitDigit(baseVolume)}
       </LabelBlock>
       <LabelBlock label="현재가">
-        {last.toFixed(10)}
+        {limitDigit(last)}
       </LabelBlock>
       <LabelBlock label="최저가 (24h)">
-        {low24hr.toFixed(10)}
+        {limitDigit(low24hr)}
       </LabelBlock>
       <LabelBlock label="최고가 (24h)">
-        {high24hr.toFixed(10)}
+        {limitDigit(high24hr)}
       </LabelBlock>
       <LabelBlock label="매수호가">
-        {lowestAsk.toFixed(10)}
+        {limitDigit(lowestAsk)}
       </LabelBlock>
       <LabelBlock label="매도호가">
-        {highestBid.toFixed(10)}
+        {limitDigit(highestBid)}
       </LabelBlock>
     </div>
   );
