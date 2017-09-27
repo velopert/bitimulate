@@ -13,7 +13,10 @@ const configureStore = (initialState) => {
     applyMiddleware(
       penderMiddleware()
     ),
-    devtools()
+    devtools({
+      actionsBlacklist: ['trade/UPDATE_TICKER'],
+      maxAge: 1000
+    })
   ];
 
   const store = createStore(modules, initialState, compose(...enhancers));

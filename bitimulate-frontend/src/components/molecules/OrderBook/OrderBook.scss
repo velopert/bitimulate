@@ -4,17 +4,11 @@
   margin-top: 1rem;
   display: flex;
   flex-direction: row;
+  margin-bottom: 5rem;
 
 
   .column {
     flex: 1;
-    .gray-card {
-      background: material-color('grey', '200');
-    }
-    .column-name {
-      font-weight: 600;
-      color: material-color('grey', '800');
-    }
   }
   .column + .column {
     margin-left: 1rem;

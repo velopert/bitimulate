@@ -21,8 +21,8 @@ class OrderBookContainer extends Component {
   }
   
   startWork = () => {
-    this.work();    clearTimeout(this.timeoutId);
-
+    clearTimeout(this.timeoutId);
+    this.work();
   }
 
   work = async () => {
@@ -41,17 +41,24 @@ class OrderBookContainer extends Component {
       this.startWork();
     }
   }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeoutId);
+  }
+  
   
   render() {
+    const { currencyType, orderBook } = this.props;
     return (
-      <OrderBook/>
+      <OrderBook currencyType={currencyType} orderBook={orderBook}/>
     )
   }
 }
 
 export default connect(
   (state) => ({
-    currencyType: state.trade.getIn(['detail', 'currencyType'])
+    currencyType: state.trade.getIn(['detail', 'currencyType']),
+    orderBook: state.trade.getIn(['detail', 'orderBook'])
   }),
   (dispatch) => ({
     TradeActions: bindActionCreators(tradeActions, dispatch)

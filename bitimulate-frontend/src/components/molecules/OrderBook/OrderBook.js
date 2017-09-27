@@ -1,21 +1,27 @@
 import React from 'react';
 import styles from './OrderBook.scss';
 import classNames from 'classnames/bind';
-import { Card } from 'components';
+import { Card, OrdersTable } from 'components';
 
 const cx = classNames.bind(styles);
 
-const OrderBook = () => {
+const OrderBook = ({currencyType, orderBook}) => {
   return (
     <div className={cx('order-book')}>
       <div className={cx('column')}>
-        <Card className={cx('gray-card')}>
-          <div className={cx('column-name')}>매수주문</div>
+        <Card>
+          <OrdersTable 
+            type="매수" 
+            currency={currencyType}
+            data={orderBook.get('buy')}/>
         </Card>
       </div>
       <div className={cx('column')}>
-        <Card className={cx('gray-card')}>
-          <div className={cx('column-name')}>매도주문</div>
+        <Card>
+          <OrdersTable
+            type="매도" 
+            currency={currencyType}
+            data={orderBook.get('sell')}/>
         </Card>
       </div>
     </div>
