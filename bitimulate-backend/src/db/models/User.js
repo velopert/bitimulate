@@ -44,7 +44,6 @@ const User = new Schema({
     type: Wallet,
     default: {
       BTC: 0,
-      KRW: 0, 
       USD: 0
     }
   }
@@ -115,6 +114,7 @@ User.statics.socialRegister = function({
   });
 
   const { currency, value } = initial;
+  
   user.wallet[currency] = value;
 
   return user.save();

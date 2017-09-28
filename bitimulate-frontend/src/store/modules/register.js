@@ -26,7 +26,7 @@ export const socialRegister = createAction(SOCIAL_REGISTER, AuthAPI.socialRegist
 // initial state
 const initialState = Map({
   nickname: '',
-  currency: 'KRW',
+  currency: 'USD',
   optionIndex: 0,
   displayNameExists: false,
   error: null,

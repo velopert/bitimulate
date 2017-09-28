@@ -1,8 +1,8 @@
 export const optionsPerCurrency = {
-  'KRW': {
-    symbol: '₩',
-    initialValue: 1000000
-  },
+  // 'KRW': {
+  //   symbol: '₩',
+  //   initialValue: 1000000
+  // },
   'USD': {
     symbol: '$',
     initialValue: 1000
@@ -14,10 +14,10 @@ export const optionsPerCurrency = {
 }
 
 export const initialCurrencies = [
-  {
-    name: 'KRW',
-    symbol: '₩'
-  },
+  // {
+  //   name: 'KRW',
+  //   symbol: '₩'
+  // },
   {
     name: 'USD',
     symbol: '$'

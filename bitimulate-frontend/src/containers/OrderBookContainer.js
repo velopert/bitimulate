@@ -7,6 +7,9 @@ import { OrderBook } from 'components';
 
 class OrderBookContainer extends Component {
   
+  timeoutId = null
+  cancel = null
+
   getOrderBook = async () => {
     const { TradeActions, currencyType } = this.props;
     if(!currencyType) return;
@@ -14,14 +17,16 @@ class OrderBookContainer extends Component {
     const currencyPair = currencyType === 'BTC' ? 'USDT_BTC' : `BTC_${currencyType}`;
     
     try {
-      await TradeActions.getOrderBook(currencyPair);
+      const p = TradeActions.getOrderBook(currencyPair);
+      this.cancel = p.cancel;
+      await p;
     } catch (e) {
 
     }
   }
   
   startWork = () => {
-    clearTimeout(this.timeoutId);
+    this.clearRepeater();
     this.work();
   }
 
@@ -29,7 +34,7 @@ class OrderBookContainer extends Component {
     await this.getOrderBook();
     this.timeoutId = setTimeout(() => {
       this.work();
-    }, 250)
+    }, 500)
   }
   
   componentDidMount() {
@@ -41,9 +46,24 @@ class OrderBookContainer extends Component {
       this.startWork();
     }
   }
+  
+  clearRepeater = () => {
+    const { TradeActions } = this.props;
+    TradeActions.resetOrderBook();
+
+    if(this.cancel) {
+      this.cancel();
+    }
+    if(this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
+      console.log('cancelling timeoutId');
+    }
+    
+  }
 
   componentWillUnmount() {
-    clearTimeout(this.timeoutId);
+    this.clearRepeater();
   }
   
   

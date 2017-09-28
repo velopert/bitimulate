@@ -22,6 +22,8 @@ const UPDATE_LAST_CANDLE = 'trade/UPDATE_LAST_CANDLE';
 const REGULAR_UPDATE = 'trade/REGULAR_UPDATE';
 
 const GET_ORDER_BOOK = 'trade/GET_ORDER_BOOK';
+const RESET_ORDER_BOOK = 'trade/RESET_ORDER_BOOK';
+
 
 
 // action creator
@@ -34,7 +36,9 @@ export const setChartType = createAction(SET_CHART_TYPE);
 export const setCurrencyType = createAction(SET_CURRENCY_TYPE);
 export const updateLastCandle = createAction(UPDATE_LAST_CANDLE);
 export const regularUpdate = createAction(REGULAR_UPDATE, ChartDataAPI.getChartData);
-export const getOrderBook = createAction(GET_ORDER_BOOK, PoloniexAPI.getOrderBook);
+export const getOrderBook = createAction(GET_ORDER_BOOK, PoloniexAPI.getOrderBook, meta => meta);
+export const resetOrderBook = createAction(RESET_ORDER_BOOK);
+
 
 // initial state
 const initialState = Map({
@@ -154,6 +158,13 @@ export default handleActions({
     ...pender({
       type: GET_ORDER_BOOK,
       onSuccess: (state, action) => {
+        const { meta } = action;
+
+        // resolves flickering orderbook
+        if(meta.indexOf(state.getIn(['detail', 'currencyType'])) === -1) {
+          return state;
+        }
+
         const { 
           bids: buy, 
           asks: sell 
@@ -164,5 +175,8 @@ export default handleActions({
           sell: fromJS(sell)
         }))
       }
-    })
+    }),
+    [RESET_ORDER_BOOK]: (state, action) => {
+      return state.setIn(['detail', 'orderBook'], initialState.getIn(['detail', 'orderBook']));
+    }
 }, initialState);
