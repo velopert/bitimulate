@@ -4,7 +4,7 @@ import Root from './Root';
 import 'styles/main.scss';
 import registerServiceWorker from './registerServiceWorker';
 import store from 'store';
-import { AppContainer } from 'react-hot-loader';
+import { AppContainer as HotContainer } from 'react-hot-loader';
 import social from 'lib/social';
 import socket from 'lib/socket';
 
@@ -19,9 +19,9 @@ window.socket = socket;
 
 const render = (Component) => ReactDOM.render(
   (
-    <AppContainer>
+    <HotContainer>
       <Component store={store}/>
-    </AppContainer>
+    </HotContainer>
   ), 
   document.getElementById('root')
 );

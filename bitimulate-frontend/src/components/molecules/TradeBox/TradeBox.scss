@@ -1,0 +1,56 @@
+@import 'utils';
+
+.trade-box {
+  .head {
+    background: material-color('grey', '800');
+    color: white;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .title {
+      font-size: 1.5rem;
+      font-weight: 300;
+    }
+    .has-amount {
+      margin-left: auto;
+      font-size: 0.85rem;
+      text-align: right;
+      .desc, .currency {
+        opacity: 0.75;
+      }
+    }
+    
+  }
+  .content {
+    padding: 1rem;
+    background: material-color('grey', '100');
+    &.bottom {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      .text {
+        font-weight: 600;
+      }
+      .total {
+        margin-left: auto;
+        font-weight: 300;
+        font-size: 1.25rem;
+
+        .base {
+          font-size: 0.9rem;
+          color: material-color('grey', '600');
+        }
+      }
+      background: white;
+    }
+  }
+  padding: 0;
+  flex: 1
+}
+
+.trade-box + .trade-box {
+  margin-left: 1rem;
+}
+
