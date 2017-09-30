@@ -4,13 +4,13 @@ import classNames from 'classnames/bind';
 import { Input } from 'components';
 const cx = classNames.bind(styles);
 
-const HorizontalLabelInput = ({label, currency}) => {
+const HorizontalLabelInput = ({label, currency, ...rest}) => {
   return (
     <div className={cx('horizontal-label-input')}>
       <label>
         {label}
       </label>
-      <Input/>
+      <Input {...rest}/>
       { currency && <div className={cx('currency')}>{currency}</div>}
     </div>
   );

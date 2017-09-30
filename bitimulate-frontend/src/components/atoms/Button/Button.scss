@@ -68,14 +68,26 @@
       background: material-color('teal', '300');
       // border: 1px solid material-color('teal', '400');
       &:hover {
-        background: material-color('teal', '200');
+        background: #6dd0c6;
         // border: 1px solid material-color('teal', '300');
       }
       &:active {
-        background: material-color('teal', '400');
+        background: material-color('teal', '300');
         // border: 1px solid material-color('teal', '500');
       }
     }
+
+    &.dark {
+      color: white;
+      background: material-color('grey', '700');
+      &:hover {
+        background: material-color('grey', '600');
+      }
+      &:active {
+        background: material-color('grey', '800');
+      }
+    }
+
     &.disabled {
       background: material-color('grey', '300');
       color: material-color('grey', '500');

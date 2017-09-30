@@ -2,8 +2,8 @@
 
 .trade-box {
   .head {
-    background: material-color('grey', '800');
-    color: white;
+    background: white;
+    color: material-color('grey', '800');
     padding: 1rem;
     display: flex;
     flex-direction: row;
@@ -17,7 +17,7 @@
       font-size: 0.85rem;
       text-align: right;
       .desc, .currency {
-        opacity: 0.75;
+        font-weight: 600;
       }
     }
     
@@ -25,7 +25,7 @@
   .content {
     padding: 1rem;
     background: material-color('grey', '100');
-    &.bottom {
+    &.bright {
       padding-top: 1.5rem;
       padding-bottom: 1.5rem;
       display: flex;
@@ -44,6 +44,11 @@
         }
       }
       background: white;
+    }
+
+    &.bottom {
+      padding-top: 0;
+      padding-bottom: 1rem;
     }
   }
   padding: 0;

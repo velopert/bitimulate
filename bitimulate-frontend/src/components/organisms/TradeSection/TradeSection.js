@@ -6,11 +6,16 @@ import { TradeBox } from 'components';
 
 const cx = classNames.bind(styles);
 
-const TradeSection = () => {
+const TradeSection = ({
+  currencyType,
+  buy,
+  sell
+}) => {
+
   return (
     <div className={cx('trade-section')}>
-      <TradeBox title="BTC 매수"/>
-      <TradeBox title="BTC 매도"/>      
+      <TradeBox currencyType={currencyType} {...buy.toJS()}/>
+      <TradeBox currencyType={currencyType} sell {...sell.toJS()}/>      
     </div>
   );
 };

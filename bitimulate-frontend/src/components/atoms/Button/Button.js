@@ -16,6 +16,7 @@ const Button = ({
   xPadding,
   style,
   disabled,
+  dark,
   ...rest
 }) => {
   const dynamicStyle = {
@@ -30,7 +31,8 @@ const Button = ({
         invert,
         flex,
         flat,
-        disabled
+        disabled,
+        dark
       }, color, className)
     }
     style={{

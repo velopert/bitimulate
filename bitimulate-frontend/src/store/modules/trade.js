@@ -24,6 +24,8 @@ const REGULAR_UPDATE = 'trade/REGULAR_UPDATE';
 const GET_ORDER_BOOK = 'trade/GET_ORDER_BOOK';
 const RESET_ORDER_BOOK = 'trade/RESET_ORDER_BOOK';
 
+const INITIALIZE_TRADE_SECTION = 'trade/INITIALIZE_TRADE_SECTION';
+const CHANGE_TRADE_BOX_INPUT = 'trade/CHANGE_TRADE_BOX_INPUT';
 
 
 // action creator
@@ -38,7 +40,8 @@ export const updateLastCandle = createAction(UPDATE_LAST_CANDLE);
 export const regularUpdate = createAction(REGULAR_UPDATE, ChartDataAPI.getChartData);
 export const getOrderBook = createAction(GET_ORDER_BOOK, PoloniexAPI.getOrderBook, meta => meta);
 export const resetOrderBook = createAction(RESET_ORDER_BOOK);
-
+export const initializeTradeAction = createAction(INITIALIZE_TRADE_SECTION);
+export const changeTradeBoxInput = createAction(CHANGE_TRADE_BOX_INPUT);
 
 // initial state
 const initialState = Map({
@@ -58,6 +61,16 @@ const initialState = Map({
     orderBook: Map({
       buy: List(),
       sell: List()
+    }),
+    tradeSection: Map({
+      buy: Map({
+        price: 0,
+        amount: 0
+      }),
+      sell: Map({
+        price: 0,
+        amount: 0
+      })
     })
   })
 });
@@ -178,5 +191,22 @@ export default handleActions({
     }),
     [RESET_ORDER_BOOK]: (state, action) => {
       return state.setIn(['detail', 'orderBook'], initialState.getIn(['detail', 'orderBook']));
+    },
+
+    [INITIALIZE_TRADE_SECTION]: (state, action) => {
+      const { payload: initialPrice  = 0} = action;
+
+      const boxState = Map({
+        amount: 0,
+        price: initialPrice
+      })
+
+      return state.setIn(['detail', 'tradeSection', 'buy'], boxState)
+                  .setIn(['detail', 'tradeSection', 'sell'], boxState);
+    },
+
+    [CHANGE_TRADE_BOX_INPUT]: (state, action) => {
+      const { type, name, value } = action.payload;
+      return state.setIn(['tradeSection', type, name], value);
     }
 }, initialState);

@@ -16,9 +16,9 @@ const CurrentInfo = ({info}) => {
     baseVolume
   } = info.toJS();
 
-  function limitDigit(value) {
-    const digits = (10 - Math.round(Math.log10(value)));
-    const fixed = value.toFixed(digits > 10 ? 10 : digits);
+  function limitDigit(value, d = 10) {
+    const digits = (d - Math.round(Math.log10(value)));
+    const fixed = value.toFixed(digits > d ? d : digits);
     const float = parseFloat(fixed)
     if(float > 1000) {
       return float.toLocaleString();
