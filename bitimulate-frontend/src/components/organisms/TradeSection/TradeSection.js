@@ -27,9 +27,6 @@ const TradeSection = ({
     to: wallet.get(currencyType) || 0
   };
 
-  console.log(has);
-
-
   return (
     <div className={cx('trade-section')}>
       <TradeBox currencyType={currencyType}
