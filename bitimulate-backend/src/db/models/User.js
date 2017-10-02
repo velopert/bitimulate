@@ -11,9 +11,8 @@ function hash(password) {
 
 const Wallet = new Schema({
   BTC: Schema.Types.Double,
-  USD: Schema.Types.Double,
-  KRW: Schema.Types.Double
-}, { _id: false });
+  USD: Schema.Types.Double
+}, { _id: false, strict: false });
 
 const User = new Schema({
   displayName: String,

@@ -25,6 +25,22 @@
   .content {
     padding: 1rem;
     background: material-color('grey', '100');
+    .text-buttons {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 0.8rem;
+      .text-button {
+        font-size: 0.8rem;
+        color: material-color('grey', '500');
+        cursor: pointer;
+        &:hover {
+          color: material-color('grey', '700');
+        }
+      }
+      .text-button + .text-button {
+        margin-left: 1rem;
+      }
+    }
     &.bright {
       padding-top: 1.5rem;
       padding-bottom: 1.5rem;
@@ -39,6 +55,7 @@
         font-size: 1.25rem;
 
         .base {
+          margin-left: 0.5rem;
           font-size: 0.9rem;
           color: material-color('grey', '600');
         }

@@ -13,6 +13,8 @@ const LOGOUT = 'user/LOGOUT';
 const GET_META_INFO = 'user/GET_META_INFO';
 const PATCH_META_INFO = 'user/PATCH_META_INFO';
 const TOGGLE_PIN_KEY = 'user/TOGGLE_PIN_KEY';
+const GET_WALLET = 'user/GET_WALLET';
+
 
 
 // action creator
@@ -22,6 +24,8 @@ export const logout = createAction(LOGOUT, AuthAPI.logout);
 export const getMetaInfo = createAction(GET_META_INFO, UserAPI.getMetaInfo);
 export const togglePinKey = createAction(TOGGLE_PIN_KEY);
 export const patchMetaInfo = createAction(PATCH_META_INFO, UserAPI.patchMetaInfo);
+export const getWallet = createAction(GET_WALLET, UserAPI.getWallet);
+
 
 // initial state
 const initialState = Map({
@@ -29,6 +33,9 @@ const initialState = Map({
   user: null, // Map({ _id, displayName })
   metaInfo: Map({
     pinned: List([])
+  }),
+  wallet: Map({
+
   })
 });
 
@@ -71,5 +78,12 @@ export default handleActions({
 
       // found
       return state.deleteIn(['metaInfo', 'pinned', index]);
-    }
+    },
+    ...pender({
+      type: GET_WALLET,
+      onSuccess: (state, action) => {
+        const { data: wallet } = action.payload;
+        return state.set('wallet', fromJS(wallet));
+      }
+    })
 }, initialState);

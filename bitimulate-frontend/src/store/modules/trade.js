@@ -207,6 +207,6 @@ export default handleActions({
 
     [CHANGE_TRADE_BOX_INPUT]: (state, action) => {
       const { type, name, value } = action.payload;
-      return state.setIn(['tradeSection', type, name], value);
+      return state.setIn(['detail', 'tradeSection', type, name], value);
     }
 }, initialState);
