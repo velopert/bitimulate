@@ -9,10 +9,14 @@ const Order = new Schema({
   currencyPair: String,
   price: Schema.Types.Double,
   amount: Schema.Types.Double,
+  processedAmount: {
+    type: Schema.Types.Double,
+    default: 0
+  },
   sell: Boolean,
   status: {
     type: String,
-    enum: ['waiting', 'processed'],
+    enum: ['waiting', 'partial', 'processed'],
     default: 'waiting'
   },
   date: {

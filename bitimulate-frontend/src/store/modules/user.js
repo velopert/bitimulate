@@ -36,6 +36,9 @@ const initialState = Map({
   }),
   wallet: Map({
 
+  }),
+  walletOnOrder: Map({
+
   })
 });
 
@@ -82,8 +85,9 @@ export default handleActions({
     ...pender({
       type: GET_WALLET,
       onSuccess: (state, action) => {
-        const { data: wallet } = action.payload;
-        return state.set('wallet', fromJS(wallet));
+        const { wallet, walletOnOrder } = action.payload.data;
+        return state.set('wallet', fromJS(wallet))
+                    .set('walletOnOrder', fromJS(walletOnOrder));
       }
     })
 }, initialState);

@@ -8,6 +8,8 @@ import {getCurrency} from 'lib/utils';
 import * as ExchangeAPI from 'lib/api/exchange';
 import * as ChartDataAPI from 'lib/api/chartData';
 import * as PoloniexAPI from 'lib/api/poloniex';
+import * as OrdersAPI from 'lib/api/orders';
+
 
 // action types
 const GET_INITIAL_RATE = 'trade/GET_INITIAL_RATE';
@@ -27,6 +29,7 @@ const RESET_ORDER_BOOK = 'trade/RESET_ORDER_BOOK';
 const INITIALIZE_TRADE_SECTION = 'trade/INITIALIZE_TRADE_SECTION';
 const CHANGE_TRADE_BOX_INPUT = 'trade/CHANGE_TRADE_BOX_INPUT';
 
+const CREATE_ORDER = 'trade/CREATE_ORDER';
 
 // action creator
 export const getInitialRate = createAction(GET_INITIAL_RATE, ExchangeAPI.getInitialRate);
@@ -42,6 +45,8 @@ export const getOrderBook = createAction(GET_ORDER_BOOK, PoloniexAPI.getOrderBoo
 export const resetOrderBook = createAction(RESET_ORDER_BOOK);
 export const initializeTradeAction = createAction(INITIALIZE_TRADE_SECTION);
 export const changeTradeBoxInput = createAction(CHANGE_TRADE_BOX_INPUT);
+export const createOrder = createAction(CREATE_ORDER, OrdersAPI.createOrder, meta => meta);
+
 
 // initial state
 const initialState = Map({
@@ -70,6 +75,10 @@ const initialState = Map({
       sell: Map({
         price: 0,
         amount: 0
+      }),
+      disableButton: Map({
+        buy: false,
+        sell: false
       })
     })
   })
@@ -208,5 +217,24 @@ export default handleActions({
     [CHANGE_TRADE_BOX_INPUT]: (state, action) => {
       const { type, name, value } = action.payload;
       return state.setIn(['detail', 'tradeSection', type, name], value);
-    }
+    },
+
+    ...pender({
+      type: CREATE_ORDER,
+      onPending: (state, action) => {
+        const { sell } = action.meta;
+        const type = sell ? 'sell' : 'buy';
+        return state.setIn(['detail', 'tradeSection', 'disableButton', type], true);
+      },
+      onSuccess: (state, action) => {
+        const { sell } = action.meta;
+        const type = sell ? 'sell' : 'buy';
+        return state.setIn(['detail', 'tradeSection', 'disableButton', type], false);
+      },
+      onError: (state, action) => {
+        const { sell } = action.meta;
+        const type = sell ? 'sell' : 'buy';
+        return state.setIn(['detail', 'tradeSection', 'disableButton', type], false);
+      }
+    })
 }, initialState);

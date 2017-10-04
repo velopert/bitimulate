@@ -15,7 +15,9 @@ const TradeBox = ({
   amount,
   sell,
   onChange,
-  onRefreshPrice
+  onRefreshPrice,
+  onCreateOrder,
+  disabled
 }) => {
 
   const actionText = sell ? '매도' : '매수';
@@ -74,7 +76,7 @@ const TradeBox = ({
         </div>
       </div>
       <div className={cx('content', 'bright', 'bottom')}>
-        <Button flat color="teal" flex>{actionText}</Button>
+        <Button flat color="teal" flex onClick={onCreateOrder} disabled={disabled}>{actionText}</Button>
       </div>
     </Card>
   );

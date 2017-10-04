@@ -17,6 +17,7 @@ const Button = ({
   style,
   disabled,
   dark,
+  onClick,
   ...rest
 }) => {
   const dynamicStyle = {
@@ -40,6 +41,7 @@ const Button = ({
       ...style,
       ...dynamicStyle
     }}
+    onClick={disabled ? undefined : onClick}
      {...rest}>
       {children}
     </div>

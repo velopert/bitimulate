@@ -71,7 +71,7 @@ exports.createOrder = async (ctx) => {
     return;
   }
 
-  const totalAmount = price * amount;
+  const totalAmount = parseFloat(price) * parseFloat(amount);
 
   try {
     const userData = await User.findById(user._id).exec();
@@ -95,8 +95,8 @@ exports.createOrder = async (ctx) => {
     const order = new Order({
       userId: mongoose.Types.ObjectId(user._id),
       currencyPair,
-      price,
-      amount,
+      price: parseFloat(price),
+      amount: parseFloat(amount),
       sell
     });
 

@@ -12,7 +12,9 @@ const TradeSection = ({
   sell,
   onChangeInput,
   onRefreshPrice,
-  wallet
+  onCreateOrder,
+  wallet,
+  disableButton
 }) => {
 
   const onChangeFor = (type) => (e) => {
@@ -21,6 +23,7 @@ const TradeSection = ({
   }
 
   const base = currencyType === 'BTC' ? 'USD' : 'BTC';
+  const currencyPair = currencyType === 'BTC' ? 'USDT_BTC' : `BTC_${currencyType}`;
 
   const has = {
     from: wallet.get(base) || 0,
@@ -34,6 +37,14 @@ const TradeSection = ({
         onChange={onChangeFor('buy')} 
         hasAmount={has.from} 
         onRefreshPrice={onRefreshPrice}
+        onCreateOrder={() => {
+          onCreateOrder({
+            currencyPair,
+            ...buy.toJS(),
+            sell: false
+          });
+        }}
+        disabled={disableButton.get('buy')}
       />
       <TradeBox 
         currencyType={currencyType} 
@@ -42,6 +53,14 @@ const TradeSection = ({
         onChange={onChangeFor('sell')} 
         hasAmount={has.to} 
         onRefreshPrice={onRefreshPrice}
+        onCreateOrder={() => {
+          onCreateOrder({
+            currencyPair,
+            ...sell.toJS(),
+            sell: true
+          });
+        }}
+        disabled={disableButton.get('sell')}
       />      
     </div>
   );
