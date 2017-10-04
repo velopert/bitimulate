@@ -9,7 +9,31 @@ const Order = new Schema({
   currencyPair: String,
   price: Schema.Types.Double,
   amount: Schema.Types.Double,
-  sell: Boolean
+  sell: Boolean,
+  status: {
+    type: String,
+    enum: ['waiting', 'processed'],
+    default: 'waiting'
+  },
+  date: {
+    type: Date,
+    default: new Date()
+  },
+  processedDate: {
+    type: Date,
+    default: null
+  }
 });
+
+Order.statics.findByUserId = function(userId, cursor) {
+  return this.find({
+    userId,
+    ...(cursor ? { _id: { $lt: cursor } } : {})
+  }, {
+    userId: false
+  }).sort({ 
+    _id: -1
+  }).limit(20).exec();
+};
 
 module.exports = mongoose.model('Order', Order);

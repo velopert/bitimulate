@@ -3,6 +3,33 @@ const Joi = require('joi');
 const User = require('db/models/User');
 const Order = require('db/models/Order');
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
+
+exports.getOrders = async (ctx) => {
+  const { user } = ctx.request;
+  const { cursor } = ctx.query;
+
+  // needs auth
+  if(!user) {
+    ctx.status = 401;
+    return;
+  }
+
+  try {
+    const orders = await Order.findByUserId(ObjectId(user._id), cursor);
+    const { protocol, host, path } = ctx;
+    
+    const nextUrl = `${protocol}://${host}${path}?cursor=${orders.length > 0 ? orders[orders.length - 1]._id : ''}`;
+    
+    if(orders.length > 0) {
+      ctx.response.set('Link', `<${nextUrl}>; rel="next"`);
+    }
+
+    ctx.body = orders;
+  } catch (e) {
+    ctx.throw(e, 500);
+  }
+};
 
 exports.createOrder = async (ctx) => {
   const {
@@ -93,8 +120,14 @@ exports.createOrder = async (ctx) => {
     }
 
     await order.save();
+
     ctx.body = {
-      order
+      _id: order._id,
+      currencyPair,
+      price,
+      amount,
+      sell,
+      status: 'waiting'
     };
   } catch (e) {
 
