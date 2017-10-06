@@ -32,12 +32,15 @@ exports.getOrders = async (ctx) => {
 };
 
 exports.createOrder = async (ctx) => {
-  const {
+  let {
     currencyPair,
     price,
     amount,
     sell
   } = ctx.request.body;
+
+  price = parseFloat(price);
+  amount = parseFloat(amount);
 
   const { user } = ctx.request;
 
@@ -83,10 +86,19 @@ exports.createOrder = async (ctx) => {
       return sell ? currencyPair.split('_')[1] : 'BTC';
     })();
 
-    if(totalAmount > (wallet[baseCurrency] || 0)) {
+    if(!sell && totalAmount > (wallet[baseCurrency] || 0)) {
       ctx.status = 400;
       ctx.body = {
-        msg: 'totalamount exceeds'
+        msg: 'exceeds available amount'
+      };
+      return;
+    }
+
+    if(sell && amount > (wallet[baseCurrency] || 0)) {
+      console.log(amount ,(wallet[baseCurrency] || 0));
+      ctx.status = 400;
+      ctx.body = {
+        msg: 'exceeds available amount'
       };
       return;
     }
@@ -100,23 +112,32 @@ exports.createOrder = async (ctx) => {
       sell
     });
 
-    // different approach depending value existancy
-    if(walletOnOrder[baseCurrency] === undefined) {
+    if(sell) {
       await User.findByIdAndUpdate(user._id, {
         $inc: {
-          [`wallet.${baseCurrency}`]: -1 * totalAmount
-        },
-        $set: {
-          [`walletOnOrder.${baseCurrency}`]: totalAmount
+          [`wallet.${baseCurrency}`]: -1 * amount,
+          [`walletOnOrder.${baseCurrency}`]: amount
         }
       }).exec();
     } else {
-      await User.findByIdAndUpdate(user._id, {
-        $inc: {
-          [`wallet.${baseCurrency}`]: -1 * totalAmount,
-          [`walletOnOrder.${baseCurrency}`]: totalAmount
-        }
-      }).exec();
+      // different approach depending value existancy
+      if(walletOnOrder[baseCurrency] === undefined) {
+        await User.findByIdAndUpdate(user._id, {
+          $inc: {
+            [`wallet.${baseCurrency}`]: -1 * totalAmount
+          },
+          $set: {
+            [`walletOnOrder.${baseCurrency}`]: totalAmount
+          }
+        }).exec();
+      } else {
+        await User.findByIdAndUpdate(user._id, {
+          $inc: {
+            [`wallet.${baseCurrency}`]: -1 * totalAmount,
+            [`walletOnOrder.${baseCurrency}`]: totalAmount
+          }
+        }).exec();
+      }
     }
 
     await order.save();
@@ -130,6 +151,6 @@ exports.createOrder = async (ctx) => {
       status: 'waiting'
     };
   } catch (e) {
-
+    ctx.throw(e, 500);
   }
 };

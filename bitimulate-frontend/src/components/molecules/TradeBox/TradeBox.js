@@ -27,7 +27,7 @@ const TradeBox = ({
     onChange({
       target: {
         name: 'amount',
-        value: parseFloat(hasAmount) / parseFloat(price)
+        value: sell ? hasAmount : parseFloat(hasAmount) / parseFloat(price)
       }
     });
   }

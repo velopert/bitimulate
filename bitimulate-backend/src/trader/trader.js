@@ -2,6 +2,9 @@ const ExchangeRate = require('db/models/ExchangeRate');
 const Order = require('db/models/Order');
 const User = require('db/models/User');
 const log = require('lib/log');
+const redis = require('redis');
+
+const generalPublisher = redis.createClient();
 
 module.exports = (() => {
   let syncTimeoutId = null;
@@ -101,7 +104,6 @@ module.exports = (() => {
 
   const processOrder = async (order) => {
     const { _id, amount, userId, price, currencyPair, sell } = order;
-    log(_id, 'is processed.');
     try {
       await Order.findByIdAndUpdate(_id, { 
         status: 'processed',
@@ -110,6 +112,10 @@ module.exports = (() => {
         }
       }).exec();
       await makeUserTransaction(userId, currencyPair, amount, price, sell);
+      generalPublisher.publish('general', JSON.stringify({
+        type: 'ORDER_PROCESSED',
+        payload: order
+      }));
     } catch (e) {
       console.log(e);
     }

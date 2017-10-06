@@ -87,7 +87,6 @@ const messageHandler = {
         lastUpdated: new Date()});
       publisher.publish('tickers', str);
       log('Updated', name);
-      // console.log('[Update]', name, new Date());
     } catch (e) {
       console.error(e);
     }
