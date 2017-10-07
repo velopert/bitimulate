@@ -78,14 +78,18 @@ const messageHandler = {
       await ExchangeRate.updateTicker(name, rest);
       
       const { last, percentChange, baseVolume, quoteVolume } = converted;
-      const str = JSON.stringify({
+      const payload = {
         name, 
         last: parseFloat(last), 
         percentChange: parseFloat(percentChange), 
         baseVolume: parseFloat(baseVolume), 
         quoteVolume: parseFloat(quoteVolume), 
-        lastUpdated: new Date()});
-      publisher.publish('tickers', str);
+        lastUpdated: new Date()
+      };
+      publisher.publish('general', JSON.stringify({
+        type: 'TICKER',
+        payload
+      }));
       log('Updated', name);
     } catch (e) {
       console.error(e);

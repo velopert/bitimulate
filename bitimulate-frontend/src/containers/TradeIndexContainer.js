@@ -56,11 +56,11 @@ class TradeIndexContainer extends Component {
 
   componentDidMount() {
     this.initialize();
-    socket.subscribe('tickers');
+    socket.subscribe('TICKER');
   }
 
   componentWillUnmount() {
-    socket.unsubscribe('tickers');
+    socket.unsubscribe('TICKER');
   }
   
 

@@ -31,6 +31,9 @@ module.exports = (function() {
     _client.on('open', handlers.open);
     _client.on('message', handlers.message);
     _client.on('close', reconnect);
+    _client.on('error', () => {
+      console.log('Websocket Error!');
+    });
     // error 처리
   };
 

@@ -18,6 +18,9 @@ const msgTypes = {
   unsubscribe: 3
 };
 
+const SUBSCRIBE = 'SUBSCRIBE';
+const UNSUBSCRIBE = 'UNSUBSCRIBE';
+
 function decompress(data) {
   return new Promise((resolve, reject) => {
     LZUTF8.decompressAsync(data, {
@@ -29,9 +32,8 @@ function decompress(data) {
   })
 }
 
-const packetTypes = {
-  UPDATE_TICKER: 1
-};
+// packet types
+const TICKER = 'TICKER';
 
 export default (function() {
   let _store = null;
@@ -40,33 +42,30 @@ export default (function() {
   let _retry = false;
   let _subscribed = [];
 
-  function handlePacket(message) {
-    const { code, data } = message;
-    const { UPDATE_TICKER } = packetTypes;
-  
-    const parsed = parseJSON(data);
-    if(!parsed) return;
+  function handlePacket(data) {
+    const { type, payload } = data;
   
     const handlers = {
-      [UPDATE_TICKER]: () => {
-        _store.dispatch(updateTicker(parsed));
+      [TICKER]: () => {
+        _store.dispatch(updateTicker(payload));
         const c = _store.getState().trade.getIn(['detail', 'currencyType']);
-        if(parsed.name.indexOf('_') < 0 || !c) return;
-        if(parsed.name.split('_')[1] === c) {
-          _store.dispatch(updateLastCandle(parsed.last));
+        if(payload.name.indexOf('_') < 0 || !c) return;
+        if(payload.name.split('_')[1] === c) {
+          _store.dispatch(updateLastCandle(payload.last));
         }
       }
     }
     
-    handlers[code]();
+    handlers[type]();
   }
 
   
   const listener = async (message) => {
     try {
-      const decompressed = await decompress(message.data);
-      const data = parseJSON(decompressed);
-      if(!data || !data.code) return;
+      // const decompressed = await decompress(message.data);
+      const data = parseJSON(message.data);
+      if(!data || !data.type) return;
+
       handlePacket(data);
     } catch (e) {
       console.log(e);
@@ -98,8 +97,8 @@ export default (function() {
 
     console.log('subscribing to ' + key);
     _socket.send(JSON.stringify({
-      code: msgTypes.subscribe,
-      data: key
+      type: SUBSCRIBE,
+      payload: key
     }));
   }
 

@@ -1,134 +1,104 @@
 const Router = require('koa-router');
-const shortid = require('shortid');
 const redis = require('redis');
-const LZUTF8 = require('lzutf8');
+const { parseJSON, compress } = require('./utils');
 const jwtMiddleware = require('lib/middlewares/jwt');
 const EventEmitter = require('events');
 const log = require('lib/log');
-const emitter = new EventEmitter();
-emitter.setMaxListeners(0); // infinite listener
 
-const parseJSON = (str) => {
-  let parsed = null;
-  try {
-    parsed = JSON.parse(str);
-  } catch (e) {
-    return null;
+const shortid = require('shortid');
+
+const emitter = new EventEmitter();
+emitter.setMaxListeners(0); // infinite listeners
+
+const generalHandlers = {
+  ORDER_PROCESSED: (payload) => {
+    const { userId } = payload;
+    const channel = `ORDER_PROCESSED:${userId}`;
+    emitter.emit(channel, {
+      type: 'ORDER_PROCESSED',
+      payload
+    });
+  },
+  TICKER: (payload) => {
+    emitter.emit('TICKER', {
+      type: 'TICKER',
+      payload
+    });
   }
-  return parsed;
 };
 
 const subscriber = redis.createClient();
-const generalSubscriber = redis.createClient();
 
-subscriber.subscribe('tickers');
-generalSubscriber.subscribe('general');
-
-const handlers = {
-  'ORDER_PROCESSED': (payload) => {
-    emitter.emit(`ORDER_PROCESSED:${payload.userId}`, JSON.stringify({
-      type: 'ORDER_PROCESSED',
-      payload
-    }));
-  }
-};
-
-generalSubscriber.on('message', (channel, message) => {
-  const parsed = parseJSON(message);
-  
-  if(!parsed) return;
-
-  const { type, payload } = parsed;
-
-  if(!handlers[type]) {
-    log.error('UNRESOLVED MESSAGE: ', parsed);
-    return;
-  }
-
-  handlers[type](payload);
+subscriber.subscribe('general');
+subscriber.on('message', (channel, message) => {
+  const data = parseJSON(message);
+  if(!data) return;
+  const { type, payload } = data;
+  if(!generalHandlers[type]) return;
+  generalHandlers[type](payload);
 });
 
-const ws = new Router();
+const SUBSCRIBE = 'SUBSCRIBE';
+const UNSUBSCRIBE = 'UNSUBSCRIBE';
 
-function compress(str) {
-  return new Promise((resolve, reject) => {
-    LZUTF8.compressAsync(str, {
-      outputEncoding: 'BinaryString'
-    }, (result, error) => {
-      if(error) reject(error);
-      resolve(result);
-    });
-  });
+const userChannels = [
+  'ORDER_PROCESSED'
+];
+
+function isUserChannel(channel) {
+  return userChannels.indexOf(channel) !== -1;
 }
 
-const msgTypes = {
-  ticker: 1,
-  subscribe: 2,
-  unsubscribe: 3
-};
-
-ws.get('/ws', jwtMiddleware);
-ws.get('/ws', (ctx, next) => {
-  const id = shortid.generate();
-  ctx.websocket.id = id;
-  const user = ctx.request.user;
+const ws = new Router();
+ws.get('/ws', jwtMiddleware, (ctx, next) => {
+  const { user } = ctx.request;
+  ctx.websocket.id = shortid.generate();
   const subscribed = [];
-  
-  const generalListener = (payload) => {
-    console.log(payload);
-  }
+  log('Connected:', ctx.websocket.id, user);
+  const appendUserId = (channel) => `${channel}:${user._id}`;
+  const processChannel = (channel) => isUserChannel(channel) ? appendUserId(channel) : channel;
 
-  const listener = async (channel, message) => {
-    if(channel === 'tickers') {
-      const msg = JSON.stringify({
-        code: msgTypes.ticker,
-        data: message
-      });
-      try {
-        const compressed = await compress(msg);
-        ctx.websocket.send(compressed);
-      } catch (e) {
-
-      }
-    }
+  const publish = (data) => {
+    ctx.websocket.send(JSON.stringify(data));
   };
 
-  const subscribers = {
-    ORDER_PROCESSED: () => {
-      const key = `ORDER_PROCESSED:${user._id}`;
-      subscribed.push(key);
-      /* 여기 수정하자 내일!!!! */
-    }
+  const subscribe = (channel) => {
+    console.log(`subscribing to ${channel}`);
+    subscribed.push(channel);
+    emitter.on(channel, publish);
   };
 
-  const messageHandler = {
-    [msgTypes.subscribe]: (data) => {
-      if(data === 'tickers') {
-        subscriber.on('message', listener);
-        return;
-      }
-      if(!subscribers[data]) return;
-      subscribers[data]();
+  const unsubscribe = (channel) => {
+    console.log(`unsubscribed ${channel}`);
+    emitter.removeListener(channel, publish);
+  };
+
+  const handlers = {
+    [SUBSCRIBE]: (channel) => {
+      subscribe(processChannel(channel));
     },
-    [msgTypes.unsubscribe]: (data) => {
-      if(data === 'tickers') {
-        subscriber.removeListener('message', listener);
-      }
+    [UNSUBSCRIBE]: (channel) => {
+      unsubscribe(processChannel(channel));
     }
   };
 
-  ctx.websocket.on('message', (message) => {
-    const parsed = parseJSON(message);
-    if(!parsed || !parsed.code) return;
-    const handler = messageHandler[parsed.code];
-    if(!messageHandler[parsed.code]) return;
-    
-    handler(parsed.data);
-  });
+  const listeners = {
+    onMessage: (message) => {
+      const data = parseJSON(message);
+      if(!data || !data.type) return; // invalid data
+      const handler = handlers[data.type];
+      if(!handler) return; // invalid type
+      handler(data.payload);
+    },
+    onClose: () => {
+      subscribed.forEach(unsubscribe); // unsubscribe all
+    }
+  };
 
-  ctx.websocket.on('close', () => {
-    subscriber.removeListener('message', listener);
-  }); 
+  ctx.websocket.on('message', listeners.onMessage);
+
+  // ctx.websockets.on('message', listeners.onMessage);
+  ctx.websocket.on('close', listeners.onClose);
 });
 
 module.exports = ws;
