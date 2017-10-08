@@ -14,7 +14,7 @@ const configureStore = (initialState) => {
       penderMiddleware()
     ),
     devtools({
-      // actionsBlacklist: ['trade/UPDATE_TICKER'],
+      actionsBlacklist: ['trade/UPDATE_TICKER'],
       maxAge: 1000
     })
   ];

@@ -1,6 +1,12 @@
 import LZUTF8 from 'lzutf8';
 
+import { bindActionCreators } from 'redux';
 import { updateTicker, updateLastCandle } from 'store/modules/trade';
+import * as userActions from 'store/modules/user';
+import store from 'store';
+
+const UserActions = bindActionCreators(userActions, store.dispatch);
+
 
 const parseJSON = (str) => {
   let parsed = null;
@@ -34,6 +40,7 @@ function decompress(data) {
 
 // packet types
 const TICKER = 'TICKER';
+const ORDER_PROCESSED = 'ORDER_PROCESSED';
 
 export default (function() {
   let _store = null;
@@ -53,6 +60,12 @@ export default (function() {
         if(payload.name.split('_')[1] === c) {
           _store.dispatch(updateLastCandle(payload.last));
         }
+      },
+      [ORDER_PROCESSED]: () => {
+        // refresh wallet
+        console.log(payload);
+        UserActions.getWallet();
+
       }
     }
     

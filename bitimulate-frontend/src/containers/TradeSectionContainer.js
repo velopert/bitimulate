@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as tradeActions from 'store/modules/trade';
 import * as userActions from 'store/modules/user';
 import { TradeSection } from 'components';
+import socket from 'lib/socket';
 
 class TradeSectionContainer extends Component {
 
@@ -49,7 +50,13 @@ class TradeSectionContainer extends Component {
 
   componentDidMount() {
     this.initialize();
+    socket.subscribe('ORDER_PROCESSED');
   }
+
+  componentWillUnmount() {
+    socket.unsubscribe('ORDER_PROCESSED');
+  }
+  
 
   componentDidUpdate(prevProps, prevState) {
     console.log(prevProps);

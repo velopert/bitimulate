@@ -44,7 +44,7 @@ module.exports = (() => {
         // if wallet target is undefined, directly set the target value
         return User.findByIdAndUpdate(userId, {
           $set: {
-            [`wallet.${target}`]: amount
+            [`wallet.${target}`]: amount * (1 - 0.0015)
           },
           $inc: {
             [`walletOnOrder.${base}`]: totalPrice * -1
@@ -55,14 +55,14 @@ module.exports = (() => {
       if(!sell) {
         return User.findByIdAndUpdate(userId, {
           $inc: {
-            [`wallet.${target}`]: amount,
+            [`wallet.${target}`]: amount * (1 - 0.0015),
             [`walletOnOrder.${base}`]: totalPrice * -1
           }
         }).exec();
       } else {
         return User.findByIdAndUpdate(userId, {
           $inc: {
-            [`wallet.${base}`]: totalPrice,
+            [`wallet.${base}`]: totalPrice * (1 - 0.0015),
             [`walletOnOrder.${target}`]: amount * -1
           }
         }).exec();
