@@ -4,9 +4,9 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-const Card = ({children, className, ...rest}) => {
+const Card = ({children, className, ...rest, noPadding}) => {
   return (
-    <div className={cx('card', className)} {...rest}>
+    <div className={cx('card', { noPadding }, className)} {...rest}>
       {children}
     </div>
   );

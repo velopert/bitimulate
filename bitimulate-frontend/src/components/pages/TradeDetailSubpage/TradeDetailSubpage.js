@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styles from './TradeDetailSubpage.scss';
 import classNames from 'classnames/bind';
-import { TradeChartContainer, OrderBookContainer, TradeSectionContainer } from 'containers';
+import { TradeChartContainer, OrderBookContainer, TradeSectionContainer, TradeHistoryContainer } from 'containers';
 
 const cx = classNames.bind(styles);
 
@@ -27,6 +27,7 @@ class TradeDetailSubpage extends Component {
         <TradeChartContainer currencyKey={currencyKey}/>
         <TradeSectionContainer/>
         <OrderBookContainer/>
+        <TradeHistoryContainer/>
       </div>
     );
   }

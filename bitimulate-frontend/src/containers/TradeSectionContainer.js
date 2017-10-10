@@ -5,12 +5,15 @@ import * as tradeActions from 'store/modules/trade';
 import * as userActions from 'store/modules/user';
 import { TradeSection } from 'components';
 import socket from 'lib/socket';
+import { limitDigit } from 'lib/utils';
 
 class TradeSectionContainer extends Component {
 
   initialize = () => {
     const { currentPrice, TradeActions } = this.props;
-    TradeActions.initializeTradeAction(currentPrice);
+    if(currentPrice) {
+      TradeActions.initializeTradeAction(limitDigit(currentPrice, 10));
+    }
   }
 
   handleCreateOrder = async ({
@@ -44,7 +47,7 @@ class TradeSectionContainer extends Component {
     TradeActions.changeTradeBoxInput({
       type,
       name: 'price',
-      value: currentPrice
+      value: limitDigit(currentPrice, 10)
     });
   }
 

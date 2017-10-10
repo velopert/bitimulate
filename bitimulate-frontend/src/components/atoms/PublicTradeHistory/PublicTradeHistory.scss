@@ -1,0 +1,43 @@
+@import 'utils';
+
+.public-trade-history {
+  .title {
+    padding: 1rem;
+    font-weight: 600;
+    color: material-color('grey', '800');
+  }
+  .head {
+    display: flex;
+    padding-left: 1rem;
+    padding-right :1rem;
+    padding-bottom: 0.5rem;
+    color: material-color('grey', '500');
+    font-size: 0.85rem;
+  }
+  .rows {
+    height: 14.375rem;
+    overflow-y: auto;
+    border-top: 1px solid material-color('grey', '200');
+    .row {
+      padding-left: 1rem;
+      display: flex;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+      font-size: 0.85rem;
+      &:nth-child(even) {
+        background: material-color('grey', '100');
+      }
+    }
+  }
+  .col {
+    flex: 1;
+    // date | type | price | amount | total
+    &.time {
+      flex: 0.5;
+    }
+    &.type {
+      flex: 0.5;
+    }
+  }
+
+}
