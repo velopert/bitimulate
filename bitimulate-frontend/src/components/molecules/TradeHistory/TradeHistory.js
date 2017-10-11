@@ -5,12 +5,12 @@ import { Card, PublicTradeHistory } from 'components';
 
 const cx = classNames.bind(styles);
 
-const TradeHistory = () => {
+const TradeHistory = ({historyData}) => {
   return (
     <div className={cx('trade-history')}>
       <div className={cx('column')}>
         <Card noPadding>
-          <PublicTradeHistory/>
+          <PublicTradeHistory data={historyData}/>
         </Card>
       </div>
       <div className={cx('column')}>

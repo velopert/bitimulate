@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styles from './TradeChart.scss';
 import classNames from 'classnames/bind';
 import echarts from 'echarts';
-import moment from 'moment';
+import moment from 'moment/moment';
 import {Spinner, ButtonSelector, CurrentInfo} from 'components';
 import debounce from 'lodash/debounce';
 import { chartTypes } from 'lib/variables';

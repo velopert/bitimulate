@@ -31,7 +31,11 @@ class OrderBookContainer extends Component {
   }
 
   work = async () => {
-    await this.getOrderBook();
+    try {
+      await this.getOrderBook();
+    } catch (e) {
+
+    }
     this.timeoutId = setTimeout(() => {
       this.work();
     }, 500)

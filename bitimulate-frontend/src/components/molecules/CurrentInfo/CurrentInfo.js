@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './CurrentInfo.scss';
 import classNames from 'classnames/bind';
 import { LabelBlock } from 'components';
-import moment from 'moment';
+import moment from 'moment/moment';
 const cx = classNames.bind(styles);
 
 const CurrentInfo = ({info}) => {
