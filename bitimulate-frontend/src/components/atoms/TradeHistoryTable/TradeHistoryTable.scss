@@ -6,7 +6,7 @@
   }
 }
 
-.public-trade-history {
+.trade-history-table {
   .flicker {
     animation-duration: .5s;
     animation-fill-mode: both;
@@ -38,6 +38,12 @@
       &:nth-child(even) {
         background: material-color('grey', '100');
       }
+      &.personal {
+        cursor: pointer;
+        &:hover {
+          background: rgba(47, 160, 192, 0.1);
+        }
+      }
     }
   }
   .col {
@@ -48,6 +54,12 @@
     }
     &.type {
       flex: 0.5;
+    }
+    &.status {
+      flex: 0.35;
+    }
+    &.processed {
+      color: material-color('green', '500');
     }
   }
 

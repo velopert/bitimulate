@@ -12,7 +12,7 @@ class TradeSectionContainer extends Component {
   initialize = () => {
     const { currentPrice, TradeActions } = this.props;
     if(currentPrice) {
-      TradeActions.initializeTradeAction(limitDigit(currentPrice, 10));
+      TradeActions.initializeTradeAction(currentPrice.toFixed(10));
     }
   }
 
@@ -44,6 +44,7 @@ class TradeSectionContainer extends Component {
 
   handleRefreshPrice = (type) => {
     const { TradeActions, currentPrice } = this.props;
+    console.log(currentPrice);
     TradeActions.changeTradeBoxInput({
       type,
       name: 'price',

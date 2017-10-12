@@ -107,6 +107,7 @@ module.exports = (() => {
     try {
       await Order.findByIdAndUpdate(_id, { 
         status: 'processed',
+        processedDate: new Date(),
         $inc: {
           processedAmount: amount
         }

@@ -55,7 +55,7 @@ ws.get('/ws', jwtMiddleware, (ctx, next) => {
   ctx.websocket.id = shortid.generate();
   const subscribed = [];
   log('Connected:', ctx.websocket.id, user);
-  const appendUserId = (channel) => `${channel}:${user._id}`;
+  const appendUserId = (channel) => `${channel}:${user ? user._id : ''}`;
   const processChannel = (channel) => isUserChannel(channel) ? appendUserId(channel) : channel;
 
   const publish = (data) => {
