@@ -1,5 +1,17 @@
 @import 'utils';
+
+@keyframes flicker {
+  50% {
+    background: rgba(0, 208, 255, 0.15);
+  }
+}
+
 .orders-table {
+  .flicker {
+    animation-duration: .5s;
+    animation-fill-mode: both;
+    animation-name: flicker;
+  }
   .title {
     font-weight: 600;
     color: material-color('grey', '800');

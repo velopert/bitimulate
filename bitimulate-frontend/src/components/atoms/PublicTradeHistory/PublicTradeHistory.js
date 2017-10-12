@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styles from './PublicTradeHistory.scss';
 import classNames from 'classnames/bind';
 import {limitDigit} from 'lib/utils';
 import moment from 'moment';
+import scuize from 'lib/hoc/scuize';
 
 const cx = classNames.bind(styles);
 
 const Row = ({date, type, rate, amount}) => {
   return (
-    <div className={cx('row')}>
+    <div className={cx('row', 'flicker')}>
       <div className={cx('col', 'time')}>
         {moment(date).format('HH:mm')}
       </div>
@@ -24,10 +25,18 @@ const Row = ({date, type, rate, amount}) => {
     </div>
   )
 }
+
+const OptimizedRow = scuize(function (nextProps, nextState) {
+  return false;
+})(Row);
+
+
+
+
 // // date | type | price | amount
 const PublicTradeHistory = ({data}) => {
   const rows = data && data.map(
-    row => <Row key={row.get('tradeID')} {...row.toJS()}/>
+    row => <OptimizedRow id={row.get('tradeID')} key={row.get('tradeID')} {...row.toJS()}/>
   )
   return (
     <div className={cx('public-trade-history')}>

@@ -34,7 +34,7 @@
     "jest": "20.0.4",
     "lodash": "^4.17.4",
     "lzutf8": "^0.4.6",
-    "moment": "^2.18.1",
+    "moment": "2.18.1",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",

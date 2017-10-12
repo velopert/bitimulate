@@ -1,6 +1,17 @@
 @import 'utils';
 
+@keyframes flicker {
+  50% {
+    background: rgba(0, 208, 255, 0.15);
+  }
+}
+
 .public-trade-history {
+  .flicker {
+    animation-duration: .5s;
+    animation-fill-mode: both;
+    animation-name: flicker;
+  }
   .title {
     padding: 1rem;
     font-weight: 600;
