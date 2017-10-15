@@ -4,10 +4,11 @@ const User = require('db/models/User');
 const Order = require('db/models/Order');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
+const queryString = require('query-string');
 
 exports.getOrders = async (ctx) => {
   const { user } = ctx.request;
-  const { cursor } = ctx.query;
+  const { cursor, currencyPair } = ctx.query;
 
   // needs auth
   if(!user) {
@@ -16,10 +17,15 @@ exports.getOrders = async (ctx) => {
   }
 
   try {
-    const orders = await Order.findByUserId(ObjectId(user._id), cursor);
+    const orders = await Order.findOrders(ObjectId(user._id), cursor, currencyPair);
     const { protocol, host, path } = ctx;
     
-    const nextUrl = `${protocol}://${host}${path}?cursor=${orders.length > 0 ? orders[orders.length - 1]._id : ''}`;
+    const urlQuery = queryString.stringify({
+      cursor: orders.length === 20 ? orders[orders.length - 1]._id : '',
+      currencyPair
+    });
+
+    const nextUrl = `${protocol}://${host}${path}?${urlQuery}`;
     
     if(orders.length > 0) {
       ctx.response.set('Link', `<${nextUrl}>; rel="next"`);
@@ -81,7 +87,7 @@ exports.createOrder = async (ctx) => {
     const { wallet, walletOnOrder } = userData;
     const baseCurrency = (() => {
       if(currencyPair === 'USDT_BTC') {
-        return sell ? 'BTC' : 'USDT';
+        return sell ? 'BTC' : 'USD';
       }
       return sell ? currencyPair.split('_')[1] : 'BTC';
     })();

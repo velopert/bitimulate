@@ -44,11 +44,10 @@ class TradeSectionContainer extends Component {
 
   handleRefreshPrice = (type) => {
     const { TradeActions, currentPrice } = this.props;
-    console.log(currentPrice);
     TradeActions.changeTradeBoxInput({
       type,
       name: 'price',
-      value: limitDigit(currentPrice, 10)
+      value: currentPrice.toFixed(10)
     });
   }
 
@@ -63,7 +62,6 @@ class TradeSectionContainer extends Component {
   
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps);
     if(prevProps.currencyType !== this.props.currencyType || (!prevProps.currentPrice && this.props.currentPrice)) {
       this.initialize();
     }

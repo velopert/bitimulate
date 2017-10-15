@@ -8,7 +8,12 @@ import * as tradeActions from 'store/modules/trade';
 class TradeHistoryContainer extends Component {
   lastRequestTime = null
 
-  loadData = async () => {
+  getPrivateHistory = async () => {
+    const { currencyType, TradeActions } = this.props;
+    TradeActions.getOrders(currencyType === 'BTC' ? 'USDT_BTC' : `BTC_${currencyType}`);
+  }
+
+  getPublicHistory = async () => {
     const { currencyType, TradeActions } = this.props;
 
     this.clearWork();
@@ -65,27 +70,30 @@ class TradeHistoryContainer extends Component {
   componentDidMount() {
       const { currencyType } = this.props;
       if(currencyType) {
-        this.loadData();
+        this.getPublicHistory();
+        this.getPrivateHistory();
       }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.currencyType !== this.props.currencyType) {
-      this.loadData();
+      this.getPublicHistory();
+      this.getPrivateHistory()
     }
   }
   
   
   render() {
-    const { tradeHistory } = this.props;
+    const { tradeHistory, privateOrders } = this.props;
     return (
-      <TradeHistory historyData={tradeHistory}/>
+      <TradeHistory historyData={tradeHistory} privateOrders={privateOrders}/>
     );
   }
 }
 
 export default connect(
   (state) => ({
+    privateOrders: state.trade.getIn(['detail', 'privateOrders']),
     currencyType: state.trade.getIn(['detail', 'currencyType']),
     tradeHistory: state.trade.getIn(['detail', 'tradeHistory'])
   }),

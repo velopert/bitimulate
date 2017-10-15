@@ -10,6 +10,8 @@ import * as ChartDataAPI from 'lib/api/chartData';
 import * as PoloniexAPI from 'lib/api/poloniex';
 import * as OrdersAPI from 'lib/api/orders';
 
+import parseLink from 'parse-link-header';
+
 
 // action types
 const GET_INITIAL_RATE = 'trade/GET_INITIAL_RATE';
@@ -33,7 +35,8 @@ const INITIALIZE_TRADE_SECTION = 'trade/INITIALIZE_TRADE_SECTION';
 const CHANGE_TRADE_BOX_INPUT = 'trade/CHANGE_TRADE_BOX_INPUT';
 
 const CREATE_ORDER = 'trade/CREATE_ORDER';
-
+const GET_ORDERS = 'trade/GET_ORDERS';
+const ORDER_PROCESSED = 'trade/ORDER_PROCESSED';
 
 // action creator
 export const getInitialRate = createAction(GET_INITIAL_RATE, ExchangeAPI.getInitialRate);
@@ -52,7 +55,8 @@ export const resetTradeHistory = createAction(RESET_TRADE_HISTORY);
 export const initializeTradeAction = createAction(INITIALIZE_TRADE_SECTION);
 export const changeTradeBoxInput = createAction(CHANGE_TRADE_BOX_INPUT);
 export const createOrder = createAction(CREATE_ORDER, OrdersAPI.createOrder, meta => meta);
-
+export const getOrders = createAction(GET_ORDERS, OrdersAPI.getOrders);
+export const orderProcessed = createAction(ORDER_PROCESSED);
 
 // initial state
 const initialState = Map({
@@ -74,6 +78,8 @@ const initialState = Map({
       sell: List()
     }),
     tradeHistory: List(),
+    privateOrders: List(),
+    nextPrivateOrdersLink: null,
     tradeSection: Map({
       buy: Map({
         price: 0,
@@ -253,12 +259,32 @@ export default handleActions({
       onSuccess: (state, action) => {
         const { sell } = action.meta;
         const type = sell ? 'sell' : 'buy';
-        return state.setIn(['detail', 'tradeSection', 'disableButton', type], false);
+        return state.setIn(['detail', 'tradeSection', 'disableButton', type], false)
+                    .updateIn(['detail', 'privateOrders'], orders => orders.unshift(fromJS(action.payload.data)));
       },
       onError: (state, action) => {
         const { sell } = action.meta;
         const type = sell ? 'sell' : 'buy';
         return state.setIn(['detail', 'tradeSection', 'disableButton', type], false);
       }
-    })
+    }),
+
+    ...pender({
+      type: GET_ORDERS,
+      onSuccess: (state, action) => {
+        const { data: privateOrders } = action.payload;
+        return state.setIn(['detail', 'privateOrders'], fromJS(privateOrders));
+      }
+    }),
+
+    [ORDER_PROCESSED]: (state, action) => {
+      const { payload: order } = action;
+      return state.updateIn(['detail', 'privateOrders'], privateOrders => {
+        const index = privateOrders.findIndex(o => o.get('_id') === order._id);
+        console.log(index);
+        if(index === -1) return privateOrders;
+        console.log(order);
+        return privateOrders.set(index, fromJS(order));
+      })
+    }
 }, initialState);

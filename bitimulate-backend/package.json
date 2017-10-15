@@ -23,6 +23,7 @@
     "moment": "^2.18.1",
     "mongoose": "^4.11.4",
     "mongoose-double": "^0.0.1",
+    "query-string": "^5.0.0",
     "redis": "^2.8.0",
     "shortid": "^2.2.8",
     "ws": "^3.1.0"

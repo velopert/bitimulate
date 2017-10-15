@@ -5,7 +5,7 @@ import { Card, TradeHistoryTable } from 'components';
 
 const cx = classNames.bind(styles);
 
-const TradeHistory = ({historyData}) => {
+const TradeHistory = ({historyData, privateOrders}) => {
   return (
     <div className={cx('trade-history')}>
       <div className={cx('column')}>
@@ -15,7 +15,7 @@ const TradeHistory = ({historyData}) => {
       </div>
       <div className={cx('column')}>
         <Card noPadding>
-          <TradeHistoryTable data={historyData} personal/>
+          <TradeHistoryTable data={privateOrders} personal/>
         </Card>
       </div>
     </div>

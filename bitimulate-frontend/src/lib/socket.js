@@ -3,10 +3,11 @@ import LZUTF8 from 'lzutf8';
 import { bindActionCreators } from 'redux';
 import { updateTicker, updateLastCandle } from 'store/modules/trade';
 import * as userActions from 'store/modules/user';
+import * as tradeActions from 'store/modules/trade';
 import store from 'store';
 
 const UserActions = bindActionCreators(userActions, store.dispatch);
-
+const TradeActions = bindActionCreators(tradeActions, store.dispatch);
 
 const parseJSON = (str) => {
   let parsed = null;
@@ -63,9 +64,9 @@ export default (function() {
       },
       [ORDER_PROCESSED]: () => {
         // refresh wallet
-        console.log(payload);
+        
         UserActions.getWallet();
-
+        TradeActions.orderProcessed(payload);
       }
     }
     
