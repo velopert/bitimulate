@@ -101,7 +101,6 @@ exports.createOrder = async (ctx) => {
     }
 
     if(sell && amount > (wallet[baseCurrency] || 0)) {
-      console.log(amount ,(wallet[baseCurrency] || 0));
       ctx.status = 400;
       ctx.body = {
         msg: 'exceeds available amount'
@@ -158,5 +157,72 @@ exports.createOrder = async (ctx) => {
     };
   } catch (e) {
     ctx.throw(e, 500);
+  }
+};
+
+exports.cancelOrder = async (ctx) => {
+  // - from walletOnOrder
+  // + to wallet
+  // change status to cancel
+  const { user } = ctx.request;
+
+  const { id } = ctx.params;
+  if(!mongoose.Types.ObjectId.isValid(id)) {
+    ctx.status = 400; // Bad Request
+    return;
+  }
+
+  try {
+    const order = await Order.findById(id).lean().exec(); 
+    if(!order) {
+      ctx.status = 404; // Not Found
+      return;
+    }
+
+    if(order.status !== 'waiting') {
+      ctx.status = 400;
+      ctx.body = {
+        message: 'not cancellable'
+      };
+      return;
+    }
+
+    const { price, amount, sell, currencyPair } = order;
+    const totalAmount = price * amount;
+
+    const baseCurrency = (() => {
+      if(currencyPair === 'USDT_BTC') {
+        return sell ? 'BTC' : 'USD';
+      }
+      return sell ? currencyPair.split('_')[1] : 'BTC';
+    })();
+
+    if(order.sell) {
+      await User.findByIdAndUpdate(user._id, {
+        $inc: {
+          [`wallet.${baseCurrency}`]: amount,
+          [`walletOnOrder.${baseCurrency}`]: amount * -1
+        }
+      }).exec();
+    } else {
+      await User.findByIdAndUpdate(user._id, {
+        $inc: {
+          [`wallet.${baseCurrency}`]: totalAmount,
+          [`walletOnOrder.${baseCurrency}`]: totalAmount * -1
+        }
+      }).exec();
+    }
+    
+    const updatedOrder = await Order.findByIdAndUpdate(id, {
+      $set: {
+        status: 'cancelled'
+      }
+    }, {
+      new: true
+    }).exec();
+
+    ctx.body = updatedOrder;
+  } catch (e) {
+    ctx.throw(500, e);
   }
 };

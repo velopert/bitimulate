@@ -10,7 +10,8 @@ const cx = classNames.bind(styles);
 
 const statusMap = {
   'processed': '완료',
-  'waiting': '대기'
+  'waiting': '대기',
+  'cancelled': '취소'
 }
 
 const Row = ({date, type, rate, amount, personal, status}) => {

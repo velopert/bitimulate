@@ -37,6 +37,7 @@ const CHANGE_TRADE_BOX_INPUT = 'trade/CHANGE_TRADE_BOX_INPUT';
 const CREATE_ORDER = 'trade/CREATE_ORDER';
 const GET_ORDERS = 'trade/GET_ORDERS';
 const ORDER_PROCESSED = 'trade/ORDER_PROCESSED';
+const CANCEL_ORDER = 'trade/CANCEL_ORDER';
 
 // action creator
 export const getInitialRate = createAction(GET_INITIAL_RATE, ExchangeAPI.getInitialRate);
@@ -57,6 +58,7 @@ export const changeTradeBoxInput = createAction(CHANGE_TRADE_BOX_INPUT);
 export const createOrder = createAction(CREATE_ORDER, OrdersAPI.createOrder, meta => meta);
 export const getOrders = createAction(GET_ORDERS, OrdersAPI.getOrders);
 export const orderProcessed = createAction(ORDER_PROCESSED);
+export const cancelOrder = createAction(CANCEL_ORDER, OrdersAPI.cancelOrder, meta => meta);
 
 // initial state
 const initialState = Map({
@@ -286,5 +288,17 @@ export default handleActions({
         console.log(order);
         return privateOrders.set(index, fromJS(order));
       })
-    }
+    },
+
+    ...pender({
+      type: CANCEL_ORDER,
+      onSuccess: (state, action) => {
+        const { data: order } = action.payload;
+        return state.updateIn(['detail', 'privateOrders'], privateOrders => {
+          const index = privateOrders.findIndex(o => o.get('_id') === action.meta);
+          if(index === -1) return privateOrders;
+          return privateOrders.set(index, fromJS(order));
+        })
+      }
+    })
 }, initialState);

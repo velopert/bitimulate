@@ -16,7 +16,7 @@ const Order = new Schema({
   sell: Boolean,
   status: {
     type: String,
-    enum: ['waiting', 'partial', 'processed'],
+    enum: ['waiting', 'partial', 'processed', 'cancelled'],
     default: 'waiting'
   },
   date: {
