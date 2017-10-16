@@ -4,9 +4,32 @@ import { TradeHistory } from 'components';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as tradeActions from 'store/modules/trade';
+import * as userActions from 'store/modules/user';
 
 class TradeHistoryContainer extends Component {
   lastRequestTime = null
+  fetchedURL = null
+
+  handleCancelOrder = async (id) => {
+    const { TradeActions, UserActions } = this.props;
+    try {
+      await TradeActions.cancelOrder(id);
+      await UserActions.getWallet();
+    } catch (e) {
+
+    }
+  }
+
+  handleScroll = (e) => {
+    const { clientHeight, scrollHeight, scrollTop } = e.target;
+    if(scrollHeight - (clientHeight + scrollTop) < 100) {
+      const { next, TradeActions } = this.props;
+      if(!next) return;
+      if(next === this.fetchedURL) return;
+      this.fetchedURL = next;
+      TradeActions.getNextOrders(next);
+    }
+  }
 
   getPrivateHistory = async () => {
     const { currencyType, TradeActions } = this.props;
@@ -84,9 +107,15 @@ class TradeHistoryContainer extends Component {
   
   
   render() {
+    const { handleCancelOrder, handleScroll } = this;
     const { tradeHistory, privateOrders } = this.props;
     return (
-      <TradeHistory historyData={tradeHistory} privateOrders={privateOrders}/>
+      <TradeHistory 
+        historyData={tradeHistory} 
+        privateOrders={privateOrders} 
+        onCancelOrder={handleCancelOrder}
+        onScroll={handleScroll}
+      />
     );
   }
 }
@@ -95,9 +124,11 @@ export default connect(
   (state) => ({
     privateOrders: state.trade.getIn(['detail', 'privateOrders']),
     currencyType: state.trade.getIn(['detail', 'currencyType']),
-    tradeHistory: state.trade.getIn(['detail', 'tradeHistory'])
+    tradeHistory: state.trade.getIn(['detail', 'tradeHistory']),
+    next: state.trade.getIn(['detail', 'nextPrivateOrdersLink'])
   }),
   (dispatch) => ({
-    TradeActions: bindActionCreators(tradeActions, dispatch)
+    TradeActions: bindActionCreators(tradeActions, dispatch),
+    UserActions: bindActionCreators(userActions, dispatch)
   })
 )(TradeHistoryContainer);

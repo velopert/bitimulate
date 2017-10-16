@@ -54,12 +54,24 @@
     }
     &.type {
       flex: 0.5;
+      &.buy {
+        color: material-color('green', '700');
+      }
+      &.sell {
+        color: material-color('red', '700');
+      }
     }
     &.status {
       flex: 0.35;
     }
+    &.waiting {
+      color: material-color('grey', '800');
+    }
     &.processed {
       color: material-color('green', '500');
+    }
+    &.cancelled {
+      color: material-color('grey', '400');
     }
   }
 

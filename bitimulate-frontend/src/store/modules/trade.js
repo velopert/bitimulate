@@ -9,6 +9,7 @@ import * as ExchangeAPI from 'lib/api/exchange';
 import * as ChartDataAPI from 'lib/api/chartData';
 import * as PoloniexAPI from 'lib/api/poloniex';
 import * as OrdersAPI from 'lib/api/orders';
+import * as CommonAPI from 'lib/api/common';
 
 import parseLink from 'parse-link-header';
 
@@ -38,6 +39,8 @@ const CREATE_ORDER = 'trade/CREATE_ORDER';
 const GET_ORDERS = 'trade/GET_ORDERS';
 const ORDER_PROCESSED = 'trade/ORDER_PROCESSED';
 const CANCEL_ORDER = 'trade/CANCEL_ORDER';
+const GET_NEXT_ORDERS = 'trade/GET_NEXT_ORDERS';
+
 
 // action creator
 export const getInitialRate = createAction(GET_INITIAL_RATE, ExchangeAPI.getInitialRate);
@@ -59,6 +62,7 @@ export const createOrder = createAction(CREATE_ORDER, OrdersAPI.createOrder, met
 export const getOrders = createAction(GET_ORDERS, OrdersAPI.getOrders);
 export const orderProcessed = createAction(ORDER_PROCESSED);
 export const cancelOrder = createAction(CANCEL_ORDER, OrdersAPI.cancelOrder, meta => meta);
+export const getNextOrders = createAction(GET_NEXT_ORDERS, CommonAPI.getNext);
 
 // initial state
 const initialState = Map({
@@ -274,11 +278,32 @@ export default handleActions({
     ...pender({
       type: GET_ORDERS,
       onSuccess: (state, action) => {
-        const { data: privateOrders } = action.payload;
-        return state.setIn(['detail', 'privateOrders'], fromJS(privateOrders));
+        const { data: privateOrders, headers: { link } } = action.payload;
+        const links = parseLink(link);
+        let next = null;
+
+        if(links && links.next) {
+          next = links.next.url
+        }
+
+        return state.setIn(['detail', 'privateOrders'], fromJS(privateOrders))
+                    .setIn(['detail', 'nextPrivateOrdersLink'], next);
       }
     }),
+    ...pender({
+      type: GET_NEXT_ORDERS,
+      onSuccess: (state, action) => {
+        const { data: privateOrders, headers: { link } } = action.payload;
+        const links = parseLink(link);
+        let next = null;
 
+        if(links && links.next) {
+          next = links.next.url
+        }
+        return state.updateIn(['detail', 'privateOrders'], po => po.concat(fromJS(privateOrders)))
+                    .setIn(['detail', 'nextPrivateOrdersLink'], next);
+      }
+    }),
     [ORDER_PROCESSED]: (state, action) => {
       const { payload: order } = action;
       return state.updateIn(['detail', 'privateOrders'], privateOrders => {

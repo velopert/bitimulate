@@ -40,12 +40,16 @@ export function waitUntil(fn, timeout) {
 }
 
 
-export function limitDigit(value, d = 10) {
+export function limitDigit(value, d = 10, showComma) {
   const parsedValue = typeof value === 'string' ? parseFloat(value) : value;
 
-  const digits = (d - Math.round(Math.log10(parsedValue)));
+  const digits = (d - Math.floor(Math.log10(parsedValue)));
   const fixed = parsedValue.toFixed(digits > d ? d : digits);
-  const float = parseFloat(fixed)
+  const float = parseFloat(fixed);
+  if(!showComma) {
+    return fixed;
+  }
+
   if(float > 1000) {
     return float.toLocaleString();
   }
