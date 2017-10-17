@@ -5,7 +5,7 @@ import { Card, TradeHistoryTable } from 'components';
 
 const cx = classNames.bind(styles);
 
-const TradeHistory = ({historyData, privateOrders, onCancelOrder, onScroll}) => {
+const TradeHistory = ({historyData, privateOrders, onCancelOrder, onScroll, hasNext}) => {
   return (
     <div className={cx('trade-history')}>
       <div className={cx('column')}>
@@ -15,7 +15,7 @@ const TradeHistory = ({historyData, privateOrders, onCancelOrder, onScroll}) => 
       </div>
       <div className={cx('column')}>
         <Card noPadding>
-          <TradeHistoryTable data={privateOrders} personal onCancelOrder={onCancelOrder} onScroll={onScroll}/>
+          <TradeHistoryTable data={privateOrders} personal onCancelOrder={onCancelOrder} onScroll={onScroll} hasNext={hasNext}/>
         </Card>
       </div>
     </div>

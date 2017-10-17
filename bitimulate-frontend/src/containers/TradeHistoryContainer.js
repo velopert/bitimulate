@@ -108,13 +108,14 @@ class TradeHistoryContainer extends Component {
   
   render() {
     const { handleCancelOrder, handleScroll } = this;
-    const { tradeHistory, privateOrders } = this.props;
+    const { tradeHistory, privateOrders, next } = this.props;
     return (
       <TradeHistory 
         historyData={tradeHistory} 
         privateOrders={privateOrders} 
         onCancelOrder={handleCancelOrder}
         onScroll={handleScroll}
+        hasNext={next}
       />
     );
   }

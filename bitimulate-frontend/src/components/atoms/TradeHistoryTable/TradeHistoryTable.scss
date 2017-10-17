@@ -29,6 +29,13 @@
     height: 14.375rem;
     overflow-y: auto;
     border-top: 1px solid material-color('grey', '200');
+    .scroll-block {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      color: material-color('grey', '400');
+    }
     .row {
       padding-left: 1rem;
       display: flex;
