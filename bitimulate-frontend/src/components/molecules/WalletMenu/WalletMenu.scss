@@ -1,0 +1,19 @@
+@import 'utils';
+.wallet-menu {
+  a {
+    display: block;
+    padding: 1rem;
+    font-weight: 200;
+    border-right: 8px solid transparent;
+    transition: .15s ease-in;
+    &.active {
+      font-weight: 400;
+      color: material-color('cyan', '600');
+      border-right: 8px solid material-color('cyan', '600');
+    }
+  }
+
+  a + a { 
+    border-top: 1px solid material-color('grey', '300');
+  }
+}

@@ -12,11 +12,11 @@ const HeaderNav = () => {
       <NavItem to="/trade">
         거래소
       </NavItem>
-      <NavItem>
-        대시보드
+      <NavItem to="/wallet">
+        내 지갑
       </NavItem>
       <NavItem>
-        커뮤니티
+        랭킹
       </NavItem>
     </FlexBox>
   );

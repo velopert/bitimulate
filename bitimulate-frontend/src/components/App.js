@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { HomePage, TradePage, RegisterPage } from 'components';
+import { HomePage, TradePage, RegisterPage, WalletPage } from 'components';
 import { Route } from 'react-router-dom';
 import { 
   ScreenMaskContainer, 
@@ -16,6 +16,7 @@ class App extends Component {
         <Route exact path ="/" component={HomePage}/>
         <Route path="/trade" component={TradePage}/>
         <Route path="/register" component={RegisterPage}/>
+        <Route path="/wallet" component={WalletPage}/>
         <ScreenMaskContainer/>
         <LoginModalContainer/>
         <UserLoader/>

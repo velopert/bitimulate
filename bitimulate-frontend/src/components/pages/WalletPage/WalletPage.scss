@@ -1,0 +1,12 @@
+.wallet-page {
+  padding-top: 3rem;
+  display: flex;
+  flex-direction: row;
+  .side-menu {
+    width: 10rem;
+  }
+  .content {
+    margin-left: 1rem;
+    flex: 1
+  }
+}

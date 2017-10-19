@@ -5,6 +5,7 @@ import * as tradeActions from 'store/modules/trade';
 import { OrderBook } from 'components';
 
 
+
 class OrderBookContainer extends Component {
   
   timeoutId = null
