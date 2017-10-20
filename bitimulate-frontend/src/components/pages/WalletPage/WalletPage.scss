@@ -7,6 +7,9 @@
   }
   .content {
     margin-left: 1rem;
-    flex: 1
+    flex: 1;
+    .section-card {
+      padding: 2.25rem;
+    }
   }
 }

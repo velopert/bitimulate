@@ -1,0 +1,34 @@
+@import 'utils';
+
+.triple-wallet {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  .wallet-box {
+    height: 128px;
+    border-radius: 2px;
+    flex: 1;
+    background: material-color('grey', '200');
+    border: 1px solid material-color('grey', '300');
+    @include flex-center();
+    & + .wallet-box {
+      margin-left: 1rem;
+    }
+    flex-direction: column;
+    
+    .currency {
+      font-size: 1.25rem;
+      color: material-color('grey', '600');
+      font-weight: 300;
+    }
+    .value {
+      margin: 0;
+      margin-top: 0.5rem;
+      color: material-color('grey', '800');
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 2rem;
+      
+    }
+  }
+}
