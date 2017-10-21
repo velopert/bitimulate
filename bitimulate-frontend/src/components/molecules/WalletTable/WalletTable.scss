@@ -1,0 +1,54 @@
+@import 'utils';
+
+.wallet-table {
+  margin-top: 1rem;
+
+  .table-head {
+    display: flex;
+    flex-direction: row;
+    height: 2.5rem;
+    align-items: center;
+    border-bottom: 1px solid material-color('grey', '300');
+    .col {
+      line-height: 1rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: material-color('grey', '800');
+    }
+  }
+  .col {
+    padding: 0.5rem;
+    &.coin {
+      flex: 4;
+    }
+    &.name {
+      flex: 10;
+    }
+    &.has {
+      flex: 11;
+    }
+    &.waiting {
+      flex: 11;
+    }
+    &.btc {
+      flex: 11;
+    }
+  }
+  .row {
+    height: 2rem;
+    font-size: 1rem;
+    line-height: 1rem;
+    display: flex;
+    align-items: center;
+    color: material-color('grey', '500');
+    font-weight: 300;
+    .coin {
+      color: material-color('grey', '700');
+      font-weight: 400;
+    }
+    & + .row {
+      border-top: 1px solid material-color('grey', '300');
+    } 
+  }
+  // 4, 10, 11, 11, 11
+}

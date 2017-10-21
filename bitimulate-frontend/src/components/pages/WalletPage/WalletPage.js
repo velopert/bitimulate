@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './WalletPage.scss';
 import classNames from 'classnames/bind';
 import { PageTemplate, WalletMenu, Card, WalletSubpage } from 'components';
-import { HeaderContainer } from 'containers';
+import { HeaderContainer, SocketSubscriber } from 'containers';
 import { Route } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
@@ -20,6 +20,8 @@ const WalletPage = () => {
           </Card>
         </section>
       </div>
+      <SocketSubscriber channel="TICKER"/>
+      <SocketSubscriber channel="ORDER_PROCESSED"/>
     </PageTemplate>
   );
 };
