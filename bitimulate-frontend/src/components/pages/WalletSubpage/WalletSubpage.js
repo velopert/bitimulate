@@ -14,7 +14,7 @@ const WalletSubpage = () => {
       </h1>
       <section>
         <h2>
-          현재 전체 보유자산
+          현재 총합 보유 자산
         </h2>
         <TripleWalletContainer/>
       </section>

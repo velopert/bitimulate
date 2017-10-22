@@ -55,3 +55,12 @@ export function limitDigit(value, d = 10, showComma) {
   }
   return fixed;
 }
+
+export function compare(current, next, names) {
+  for(let name of names) {
+    if(current[name] !== next[name]) {
+      return true;
+    }
+  }
+  return false;
+}
