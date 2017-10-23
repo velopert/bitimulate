@@ -65,6 +65,8 @@ class TrippleWalletContainer extends Component {
       }
     );
 
+    
+
     return (
       <TripleWallet/>
     );
