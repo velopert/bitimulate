@@ -100,7 +100,16 @@
         background: material-color('grey', '300');
       }
     }
-
+  }
+  &.outline {
+    background: transparent;
+    border: 1px solid material-color('grey', '300');
+    &:hover {
+      background: material-color('grey', '100');
+    }
+    &:active {
+      background: material-color('grey', '200');
+    }
   }
 
 

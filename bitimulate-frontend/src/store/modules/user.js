@@ -14,6 +14,8 @@ const GET_META_INFO = 'user/GET_META_INFO';
 const PATCH_META_INFO = 'user/PATCH_META_INFO';
 const TOGGLE_PIN_KEY = 'user/TOGGLE_PIN_KEY';
 const GET_WALLET = 'user/GET_WALLET';
+const RESET_PIN = 'user/RESET_PIN';
+
 
 
 
@@ -25,7 +27,7 @@ export const getMetaInfo = createAction(GET_META_INFO, UserAPI.getMetaInfo);
 export const togglePinKey = createAction(TOGGLE_PIN_KEY);
 export const patchMetaInfo = createAction(PATCH_META_INFO, UserAPI.patchMetaInfo);
 export const getWallet = createAction(GET_WALLET, UserAPI.getWallet);
-
+export const resetPin = createAction(RESET_PIN);
 
 // initial state
 const initialState = Map({
@@ -68,6 +70,9 @@ export default handleActions({
         return state.set('metaInfo', fromJS(metaInfo));
       }
     }),
+    [RESET_PIN]: (state, action) => {
+      return state.setIn(['metaInfo', 'pinned'], List());
+    },
     [TOGGLE_PIN_KEY]: (state, action) => {
       const { payload: key } = action;
 

@@ -92,6 +92,10 @@ class WalletsContainer extends Component {
     }, 0);
 
     const btcRate = rate.find(r => r.get('currencyKey') === 'BTC');
+    
+    // circumstance when websocket has received new update before inital rate fetch
+    if(!btcRate) return null; 
+    
     const btcMultiplier = btcRate.get('last');
 
     

@@ -3,7 +3,7 @@ import styles from './TradeIndexOptions.scss';
 import classNames from 'classnames/bind';
 import PinIcon from 'react-icons/lib/ti/pin';
 
-import { Selector, SortReverser, Option } from 'components';
+import { Selector, SortReverser, Option, Button } from 'components';
 
 const sorterOptions = [
   {
@@ -32,6 +32,7 @@ const TradeIndexOptions = ({
   showPinned,
   onToggleAsc,
   onSelectSort,
+  onAutoPin,
   onToggleShowPinned
 }) => {
   return (
@@ -40,6 +41,9 @@ const TradeIndexOptions = ({
         <Option onClick={onToggleShowPinned} active={showPinned}>
           핀만 보기
         </Option>
+      </div>
+      <div className={cx('auto-pin')}>
+      <Button flat onClick={onAutoPin} theme="outline">보유 화폐 자동핀</Button>
       </div>
       <div className={cx('selector')}><Selector onSelect={onSelectSort} value={sortBy} options={sorterOptions}/></div>
       <div className={cx('reverser')}><SortReverser asc={asc} onToggle={onToggleAsc}/></div>

@@ -18,6 +18,7 @@ const Button = ({
   disabled,
   dark,
   onClick,
+  theme,
   ...rest
 }) => {
   const dynamicStyle = {
@@ -33,8 +34,8 @@ const Button = ({
         flex,
         flat,
         disabled,
-        dark
-      }, color, className)
+        dark,
+      }, color, className, theme)
     }
     style={{
       padding,
