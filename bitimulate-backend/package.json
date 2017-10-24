@@ -35,11 +35,13 @@
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^4.1.1"
   },
   "scripts": {
     "start:dev": "NODE_PATH=src nodemon --watch src/ src/index.js",
     "crawler:dev": "NODE_PATH=src nodemon --watch src/crawler/ src/crawler/index.js --ignore src/crawler/*.json",
-    "trader:dev": "NODE_PATH=src nodemon --inspect --watch src/trader/ src/trader/index.js"
+    "trader:dev": "NODE_PATH=src nodemon --inspect --watch src/trader/ src/trader/index.js",
+    "dev": "npm-run-all --parallel start:dev crawler:dev trader:dev"
   }
 }
