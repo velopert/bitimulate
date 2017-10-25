@@ -8,7 +8,7 @@ const queryString = require('query-string');
 
 exports.getOrders = async (ctx) => {
   const { user } = ctx.request;
-  const { cursor, currencyPair } = ctx.query;
+  const { cursor, currencyPair, status } = ctx.query;
 
   // needs auth
   if(!user) {
@@ -17,12 +17,13 @@ exports.getOrders = async (ctx) => {
   }
 
   try {
-    const orders = await Order.findOrders(ObjectId(user._id), cursor, currencyPair);
+    const orders = await Order.findOrders(ObjectId(user._id), cursor, currencyPair, status);
     const { protocol, host, path } = ctx;
     
     const urlQuery = queryString.stringify({
       cursor: orders.length === 20 ? orders[orders.length - 1]._id : '',
-      currencyPair
+      currencyPair,
+      status
     });
 
     // const nextUrl = `${protocol}://${host}${path}?${urlQuery}`;
