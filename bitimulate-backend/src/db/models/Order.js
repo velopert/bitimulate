@@ -29,11 +29,12 @@ const Order = new Schema({
   }
 });
 
-Order.statics.findOrders = function(userId, cursor, currencyPair) {
+Order.statics.findOrders = function(userId, cursor, currencyPair, status) {
   return this.find({
     userId,
     ...(cursor ? { _id: { $lt: cursor } } : {}),
-    ...(currencyPair ? { currencyPair } : {})
+    ...(currencyPair ? { currencyPair } : {}),
+    ...(status ? { status } : {})
   }, {
     userId: false
   }).sort({ 

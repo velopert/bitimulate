@@ -3,8 +3,10 @@ import { createAction, handleActions } from 'redux-actions';
 import { Map, List, fromJS } from 'immutable';
 import * as AuthAPI from 'lib/api/auth';
 import * as UserAPI from 'lib/api/user';
-import { pender } from 'redux-pender';
+import * as OrdersAPI from 'lib/api/orders';
 
+import { pender } from 'redux-pender';
+import parseLink from 'parse-link-header';
 
 // action types
 const SET_USER = 'user/SET_USER';
@@ -15,6 +17,7 @@ const PATCH_META_INFO = 'user/PATCH_META_INFO';
 const TOGGLE_PIN_KEY = 'user/TOGGLE_PIN_KEY';
 const GET_WALLET = 'user/GET_WALLET';
 const RESET_PIN = 'user/RESET_PIN';
+const GET_ORDERS = 'user/GET_ORDERS';
 
 
 
@@ -28,6 +31,7 @@ export const togglePinKey = createAction(TOGGLE_PIN_KEY);
 export const patchMetaInfo = createAction(PATCH_META_INFO, UserAPI.patchMetaInfo);
 export const getWallet = createAction(GET_WALLET, UserAPI.getWallet);
 export const resetPin = createAction(RESET_PIN);
+export const getOrders = createAction(GET_ORDERS, OrdersAPI.getOrders, meta => meta);
 
 // initial state
 const initialState = Map({
@@ -41,6 +45,14 @@ const initialState = Map({
   }),
   walletOnOrder: Map({
 
+  }),
+  orders: Map({
+    processed: List(),
+    waiting: List(),
+    next: Map({
+      processed: null,
+      waiting: null
+    })
   })
 });
 
@@ -93,6 +105,23 @@ export default handleActions({
         const { wallet, walletOnOrder } = action.payload.data;
         return state.set('wallet', fromJS(wallet))
                     .set('walletOnOrder', fromJS(walletOnOrder));
+      }
+    }),
+    ...pender({
+      type: GET_ORDERS,
+      onSuccecss: (state, action) => {
+        const { data: orders, header: { link } } = action.payload;
+        const { meta: orderType } = action;
+
+        const links = parseLink(link);
+        let next = null;
+
+        if(links && links.next) {
+          next = links.next.url;
+        }
+
+        return state.setIn(['orders', orderType], fromJS(orders))
+                    .setIn(['orders', 'next', orderType], next);
       }
     })
 }, initialState);

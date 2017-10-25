@@ -7,6 +7,24 @@
 }
 
 .trade-history-table {
+
+  &.forPage {
+    margin-top: 1.5rem;
+    .head, .rows .row {
+      padding-left: 0;
+      padding-right: 0;
+      font-size: 1rem;
+    }
+    .rows {
+      height: auto;
+    }
+    .head {
+      line-height: 1rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: material-color('grey', '800');
+    }
+  }
   .flicker {
     animation-duration: .5s;
     animation-fill-mode: both;
@@ -38,6 +56,7 @@
     }
     .row {
       padding-left: 1rem;
+      padding-right: 1rem;
       display: flex;
       padding-top: 0.25rem;
       padding-bottom: 0.25rem;

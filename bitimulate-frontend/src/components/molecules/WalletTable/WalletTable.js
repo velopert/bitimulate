@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './WalletTable.scss';
 import classNames from 'classnames/bind';
 import { limitDigit } from 'lib/utils';
+import {Link} from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -12,13 +13,13 @@ const Row = ({
   valueOnOrder,
   btcValue
 }) => (
-  <div className={cx('row')}>
+  <Link to={`/trade/${currency}`}  className={cx('row')}>
     <div className={cx('col', 'coin')}>{currency}</div>
     <div className={cx('col', 'name')}>{currencyName}</div>
     <div className={cx('col', 'has')}>{limitDigit(value)}</div>
     <div className={cx('col', 'waiting')}>{limitDigit(valueOnOrder)}</div>
     <div className={cx('col', 'btc')}>{limitDigit(btcValue)}</div>
-  </div>
+  </Link>
 )
 
 const WalletTable = ({data}) => {
