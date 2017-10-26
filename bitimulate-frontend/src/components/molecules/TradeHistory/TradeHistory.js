@@ -15,7 +15,7 @@ const TradeHistory = ({historyData, privateOrders, onCancelOrder, onScroll, hasN
       </div>
       <div className={cx('column')}>
         <Card noPadding>
-          <TradeHistoryTable data={privateOrders} personal onCancelOrder={onCancelOrder} onScroll={onScroll} hasNext={hasNext}/>
+          <TradeHistoryTable data={privateOrders} personal onCancelOrder={onCancelOrder} onScroll={onScroll} hasNext={hasNext} showTooltip/>
         </Card>
       </div>
     </div>

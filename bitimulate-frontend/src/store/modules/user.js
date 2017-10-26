@@ -4,6 +4,8 @@ import { Map, List, fromJS } from 'immutable';
 import * as AuthAPI from 'lib/api/auth';
 import * as UserAPI from 'lib/api/user';
 import * as OrdersAPI from 'lib/api/orders';
+import * as CommonAPI from 'lib/api/common';
+
 
 import { pender } from 'redux-pender';
 import parseLink from 'parse-link-header';
@@ -18,6 +20,8 @@ const TOGGLE_PIN_KEY = 'user/TOGGLE_PIN_KEY';
 const GET_WALLET = 'user/GET_WALLET';
 const RESET_PIN = 'user/RESET_PIN';
 const GET_ORDERS = 'user/GET_ORDERS';
+const GET_NEXT_ORDERS = 'user/GET_NEXT_ORDERS';
+const CANCEL_ORDER = 'trade/CANCEL_ORDER';
 
 
 
@@ -32,6 +36,8 @@ export const patchMetaInfo = createAction(PATCH_META_INFO, UserAPI.patchMetaInfo
 export const getWallet = createAction(GET_WALLET, UserAPI.getWallet);
 export const resetPin = createAction(RESET_PIN);
 export const getOrders = createAction(GET_ORDERS, OrdersAPI.getOrders, meta => meta);
+export const getNextOrders = createAction(GET_NEXT_ORDERS, ({status, url}) => CommonAPI.getNext(url), meta => meta);
+export const cancelOrder = createAction(CANCEL_ORDER, OrdersAPI.cancelOrder, meta => meta);
 
 // initial state
 const initialState = Map({
@@ -109,9 +115,9 @@ export default handleActions({
     }),
     ...pender({
       type: GET_ORDERS,
-      onSuccecss: (state, action) => {
-        const { data: orders, header: { link } } = action.payload;
-        const { meta: orderType } = action;
+      onSuccess: (state, action) => {
+        const { data: orders, headers: { link } } = action.payload;
+        const { status } = action.meta;
 
         const links = parseLink(link);
         let next = null;
@@ -120,8 +126,36 @@ export default handleActions({
           next = links.next.url;
         }
 
-        return state.setIn(['orders', orderType], fromJS(orders))
-                    .setIn(['orders', 'next', orderType], next);
+        return state.setIn(['orders', status], fromJS(orders))
+                    .setIn(['orders', 'next', status], next);
+      }
+    }),
+    ...pender({
+      type: GET_NEXT_ORDERS,
+      onSuccess: (state, action) => {
+        const { data: orders, headers: { link } } = action.payload;
+        const { status } = action.meta;
+
+        const links = parseLink(link);
+        let next = null;
+
+        if(links && links.next) {
+          next = links.next.url;
+        }
+
+        return state.updateIn(['orders', status], currentOrders => currentOrders.concat(fromJS(orders)))
+                    .setIn(['orders', 'next', status], next);
+      }
+    }),
+    ...pender({
+      type: CANCEL_ORDER,
+      onSuccess: (state, action) => {
+        const { data: order } = action.payload;
+        return state.updateIn(['orders', 'waiting'], currentOrders => {
+          const index = currentOrders.findIndex(o => o.get('_id') === action.meta);
+          if(index === -1) return currentOrders;
+          return currentOrders.set(index, fromJS(order));
+        })
       }
     })
 }, initialState);

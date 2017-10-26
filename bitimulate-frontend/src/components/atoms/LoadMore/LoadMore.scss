@@ -1,0 +1,20 @@
+@import 'utils';
+
+.load-more {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: material-color('grey', '500');
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  user-select: none;
+  &:hover {
+    background: rgba(0,0,0,0.025);
+    color: material-color('cyan', '600');
+  }
+  &:active {
+    background: rgba(0,0,0,0.05)
+  }
+}

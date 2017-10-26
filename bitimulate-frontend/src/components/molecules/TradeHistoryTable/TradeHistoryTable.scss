@@ -43,6 +43,13 @@
     color: material-color('grey', '500');
     font-size: 0.85rem;
   }
+  .empty {
+    height: 5rem;
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: material-color('grey', '400');
+    @include flex-center();
+  }
   .rows {
     height: 14.375rem;
     overflow-y: auto;
@@ -75,6 +82,10 @@
   .col {
     flex: 1;
     // date | type | price | amount | total
+    &.currency {
+      width: 5rem;
+      flex: none;
+    }
     &.time {
       flex: 0.5;
     }

@@ -15,7 +15,7 @@ const statusMap = {
   'cancelled': '취소됨'
 }
 
-const Row = ({date, type, rate, amount, personal, status, onCancelOrder, id}) => {
+const Row = ({date, type, rate, amount, personal, status, onCancelOrder, id, showCurrency, currencyPair}) => {
   const d = new Date(date);
   const calculatedGMT = new Date(d.valueOf() - d.getTimezoneOffset() * 60000)
   return (
@@ -26,6 +26,9 @@ const Row = ({date, type, rate, amount, personal, status, onCancelOrder, id}) =>
         onCancelOrder(id);
       }
     }>
+    {
+      showCurrency && <div className={cx('col', 'currency')}>{currencyPair && currencyPair.split('_')[1]}</div>
+    }
       <div className={cx('col', 'time')}>
         {moment(personal ? date : calculatedGMT).format('HH:mm')}
       </div>
@@ -53,9 +56,9 @@ const OptimizedRow = scuize(function (nextProps, nextState) {
 
 
 // // date | type | price | amount
-const TradeHistoryTable = ({data, personal, onCancelOrder, onScroll, hasNext, forPage}) => {
+const TradeHistoryTable = ({data, personal, onCancelOrder, onScroll, hasNext, forPage, showTooltip}) => {
 
-  const tooltip = personal ? {
+  const tooltip = showTooltip && personal ? {
     'data-tip': "항목을 더블클릭하여 거래 취소",
     'data-effect': 'solid'
   } : {} 
@@ -66,18 +69,21 @@ const TradeHistoryTable = ({data, personal, onCancelOrder, onScroll, hasNext, fo
         return <OptimizedRow id={row.get('tradeID')} key={row.get('tradeID')} {...row.toJS()}/>;
       } else {
         const { 
-          _id, price, amount, status, sell
+          _id, price, amount, status, sell, currencyPair
         } = row.toJS();
-        return <OptimizedRow personal key={_id} id={_id} rate={price} amount={amount} type={sell ? 'sell' : 'buy'} status={status} onCancelOrder={onCancelOrder}/>
+        return <OptimizedRow personal currencyPair={currencyPair} key={_id} id={_id} rate={price} amount={amount} type={sell ? 'sell' : 'buy'} status={status} onCancelOrder={onCancelOrder}  showCurrency={forPage}/>
       }
     }
   )
   return (
     <div className={cx('trade-history-table', { forPage })}>
       { !forPage && <div className={cx('title')}>
-        거래내역
+        {personal ? '나의 ' : '' }거래내역
       </div> }
       <div className={cx('head')}>
+        { forPage && <div className={cx('col', 'currency')}>
+          코인
+        </div> }
         <div className={cx('col', 'time')}>
           시간
         </div>
@@ -101,6 +107,9 @@ const TradeHistoryTable = ({data, personal, onCancelOrder, onScroll, hasNext, fo
             <Spinner size="5rem"/>
           </div>
         )}
+        {
+          rows.isEmpty() && forPage && <div className={cx('empty')}>거래내역이 없습니다</div>
+        }
 
       </div>
       <ReactTooltip />
