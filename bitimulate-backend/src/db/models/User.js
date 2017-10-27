@@ -9,11 +9,11 @@ function hash(password) {
   return crypto.createHmac('sha256', secret).update(password).digest('hex');
 }
 
-const Wallet = new Schema({
-  BTC: Schema.Types.Double,
-  USD: Schema.Types.Double,
-  ETH: Schema.Types.Double
-}, { _id: false, strict: false });
+// const Wallet = new Schema({
+//   BTC: Schema.Types.Double,
+//   USD: Schema.Types.Double,
+//   ETH: Schema.Types.Double
+// }, { _id: false, strict: false });
 
 const User = new Schema({
   displayName: String,
@@ -53,6 +53,13 @@ const User = new Schema({
       BTC: 0,
       USD: 0
     }
+  },
+  balanceHistory: {
+    type: [{
+      value: Schema.Types.Double,
+      date: Date
+    }],
+    default: []
   }
 });
 
@@ -140,6 +147,30 @@ User.methods.generateToken = function() {
       displayName
     }
   }, 'user');
+};
+
+User.methods.saveBalance = function(balance) {
+  if(!this.balanceHistory) {
+    return this.model('User').findByIdAndUpdate(this._id, {
+      $set: {
+        balanceHistory: [{
+          time: new Date(),
+          value: balance
+        }]
+      }
+    }).exec();
+  }
+
+  console.log(this.balanceHistory);
+
+  return this.model('User').findByIdAndUpdate(this._id, {
+    $push: {
+      balanceHistory: {
+        date: new Date(),
+        value: balance
+      }
+    }
+  }).exec();
 };
 
 module.exports = mongoose.model('User', User);

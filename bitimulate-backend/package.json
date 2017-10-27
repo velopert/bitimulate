@@ -9,6 +9,7 @@
     "bluebird": "^3.5.0",
     "chalk": "^2.1.0",
     "cli-progress": "^1.5.0",
+    "cron": "^1.3.0",
     "dotenv": "^4.0.0",
     "fb": "^2.0.0",
     "googleapis": "^20.1.0",
@@ -42,6 +43,7 @@
     "start:dev": "NODE_PATH=src nodemon --watch src/ src/index.js",
     "crawler:dev": "NODE_PATH=src nodemon --watch src/crawler/ src/crawler/index.js --ignore src/crawler/*.json",
     "trader:dev": "NODE_PATH=src nodemon --inspect --watch src/trader/ src/trader/index.js",
-    "dev": "npm-run-all --parallel start:dev crawler:dev trader:dev"
+    "worker:dev": "NODE_PATH=src nodemon --watch src/worker/ src/worker/index.js",
+    "dev": "npm-run-all --parallel start:dev crawler:dev trader:dev worker:dev"
   }
 }

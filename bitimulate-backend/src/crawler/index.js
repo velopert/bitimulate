@@ -90,7 +90,7 @@ const messageHandler = {
         type: 'TICKER',
         payload
       }));
-      log('Updated', name);
+      // log('Updated', name);
     } catch (e) {
       console.error(e);
     }
