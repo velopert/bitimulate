@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const crypto = require('crypto');
 const token = require('lib/token');
+const ExchangeRate = require('./ExchangeRate');
 
 const { PASSWORD_HASH_KEY: secret } = process.env;
 
@@ -36,7 +37,8 @@ const User = new Schema({
   metaInfo: {
     initial: {
       currency: String,
-      value: Schema.Types.Double
+      value: Schema.Types.Double,
+      usdRate: Schema.Types.Double
     },
     pinned: [String]
   },
@@ -61,7 +63,7 @@ const User = new Schema({
     }],
     default: []
   },
-  btcBalance: {
+  earningsRatio: {
     type: Schema.Types.Double,
     default: 0
   }
@@ -92,7 +94,7 @@ User.statics.findSocialId = function({provider, id}) {
   });
 };
 
-User.statics.localRegister = function({ displayName, email, password, initial }) {
+User.statics.localRegister = async function({ displayName, email, password, initial }) {
   const user = new this({
     displayName, 
     email,
@@ -106,10 +108,13 @@ User.statics.localRegister = function({ displayName, email, password, initial })
   const { currency, value } = initial;
   user.wallet[currency] = value;
 
+  const usdRate = await ExchangeRate.getUSDRate();
+  user.metaInfo.initial.usdRate = usdRate;
+
   return user.save();
 };
 
-User.statics.socialRegister = function({
+User.statics.socialRegister = async function({
   displayName,
   email,
   provider,
@@ -135,6 +140,9 @@ User.statics.socialRegister = function({
   
   user.wallet[currency] = value;
 
+  const usdRate = await ExchangeRate.getUSDRate();
+  user.metaInfo.initial.usdRate = usdRate;
+  
   return user.save();
 };
 
@@ -151,6 +159,14 @@ User.methods.generateToken = function() {
       displayName
     }
   }, 'user');
+};
+
+User.methods.updateEarningsRatio = function(ratio) {
+  return this.update({
+    $set: {
+      earningsRatio: ratio
+    }
+  });
 };
 
 User.methods.saveBalance = function(balance) {
@@ -171,9 +187,6 @@ User.methods.saveBalance = function(balance) {
         date: new Date(),
         value: balance
       }
-    },
-    $set: {
-      btcBalance: balance
     }
   }).exec();
 };

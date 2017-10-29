@@ -39,4 +39,12 @@ ExchangeRate.statics.showAll = function() {
   return this.find({});
 };
 
+ExchangeRate.statics.getUSDRate = function() {
+  return this.findOne({name: 'USDT_BTC'}).exec().then(
+    (rate) => {
+      return 1 / rate.last.value;
+    }
+  );
+};
+
 module.exports = mongoose.model('ExchangeRate', ExchangeRate);

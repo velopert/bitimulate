@@ -13,6 +13,7 @@ module.exports = (() => {
   const makeUserTransaction = async (userId, currencyPair, amount, price, sell) => {
     let [ base, target ] = currencyPair.split('_');
 
+    console.log({userId, currencyPair, amount, price, sell});
     console.log(base, target);
 
     // mock USDT to USD
@@ -112,7 +113,9 @@ module.exports = (() => {
           processedAmount: amount
         }
       }, { new: true }).lean().exec();
+      require('mongoose').set('debug', true);
       await makeUserTransaction(userId, currencyPair, amount, price, sell);
+      require('mongoose').set('debug', false);
       generalPublisher.publish('general', JSON.stringify({
         type: 'ORDER_PROCESSED',
         payload: updatedOrder

@@ -34,9 +34,9 @@ class UserLoader extends Component {
   componentDidUpdate(prevProps, prevState) {
     // recheck login status when userId changes
 
-    // if(!prevProps.user && this.props.user) {
-    //   this.checkLoginStatus();
-    // }
+    if(!prevProps.user && this.props.user) {
+      this.checkLoginStatus();
+    }
   }
   
 

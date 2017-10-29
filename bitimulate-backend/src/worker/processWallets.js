@@ -47,10 +47,18 @@ function convertToBTC(wallet, rates) {
   return btc;
 }
 
+function getInitialBTCAmount(initial, usdRate) {
+  const { currency, value } = initial;
+  if(currency === 'BTC') return value.value;
+  return value.value * usdRate;
+}
+
 async function processWallets() {
   try {
     const rates = await getAllExchangeRate();
     const count = await getUsersCount();
+
+    const usdRate = getPrice(rates, 'USD');
     log.info(count, 'users');
     const length = Math.ceil(count / batchSize);
 
@@ -61,6 +69,12 @@ async function processWallets() {
       users.forEach(user => {
         const combined = combineWallet(user.wallet, user.walletOnOrder);
         const btc = convertToBTC(combined, rates);
+        const { initial } = user.metaInfo;
+        const initialBTC = getInitialBTCAmount(initial, usdRate);
+        console.log('--------------');
+        console.log(initialBTC, btc);
+        console.log((btc - initialBTC) / initialBTC);
+        
         user.saveBalance(btc);
       });
       // users.forEach(user => {
