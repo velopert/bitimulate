@@ -60,6 +60,10 @@ const User = new Schema({
       date: Date
     }],
     default: []
+  },
+  btcBalance: {
+    type: Schema.Types.Double,
+    default: 0
   }
 });
 
@@ -161,14 +165,15 @@ User.methods.saveBalance = function(balance) {
     }).exec();
   }
 
-  console.log(this.balanceHistory);
-
   return this.model('User').findByIdAndUpdate(this._id, {
     $push: {
       balanceHistory: {
         date: new Date(),
         value: balance
       }
+    },
+    $set: {
+      btcBalance: balance
     }
   }).exec();
 };

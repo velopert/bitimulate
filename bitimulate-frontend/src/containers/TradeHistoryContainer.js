@@ -33,7 +33,7 @@ class TradeHistoryContainer extends Component {
 
   getPrivateHistory = async () => {
     const { currencyType, TradeActions } = this.props;
-    TradeActions.getOrders({currencyType: currencyType === 'BTC' ? 'USDT_BTC' : `BTC_${currencyType}`});
+    TradeActions.getOrders({currencyPair: currencyType === 'BTC' ? 'USDT_BTC' : `BTC_${currencyType}`});
   }
 
   getPublicHistory = async () => {
