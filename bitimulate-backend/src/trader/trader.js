@@ -41,17 +41,17 @@ module.exports = (() => {
         return;
       }
 
-      if(!sell && user.wallet[target] === undefined) {
-        // if wallet target is undefined, directly set the target value
-        return User.findByIdAndUpdate(userId, {
-          $set: {
-            [`wallet.${target}`]: amount * (1 - 0.0015)
-          },
-          $inc: {
-            [`walletOnOrder.${base}`]: totalPrice * -1
-          }
-        }).exec();
-      }
+      // if(!sell && user.wallet[target] === undefined) {
+      //   // if wallet target is undefined, directly set the target value
+      //   return User.findByIdAndUpdate(userId, {
+      //     $set: {
+      //       [`wallet.${target}`]: amount * (1 - 0.0015)
+      //     },
+      //     $inc: {
+      //       [`walletOnOrder.${base}`]: totalPrice * -1
+      //     }
+      //   }).exec();
+      // }
       
       if(!sell) {
         return User.findByIdAndUpdate(userId, {
