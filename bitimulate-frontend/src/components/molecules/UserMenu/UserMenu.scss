@@ -1,0 +1,61 @@
+@import 'utils';
+
+@keyframes enter {
+  0% {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes leave {
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+}
+
+.enter {
+  animation-duration: .4s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+  animation-name: enter;
+}
+
+.leave {
+  animation-duration: .4s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+  animation-name: leave;
+}
+.user-menu {
+  position: absolute;
+  right: 1rem;
+  top: 4rem;
+  z-index: z-index-for('screen-mask');
+  .card {
+    @include material-shadow(2, 0.5);
+    .menu-item {
+      padding: 1rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      font-weight: 600;
+      color: material-color('grey', '600');
+      cursor: pointer;
+      &:hover {
+        background: rgb(245, 245, 245);
+        color: material-color('teal', '600');
+      }
+      &:active {
+        background: rgb(240, 240, 240);
+      }
+    }
+  }
+}
