@@ -63,6 +63,13 @@ const User = new Schema({
     }],
     default: []
   },
+  earningsHistory: {
+    type: [{
+      ratio: Schema.Types.Double,
+      date: Date
+    }],
+    default: []
+  },
   earningsRatio: {
     type: Schema.Types.Double,
     default: 0
@@ -169,26 +176,52 @@ User.methods.updateEarningsRatio = function(ratio) {
   });
 };
 
-User.methods.saveBalance = function(balance) {
-  if(!this.balanceHistory) {
-    return this.model('User').findByIdAndUpdate(this._id, {
+User.methods.saveEarnings = function(ratio) {
+  if(!this.earningsHistory) {
+    return this.update({
       $set: {
-        balanceHistory: [{
-          time: new Date(),
-          value: balance
+        earningsRatio: ratio,
+        earningsHistory: [{
+          date: new Date(),
+          value: ratio
         }]
       }
     }).exec();
   }
 
-  return this.model('User').findByIdAndUpdate(this._id, {
+  this.update({
+    $set: {
+      earningsRatio: ratio
+    },
     $push: {
-      balanceHistory: {
+      earningsHistory: {
         date: new Date(),
-        value: balance
+        ratio
       }
     }
   }).exec();
 };
+
+// User.methods.saveEarnings = function(balance) {
+//   if(!this.balanceHistory) {
+//     return this.model('User').findByIdAndUpdate(this._id, {
+//       $set: {
+//         balanceHistory: [{
+//           time: new Date(),
+//           value: balance
+//         }]
+//       }
+//     }).exec();
+//   }
+
+//   return this.model('User').findByIdAndUpdate(this._id, {
+//     $push: {
+//       balanceHistory: {
+//         date: new Date(),
+//         value: balance
+//       }
+//     }
+//   }).exec();
+// };
 
 module.exports = mongoose.model('User', User);

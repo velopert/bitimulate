@@ -47,10 +47,10 @@ function convertToBTC(wallet, rates) {
   return btc;
 }
 
-function getInitialBTCAmount(initial, usdRate) {
-  const { currency, value } = initial;
-  if(currency === 'BTC') return value.value;
-  return value.value * usdRate;
+function getInitialUSDAmount(initial) {
+  const { currency, value, usdRate } = initial;
+  if(currency === 'USD') return value.value;
+  return value.value / usdRate;
 }
 
 async function processWallets() {
@@ -70,12 +70,10 @@ async function processWallets() {
         const combined = combineWallet(user.wallet, user.walletOnOrder);
         const btc = convertToBTC(combined, rates);
         const { initial } = user.metaInfo;
-        const initialBTC = getInitialBTCAmount(initial, usdRate);
-        console.log('--------------');
-        console.log(initialBTC, btc);
-        console.log((btc - initialBTC) / initialBTC);
-        
-        user.saveBalance(btc);
+        const initialUSD = getInitialUSDAmount(initial);
+        const currentUSD = btc / usdRate;
+        const earnings = (currentUSD - initialUSD) / initialUSD;
+        user.saveEarnings(earnings);
       });
       // users.forEach(user => {
       //   user.balanceHistory = [];
