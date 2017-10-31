@@ -1,12 +1,16 @@
 import React from 'react';
 import styles from './Header.scss';
 import classNames from 'classnames/bind';
-import { Logo, HeaderNav, Button, UserButton, UserMenu } from 'components';
+import { Logo, HeaderNav, Button, UserButton, UserMenu, ClickOutside } from 'components';
 
 const cx = classNames.bind(styles);
 
 const Header = ({
   onLoginButtonClick,
+  onShowUserMenu,
+  onHideUserMenu,
+  onLogout,
+  userMenu,
   user,
   solid
 }) => {
@@ -20,7 +24,7 @@ const Header = ({
           <HeaderNav/>
           {
             user ? (
-              <UserButton displayName={user.get('displayName')}/>
+              <UserButton displayName={user.get('displayName')} onClick={onShowUserMenu}/>
             ) : (
               <Button 
                 invert 
@@ -31,7 +35,7 @@ const Header = ({
             )
           }
         </div>
-        <UserMenu/>
+        <UserMenu visible={userMenu} onHide={onHideUserMenu} eventTypes={["mouseup", "touchend"]} onLogout={onLogout}/>
       </div>
     </div>
   );

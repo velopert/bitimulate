@@ -31,8 +31,3 @@ export const socialRegister = ({
 });
 export const checkLoginStatus = () => axios.get('/api/v1.0/auth/check');
 export const logout = () => axios.post('/api/v1.0/auth/logout');
-
-
-
-// temporary logout caller
-window.logout = logout;

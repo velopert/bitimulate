@@ -5,9 +5,9 @@ import UserIcon from 'react-icons/lib/io/person';
 
 const cx = classNames.bind(styles);
 
-const UserButton = ({displayName}) => {
+const UserButton = ({displayName, onClick}) => {
   return (
-    <div className={cx('user-button')}>
+    <div className={cx('user-button')} onClick={onClick}>
       <UserIcon/>
       <div className={cx('display-name')}>
         {displayName}

@@ -14,6 +14,8 @@ const CHECK_EMAIL = 'auth/CHECK_EMAIL';
 const LOCAL_LOGIN  = 'auth/LOCAL_LOGIN';
 const PROVIDER_LOGIN = 'auth/PROVIDER_LOGIN';
 const SOCIAL_LOGIN = 'auth/SOCIAL_LOGIN';
+const LOGOUT = 'auth/LOGOUT';
+
 
 // action creator
 export const toggleLoginModal = createAction(TOGGLE_LOGIN_MODAL);
@@ -24,6 +26,7 @@ export const checkEmail = createAction(CHECK_EMAIL, AuthAPI.checkEmail); // (ema
 export const localLogin = createAction(LOCAL_LOGIN, AuthAPI.localLogin); // ({email, password})
 export const providerLogin = createAction(PROVIDER_LOGIN, (provider) => social[provider](), provider => provider);
 export const socialLogin = createAction(SOCIAL_LOGIN, AuthAPI.socialLogin);
+export const logout = createAction(LOGOUT, AuthAPI.logout);
 
 // initial state
 const initialState = Map({
