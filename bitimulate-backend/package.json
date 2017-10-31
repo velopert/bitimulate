@@ -19,6 +19,7 @@
     "koa-bodyparser": "^4.2.0",
     "koa-compress": "^2.0.0",
     "koa-router": "^7.2.1",
+    "koa-static": "^4.0.1",
     "koa-websocket": "^4.0.0",
     "lzutf8": "^0.4.6",
     "moment": "^2.18.1",
