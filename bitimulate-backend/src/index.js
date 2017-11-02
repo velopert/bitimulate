@@ -10,6 +10,8 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const compress = require('koa-compress');
 const websockify = require('koa-websocket');
+const cors = require('koa-cors');
+
 // const koaStatic = require('koa-static');
 // const path = require('path');
 // const fs = require('fs');
@@ -27,6 +29,13 @@ const ws = require('./ws');
 
 db.connect();
 const app = websockify(new Koa());
+
+app.use((ctx, next) => {
+  ctx.response.set('Access-Control-Allow-Origin', 'bitimulate.com');
+  ctx.response.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  return next();
+});
+
 app.use(compress());
 
 app.use(jwtMiddleware);
