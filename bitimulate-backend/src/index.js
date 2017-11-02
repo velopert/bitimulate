@@ -10,9 +10,9 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const compress = require('koa-compress');
 const websockify = require('koa-websocket');
-const koaStatic = require('koa-static');
-const path = require('path');
-const fs = require('fs');
+// const koaStatic = require('koa-static');
+// const path = require('path');
+// const fs = require('fs');
 
 const db = require('./db');
 
@@ -21,9 +21,9 @@ const jwtMiddleware = require('lib/middlewares/jwt');
 const cache = require('lib/cache');
 const ws = require('./ws');
 
-const frontendBuild = path.join(__dirname, '../../bitimulate-frontend/build');
-const indexPagePath = path.join(frontendBuild, 'index.html');
-const indexPage = fs.readFileSync(indexPagePath);
+// const frontendBuild = path.join(__dirname, '../../bitimulate-frontend/build');
+// const indexPagePath = path.join(frontendBuild, 'index.html');
+// const indexPage = fs.readFileSync(indexPagePath);
 
 db.connect();
 const app = websockify(new Koa());
@@ -39,10 +39,10 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 app.ws.use(ws.routes()).use(ws.allowedMethods());
 
-app.use(koaStatic(frontendBuild));
-app.use((ctx) => {
-  ctx.body = indexPage;
-});
+// app.use(koaStatic(frontendBuild));
+// app.use((ctx) => {
+//   ctx.body = indexPage;
+// });
 
 app.listen(port, () => {
   console.log(`bitimulate server is listening to port ${port}`);
