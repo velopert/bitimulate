@@ -1,0 +1,23 @@
+{
+  "apps": [{
+    "name": "crawler",
+    "script" : "./src/crawler",
+    "env": {
+      "NODE_PATH": "src"
+    }
+  },
+  {
+    "name": "worker",
+    "script" : "./src/worker",
+    "env": {
+      "NODE_PATH": "src"
+    }
+  },
+  {
+    "name": "trader",
+    "script" : "./src/trader",
+    "env": {
+      "NODE_PATH": "src"
+    }
+  }]
+}
