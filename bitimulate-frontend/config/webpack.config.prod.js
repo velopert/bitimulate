@@ -166,7 +166,7 @@ module.exports = {
         include: paths.appSrc,
         loader: require.resolve('babel-loader'),
         options: {
-          
+          cacheDirectory: true,
           compact: true,
         },
       },

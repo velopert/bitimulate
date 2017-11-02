@@ -30,6 +30,7 @@ db.connect();
 const app = websockify(new Koa());
 
 app.use((ctx, next) => {
+  ctx.response.set('Access-Control-Allow-Origin', 's3.bitimulate.com.s3-website.ap-northeast-2.amazonaws.com');
   ctx.response.set('Access-Control-Allow-Origin', 'bitimulate.com');
   ctx.response.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   return next();
