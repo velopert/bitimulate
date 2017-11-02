@@ -30,6 +30,7 @@ db.connect();
 const app = websockify(new Koa());
 
 app.use((ctx, next) => {
+  ctx.set('Access-Control-Allow-Credentials', true);
   ctx.response.set('Access-Control-Allow-Origin', '*');
   ctx.response.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   return next();
