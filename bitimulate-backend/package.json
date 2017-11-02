@@ -45,6 +45,12 @@
     "crawler:dev": "NODE_PATH=src nodemon --watch src/crawler/ src/crawler/index.js --ignore src/crawler/*.json",
     "trader:dev": "NODE_PATH=src nodemon --inspect --watch src/trader/ src/trader/index.js",
     "worker:dev": "NODE_PATH=src nodemon --watch src/worker/ src/worker/index.js",
-    "dev": "npm-run-all --parallel start:dev crawler:dev trader:dev worker:dev"
+    "dev": "npm-run-all --parallel start:dev crawler:dev trader:dev worker:dev",
+    "workers": "pm2 start workers.config.json",
+    "server": "pm2 start deploy.config.json",
+    "start": "npm-run-all workers server",
+    "reload:workers": "pm2 reload workers.config.json",
+    "reload:server": "pm2 reload deploy.config.json",
+    "reload": "npm-run-all reload:workers reload:server"
   }
 }

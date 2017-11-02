@@ -1,0 +1,11 @@
+{
+  "apps": [{
+    "name": "server",
+    "script" : "./src",
+    // "instances": 2,
+    // "exec_mode": "cluster",
+    "env": {
+      "NODE_PATH": "src"
+    }
+  }]
+}
