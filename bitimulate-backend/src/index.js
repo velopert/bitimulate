@@ -10,7 +10,6 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const compress = require('koa-compress');
 const websockify = require('koa-websocket');
-const cors = require('koa-cors');
 
 // const koaStatic = require('koa-static');
 // const path = require('path');
