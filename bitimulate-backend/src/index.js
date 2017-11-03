@@ -34,7 +34,7 @@ app.use((ctx, next) => {
     'bitimulate.com',
     's3.bitimulate.com.s3-website.ap-northeast-2.amazonaws.com'
   ];
-  const origin = ctx.origin;
+  const origin = ctx.header['origin'];
   allowedHosts.every(el => {
     if(!origin) return false;
     if(origin.indexOf(el) !== -1) {
