@@ -9,11 +9,13 @@ import social from 'lib/social';
 import socket from 'lib/socket';
 import axios from 'axios';
 
+window.axios = axios;
 const socketURI = process.env.NODE_ENV === 'production'
                     ? 'wss://api.bitimulate.com/ws'
                     : 'ws://localhost:4000/ws'
 
 if(process.env.NODE_ENV === 'production') {
+  axios.defaults.withCredentials = true;
   axios.defaults.baseURL = 'https://api.bitimulate.com';
 }
 

@@ -30,8 +30,20 @@ db.connect();
 const app = websockify(new Koa());
 
 app.use((ctx, next) => {
+  const allowedHosts = [
+    'bitimulate.com',
+    's3.bitimulate.com.s3-website.ap-northeast-2.amazonaws.com'
+  ];
+  const origin = ctx.origin;
+  allowedHosts.every(el => {
+    if(!origin) return false;
+    if(origin.indexOf(el) !== -1) {
+      ctx.response.set('Access-Control-Allow-Origin', origin);
+      return false;
+    }
+    return true;
+  });
   ctx.set('Access-Control-Allow-Credentials', true);
-  ctx.response.set('Access-Control-Allow-Origin', '*');
   ctx.response.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   return next();
 });
