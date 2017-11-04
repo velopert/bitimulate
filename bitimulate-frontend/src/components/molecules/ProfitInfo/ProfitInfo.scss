@@ -1,0 +1,47 @@
+@import 'utils';
+.profit-info {
+  .description {
+    margin-top: 0.5rem;
+    color: material-color('grey', '800');
+    font-size: 0.85rem;
+  }
+  .info {
+    margin-top: 1rem;
+    display: flex;
+    .info-box {
+      padding: 1rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      flex: 1;
+      h4 {
+        color: material-color('grey', '600');
+        margin: 0;
+        margin-bottom: 0.5rem;
+      }
+      p {
+        font-size: 0.85rem;
+        margin: 0;
+        .sign {
+          font-family: 'initial';
+        }
+      }
+      .percentage {
+        font-size: 1.5rem;
+        &.positive {
+          color: material-color('green', '700');
+        }
+      }
+      &:first-child {
+        padding-left: 0;
+      }
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+    
+    .info-box + .info-box {
+      border-left: 1px solid material-color('grey', '300');
+    }
+  }
+  
+}
