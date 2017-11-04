@@ -69,9 +69,21 @@ const TradeHistoryTable = ({data, personal, onCancelOrder, onScroll, hasNext, fo
         return <OptimizedRow id={row.get('tradeID')} key={row.get('tradeID')} {...row.toJS()}/>;
       } else {
         const { 
-          _id, price, amount, status, sell, currencyPair
+          _id, price, amount, status, sell, currencyPair, date
         } = row.toJS();
-        return <OptimizedRow personal currencyPair={currencyPair} key={_id} id={_id} rate={price} amount={amount} type={sell ? 'sell' : 'buy'} status={status} onCancelOrder={onCancelOrder}  showCurrency={forPage}/>
+        return <OptimizedRow 
+            personal 
+            currencyPair={currencyPair} 
+            key={_id} 
+            id={_id} 
+            rate={price} 
+            amount={amount} 
+            type={sell ? 'sell' : 'buy'} 
+            status={status} 
+            onCancelOrder={onCancelOrder} 
+            date={date} 
+            showCurrency={forPage}
+          />
       }
     }
   )
