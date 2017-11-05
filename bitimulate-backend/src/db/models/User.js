@@ -10,12 +10,6 @@ function hash(password) {
   return crypto.createHmac('sha256', secret).update(password).digest('hex');
 }
 
-// const Wallet = new Schema({
-//   BTC: Schema.Types.Double,
-//   USD: Schema.Types.Double,
-//   ETH: Schema.Types.Double
-// }, { _id: false, strict: false });
-
 const User = new Schema({
   displayName: String,
   email: String,
@@ -72,7 +66,8 @@ const User = new Schema({
   },
   earningsRatio: {
     type: Schema.Types.Double,
-    default: 0
+    default: 0,
+    index: true
   }
 });
 
@@ -200,6 +195,10 @@ User.methods.saveEarnings = function(ratio) {
       }
     }
   }).exec();
+};
+
+User.statics.getTopRanking = function() {
+  return this.find({}, { _id: false, displayName: true, earningsRatio: true }).sort({ earningsRatio: -1 }).limit(100).exec();
 };
 
 // User.methods.saveEarnings = function(balance) {
