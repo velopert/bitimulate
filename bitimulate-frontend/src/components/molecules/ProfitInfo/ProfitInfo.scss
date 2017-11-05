@@ -30,6 +30,9 @@
         &.positive {
           color: material-color('green', '700');
         }
+        &.negative {
+          color: material-color('red', '700');
+        }
       }
       &:first-child {
         padding-left: 0;

@@ -8,49 +8,18 @@ import { waitUntil } from 'lib/utils';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import compose from 'lodash/fp/compose';
+import { getAggregatedWallet, getCorrespondingRate } from 'lib/aggregateWallet';
 
 class WalletsContainer extends Component {
 
   getAggregatedWallet = () => {
     const { wallet, walletOnOrder } = this.props;
-
-    const aggregated = [];
-    const walletData = wallet.toJS();
-    for(let currency in walletData) {
-      aggregated.push({
-        valueOnOrder: walletOnOrder.get(currency),
-        currency,
-        value: wallet.get(currency) + (walletOnOrder.get(currency) || 0)
-      })
-    }
-    return aggregated;
+    return getAggregatedWallet(wallet, walletOnOrder);
   }
 
   getCorrespondingRate = (aggregated) => {
     const { rate } = this.props;
-    aggregated.forEach(
-      w => {
-        if(w.currency === 'BTC') {
-          w.currencyName = 'Bitcoin';
-          w.last = 1;
-          return;
-        }
-        if(w.currency === 'USD') {
-
-          const btcRate = rate.find(r => r.get('currencyKey') === 'BTC');
-          if(!btcRate) return w;
-          w.currencyName = 'Dollar';
-          w.last = 1 / btcRate.get('last');
-          return;
-        }
-
-        const info = rate.find(r => r.get('currencyKey') === w.currency);
-        if(!info) return w;
-        w.last = info.get('last'); 
-        w.currencyName = info.get('currencyName');
-      }
-    );
-    return aggregated;
+    return getCorrespondingRate(aggregated, rate);
   }
 
   getWalletData = compose([
@@ -80,8 +49,8 @@ class WalletsContainer extends Component {
   
   render() {
 
-    const { rate, wallet, krwRate, walletOnOrder } = this.props;
-    // const aggregated = this.aggregateWallet();
+    const { rate, krwRate } = this.props;
+
     
     if(rate.isEmpty()) return null;
     const walletData = this.getWalletData();
@@ -91,7 +60,6 @@ class WalletsContainer extends Component {
 
     const btcRate = rate.find(r => r.get('currencyKey') === 'BTC');
     
-    // circumstance when websocket has received new update before inital rate fetch
     if(!btcRate) return null; 
     
     const btcMultiplier = btcRate.get('last');
