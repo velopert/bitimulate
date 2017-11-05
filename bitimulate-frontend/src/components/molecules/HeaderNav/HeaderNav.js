@@ -15,7 +15,7 @@ const HeaderNav = () => {
       <NavItem to="/wallet">
         내 지갑
       </NavItem>
-      <NavItem>
+      <NavItem to="/ranking">
         랭킹
       </NavItem>
     </FlexBox>
