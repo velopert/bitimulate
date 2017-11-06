@@ -1,0 +1,43 @@
+@import 'utils';
+
+.ranking {
+  .user-number {
+    text-align: right;
+  }
+  .ranking-list {
+    margin-top: 1rem;
+    .row-desc, .rank-item {
+      display: flex;
+    }
+
+    .row-desc {
+      font-weight: 600;
+      padding: 0.5rem;
+      border-bottom: 2px solid material-color('grey', '500');
+    }
+
+    .rank-item {
+      padding: 0.5rem;
+      border-top: 1px solid material-color('grey', '300');
+      color: material-color('grey', '600');
+      font-size: 0.875rem;
+    }
+
+    .num {
+      width: 4rem;
+    }
+    .username, .profit {
+      flex: 1;
+    }
+    .profit {
+      &.positive {
+        color: material-color('green', '600');
+      }
+      &.negative {
+        color: material-color('red', '600');
+      }
+    }
+  
+  }
+  
+}

@@ -19,8 +19,11 @@ exports.getKrwRate = async (ctx) => {
 
 exports.getRanking = async (ctx) => {
   try {
+    const count = await User.count().exec();
     const ranking = await User.getTopRanking();
-    ctx.body = ranking;
+    ctx.body = {
+      count, ranking
+    };
   } catch (e) {
     ctx.throw(e, 500);
   }

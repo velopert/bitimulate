@@ -1,0 +1,7 @@
+@import 'utils';
+.spinner-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: material-color('cyan', '400');
+}

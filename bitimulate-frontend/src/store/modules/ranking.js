@@ -14,7 +14,8 @@ export const getTopRanking = createAction(GET_TOP_RANKING, CommonAPI.getTopRanki
 
 // initial state
 const initialState = Map({
-  ranking: List()
+  ranking: List(),
+  count: 0
 });
 
 // reducer
@@ -22,8 +23,9 @@ export default handleActions({
   ...pender({
     type: GET_TOP_RANKING,
     onSuccess: (state, action) => {
-      const { data: ranking } = action.payload;
-      return state.set('ranking', fromJS(ranking));
+      const { ranking, count } = action.payload.data;
+      return state.set('ranking', fromJS(ranking))
+                  .set('count', count);
     }
   })
 }, initialState);
