@@ -65,17 +65,18 @@ exports.patchMetaInfo = async (ctx) => {
   try {
     const userData = await User.findById(_id).exec();
 
+    console.log(userData);
     if(!userData) {
       ctx.status = 403;
       return;
     }
 
     userData.metaInfo = {
-      ...userData.metaInfo,
+      ...userData.metaInfo.toObject(),
       ...patchData
     };
 
-    await userData.save();
+    await userData.update({ metaInfo: userData.metaInfo }).exec();
     ctx.body = userData.metaInfo;
   } catch (e) {
     ctx.throw(e, 500);

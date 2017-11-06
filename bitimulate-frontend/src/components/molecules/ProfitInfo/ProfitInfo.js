@@ -17,6 +17,7 @@ const InfoBox = ({name, children}) => (
 )
 
 const ProfitInfo = ({initial, current}) => {
+  if(!initial) return null;
   const { currency, value, usdRate } = initial.toJS();
 
   const initialUSD = currency === 'USD' ? value : value / usdRate;
