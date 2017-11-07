@@ -1,10 +1,19 @@
+@import 'utils';
+
+.block {
+  background: linear-gradient(to right, #276caf, #30a1c1);
+  height: 25rem;
+  z-index: 1;
+}
 .ranking-box {
   margin: 0 auto;
-
+  margin-top: -20rem;
   width: 768px;
   padding: 2rem;
   padding-bottom: 4rem;
   z-index: 10;
+  margin-bottom: 3rem;
+  @include material-shadow(3, 0.45);
   
   h1 {
     margin: 0;
