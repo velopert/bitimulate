@@ -1,13 +1,9 @@
 const Joi = require('joi');
 const User = require('db/models/User');
+const EarningsHistory = require('db/models/EarningsHistory');
 
 exports.getMetaInfo = async (ctx) => {
   const { user } = ctx.request;
-  if(!user) {
-    ctx.status = 403;
-    return;
-  }
-
   const { _id } = user;
 
   try {
@@ -23,14 +19,7 @@ exports.getMetaInfo = async (ctx) => {
 };
 
 exports.patchMetaInfo = async (ctx) => {
-  // check login status
   const { user } = ctx.request;
-
-  if(!user) {
-    ctx.status = 403;
-    return;
-  }
-  
   const { _id } = user;
 
   const availableFields = {
@@ -80,5 +69,17 @@ exports.patchMetaInfo = async (ctx) => {
     ctx.body = userData.metaInfo;
   } catch (e) {
     ctx.throw(e, 500);
+  }
+};
+
+exports.getEarningsHistory = async (ctx) => {
+  const { user } = ctx.request;
+  const { _id } = user;
+  
+  try {
+    const history = await EarningsHistory.find({ userId: _id }, { userId: false, updatedAt: false, _id: false }).lean().exec();
+    ctx.body = history;
+  } catch (e) {
+    ctx.throw(500, e);
   }
 };

@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 const crypto = require('crypto');
 const token = require('lib/token');
 const ExchangeRate = require('./ExchangeRate');
+const EarningsHistory = require('./EarningsHistory');
 
 const { PASSWORD_HASH_KEY: secret } = process.env;
 
@@ -184,15 +185,11 @@ User.methods.saveEarnings = function(ratio) {
     }).exec();
   }
 
+  EarningsHistory.create(this._id, ratio);
+
   this.update({
     $set: {
       earningsRatio: ratio
-    },
-    $push: {
-      earningsHistory: {
-        date: new Date(),
-        ratio
-      }
     }
   }).exec();
 };

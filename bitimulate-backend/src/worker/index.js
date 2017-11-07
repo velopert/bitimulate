@@ -6,9 +6,9 @@ const processWallets = require('./processWallets');
 
 function initialize() {
   db.connect();
-  // processWallets();   
+  // processWallets();  
   const jobProcessWallets = new CronJob({
-    cronTime: '0 */4 * * *',
+    cronTime: '0 * * * *',
     onTick: processWallets
   });
 
