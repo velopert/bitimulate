@@ -41,6 +41,7 @@ class Profit extends Component {
       return !this.props.currencyInfo.isEmpty();
     })
     TradeActions.getInitialRate();
+    UserActions.getEarningsHistory();
   }
 
   componentDidMount() {
@@ -48,7 +49,7 @@ class Profit extends Component {
   }
 
   render() {
-    const { rate, initial } = this.props;
+    const { rate, initial, earningsHistory } = this.props;
     
     if(rate.isEmpty()) return null;
     const btcRate = rate.find(r => r.get('currencyKey') === 'BTC');
@@ -69,7 +70,7 @@ class Profit extends Component {
             usd: sum * btcRate.get('last')
           }}
         />
-        <ProfitChart/>
+        <ProfitChart earningsHistory={earningsHistory}/>
       </div>
     )
   }
@@ -82,7 +83,8 @@ export default connect(
     wallet: state.user.get('wallet'),
     walletOnOrder: state.user.get('walletOnOrder'),
     currencyInfo: state.common.get('currencyInfo'),
-    initial: state.user.getIn(['metaInfo', 'initial'])
+    initial: state.user.getIn(['metaInfo', 'initial']),
+    earningsHistory: state.user.get('earningsHistory')
   }),
   (dispatch) => ({
     TradeActions: bindActionCreators(tradeActions, dispatch),

@@ -6,3 +6,13 @@
   color: rgb(67, 67, 67);
   text-align: center;
 }
+
+.profit-chart {
+  margin-top: 1.5rem;
+  width: 100%;
+  height: 500px;
+  .chart {
+    width: 100%;
+    height: 100%;
+  }
+}

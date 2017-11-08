@@ -22,6 +22,8 @@ const RESET_PIN = 'user/RESET_PIN';
 const GET_ORDERS = 'user/GET_ORDERS';
 const GET_NEXT_ORDERS = 'user/GET_NEXT_ORDERS';
 const CANCEL_ORDER = 'trade/CANCEL_ORDER';
+const GET_EARNINGS_HISTORY = 'trade/GET_EARNINGS_HISTORY';
+
 
 
 
@@ -38,6 +40,7 @@ export const resetPin = createAction(RESET_PIN);
 export const getOrders = createAction(GET_ORDERS, OrdersAPI.getOrders, meta => meta);
 export const getNextOrders = createAction(GET_NEXT_ORDERS, ({status, url}) => CommonAPI.getNext(url), meta => meta);
 export const cancelOrder = createAction(CANCEL_ORDER, OrdersAPI.cancelOrder, meta => meta);
+export const getEarningsHistory = createAction(GET_EARNINGS_HISTORY, UserAPI.getEarningsHistory);
 
 // initial state
 const initialState = Map({
@@ -59,7 +62,8 @@ const initialState = Map({
       processed: null,
       waiting: null
     })
-  })
+  }),
+  earningsHistory: List()
 });
 
 // reducer
@@ -156,6 +160,13 @@ export default handleActions({
           if(index === -1) return currentOrders;
           return currentOrders.set(index, fromJS(order));
         })
+      }
+    }),
+    ...pender({
+      type: GET_EARNINGS_HISTORY,
+      onSuccess: (state, action) => {
+        const { data: earningsHistory } = action.payload;
+        return state.set('earningsHistory', fromJS(earningsHistory));
       }
     })
 }, initialState);
