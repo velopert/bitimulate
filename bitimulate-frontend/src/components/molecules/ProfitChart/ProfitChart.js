@@ -31,11 +31,11 @@ class ProfitChart extends Component {
       tooltip: {
         trigger: 'axis',
         axisPointer: {
-          type: 'shadow'
+          type: 'cross'
         },
         formatter: (params) => {
-          const { value } = params[0];
-          return (Math.round(value * 10000)/100).toFixed(2) + '%'
+          const { value, axisValue } = params[0];
+          return `<b>${axisValue}</b><br/>수익률: ${(Math.round(value * 10000)/100).toFixed(2)}%`
         }
       },
       grid: { 
@@ -48,6 +48,7 @@ class ProfitChart extends Component {
       xAxis: [
         {
           type: 'category',
+          boundaryGap: false,
           data: dates,
           axisTick: { 
             alignWithLabel: true
@@ -67,9 +68,22 @@ class ProfitChart extends Component {
       series: [
         {
           name: '수익률',
-          type: 'bar',
-          barWidth: '75%',
-          data: values
+          type: 'line',
+          // barWidth: data.length > 50 ? '100%' : '75%',
+          data: values,
+          smooth: true,
+          lineStyle: { normal: { color: '#26C6DA', width: 5 } },
+          areaStyle: {
+            normal: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: '#80DEEA'
+                }, {
+                    offset: 1,
+                    color: '#80DEEA'
+                }])
+            }
+         },
         }
       ]
     };
@@ -86,6 +100,7 @@ class ProfitChart extends Component {
   
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.earningsHistory !== this.props.earningsHistory) {
+      if(prevProps.earningsHistory.size === this.props.earningsHistory.size) return;
       this.drawChart();
     }
   }
