@@ -59,6 +59,12 @@
           font-size: 0.9rem;
           color: material-color('grey', '600');
         }
+        .fee {
+          color: material-color('grey', '500');
+          font-weight: 400;
+          text-align: right;
+          font-size: 0.75rem;
+        }
       }
       background: white;
     }

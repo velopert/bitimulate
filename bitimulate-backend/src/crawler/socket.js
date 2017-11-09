@@ -16,6 +16,7 @@ module.exports = (function() {
       // });
     },
     message: (message) => {
+      // console.log(message);
       _messageHandler(message);
       // console.log('received: %s', message);
     }
@@ -28,6 +29,7 @@ module.exports = (function() {
 
   const connect = () => {
     _client = new WebSocket('wss://api2.poloniex.com');
+    global.client = _client;
     _client.on('open', handlers.open);
     _client.on('message', handlers.message);
     _client.on('close', reconnect);

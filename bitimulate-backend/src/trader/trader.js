@@ -56,8 +56,8 @@ module.exports = (() => {
       if(!sell) {
         return User.findByIdAndUpdate(userId, {
           $inc: {
-            [`wallet.${target}`]: amount * (1 - 0.0015),
-            [`walletOnOrder.${base}`]: totalPrice * -1
+            [`wallet.${target}`]: amount * (1),
+            [`walletOnOrder.${base}`]: totalPrice * -1.0015
           }
         }).exec();
       } else {

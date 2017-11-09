@@ -102,6 +102,7 @@ socket.handleMessage = (message) => {
   if (!parsed) {
     return null;
   }
+
   const [type, meta, data] = parsed;
   if (messageHandler[type]) {
     messageHandler[type](data);

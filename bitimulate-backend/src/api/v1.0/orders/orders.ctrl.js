@@ -93,7 +93,7 @@ exports.createOrder = async (ctx) => {
       return sell ? currencyPair.split('_')[1] : 'BTC';
     })();
 
-    if(!sell && totalAmount > (wallet[baseCurrency] || 0)) {
+    if(!sell && totalAmount * 1.0015 > (wallet[baseCurrency] || 0)) {
       ctx.status = 400;
       ctx.body = {
         msg: 'exceeds available amount'
@@ -127,23 +127,12 @@ exports.createOrder = async (ctx) => {
       }).exec();
     } else {
       // different approach depending value existancy
-      if(walletOnOrder[baseCurrency] === undefined) {
-        await User.findByIdAndUpdate(user._id, {
-          $inc: {
-            [`wallet.${baseCurrency}`]: -1 * totalAmount
-          },
-          $set: {
-            [`walletOnOrder.${baseCurrency}`]: totalAmount
-          }
-        }).exec();
-      } else {
-        await User.findByIdAndUpdate(user._id, {
-          $inc: {
-            [`wallet.${baseCurrency}`]: -1 * totalAmount,
-            [`walletOnOrder.${baseCurrency}`]: totalAmount
-          }
-        }).exec();
-      }
+      await User.findByIdAndUpdate(user._id, {
+        $inc: {
+          [`wallet.${baseCurrency}`]: -1.0015 * totalAmount,
+          [`walletOnOrder.${baseCurrency}`]: totalAmount * 1.0015
+        }
+      }).exec();
     }
 
     await order.save();
