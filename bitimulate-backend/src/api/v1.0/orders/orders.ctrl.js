@@ -197,8 +197,8 @@ exports.cancelOrder = async (ctx) => {
     } else {
       await User.findByIdAndUpdate(user._id, {
         $inc: {
-          [`wallet.${baseCurrency}`]: totalAmount,
-          [`walletOnOrder.${baseCurrency}`]: totalAmount * -1
+          [`wallet.${baseCurrency}`]: totalAmount * 1.0015,
+          [`walletOnOrder.${baseCurrency}`]: totalAmount * -1.0015
         }
       }).exec();
     }
