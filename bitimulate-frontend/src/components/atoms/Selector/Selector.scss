@@ -40,6 +40,10 @@
     position: absolute;
     background: white;
     z-index: 5;
+    @include media("<medium") {
+      left: 0;
+      width :100%;
+    }
     @include material-shadow(3, 0.8);
     .selector-option {
       cursor: default;

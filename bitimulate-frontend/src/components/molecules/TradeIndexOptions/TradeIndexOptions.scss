@@ -8,14 +8,32 @@
   flex-direction: row;
   align-items: center;
   @include material-shadow(1, 0.5);
+
+  @include media("<medium") {
+    flex-direction: column;
+    align-items: center;
+  }
   .show-pinned {
 
   }
   .auto-pin {
     margin-left: 1rem;
   }
-  .selector {
+  .left, .right {
+    display: flex;
+    align-items: center;
+  }
+  .right {
     margin-left: auto;
+    @include media("<medium") {
+      margin-left: 0;
+      width: 100%;
+      display: flex;
+      .selector {
+        flex: 1;
+      }
+      margin-top: 1rem;
+    }
   }
   .reverser {
     margin-top: -2px;

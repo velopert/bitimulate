@@ -83,7 +83,7 @@ class BitcoinInfoCard extends Component {
             </div>
             <div className={cx('percentage', { positive: parsedPercentage > 0, netural: parsedPercentage === 0 })}>({parsedPercentage}%)</div>
             <div className={cx('value')}>${parseFloat(value).toLocaleString()}</div>
-            <div className={cx('value')}>{krwRate ? '₩' + (value*krwRate).toLocaleString() : '계산중..'}</div>
+            <div className={cx('value')}>{krwRate ? '₩' + (Math.round(value*krwRate)).toLocaleString() : '계산중..'}</div>
             <div className={cx('name')}>Bitcoin</div>
           </HoverCard>
         </div>

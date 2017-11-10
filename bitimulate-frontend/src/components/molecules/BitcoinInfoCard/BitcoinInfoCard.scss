@@ -3,6 +3,9 @@
 .wrapper {
   padding: 0.5rem;
   width: calc(100% / 2);
+  @include media("<small") {
+    width: 100%;
+  }
   .bitcoin-info-card {
     background: material-color('grey', '100');
     border: 1px solid transparent;
