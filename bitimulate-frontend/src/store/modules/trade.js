@@ -232,7 +232,11 @@ export default handleActions({
         }
         
         const currentTradeHistory = state.getIn(['detail', 'tradeHistory']);
-        return state.setIn(['detail', 'tradeHistory'], fromJS(tradeHistory).concat(currentTradeHistory));
+        const filtered = fromJS(tradeHistory)
+                        .filter(h => currentTradeHistory
+                        .find(h2 => h2.get('globalTradeID') !== h.get('globalTradeID')));
+
+        return state.setIn(['detail', 'tradeHistory'], filtered.concat(currentTradeHistory).slice(0, 200));
       }
     }),
     [RESET_TRADE_HISTORY]: (state, action) => {
