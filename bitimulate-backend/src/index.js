@@ -44,7 +44,8 @@ app.use((ctx, next) => {
     return true;
   });
   ctx.set('Access-Control-Allow-Credentials', true);
-  ctx.response.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-timebase');
+  ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-timebase');
+  ctx.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PATCH, OPTIONS');
   return next();
 });
 
