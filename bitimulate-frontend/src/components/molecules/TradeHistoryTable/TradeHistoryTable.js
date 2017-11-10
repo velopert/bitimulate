@@ -17,7 +17,18 @@ const statusMap = {
 
 const Row = ({date, type, rate, amount, personal, status, onCancelOrder, id, showCurrency, currencyPair}) => {
   const d = new Date(date);
-  const calculatedGMT = new Date(d.valueOf() - d.getTimezoneOffset() * 60000)
+  const calculatedGMT = new Date(d.valueOf() - d.getTimezoneOffset() * 60000);
+
+
+  const dateString = (() => {
+    const t = moment(personal ? date : calculatedGMT);
+    const now = moment();
+    if(t.format('YYYYMMDD') !== now.format('YYYYMMDD')) {
+      return t.format('MM/D');
+    }
+    return t.format('HH:mm');
+  })()
+
   return (
     <div className={cx('row', 'flicker', { personal })} onDoubleClick={
       () => {
@@ -30,7 +41,7 @@ const Row = ({date, type, rate, amount, personal, status, onCancelOrder, id, sho
       showCurrency && <div className={cx('col', 'currency')}>{currencyPair && currencyPair.split('_')[1]}</div>
     }
       <div className={cx('col', 'time')}>
-        {moment(personal ? date : calculatedGMT).format('HH:mm')}
+        {dateString}
       </div>
       <div className={cx('col', 'type', type)}>
         {type === 'sell' ? '매도' : '매수'}
