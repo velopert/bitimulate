@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Header.scss';
 import classNames from 'classnames/bind';
-import { Logo, HeaderNav, Button, UserButton, UserMenu, ClickOutside } from 'components';
+import { Logo, HeaderNav, Button, UserButton, UserMenu, Hamburger } from 'components';
 
 const cx = classNames.bind(styles);
 
@@ -21,19 +21,21 @@ const Header = ({
           <Logo/>
         </div>
         <div className={cx('right-side')}>
-          <HeaderNav/>
-          {
-            user ? (
-              <UserButton displayName={user.get('displayName')} onClick={onShowUserMenu}/>
-            ) : (
-              <Button 
-                invert 
-                className={cx('login-button')}
-                onClick={onLoginButtonClick}>
-                로그인
-              </Button>
-            )
-          }
+          <div className={cx('desktop-only')}>
+            <HeaderNav/>
+            {
+              user ? (
+                <UserButton displayName={user.get('displayName')} onClick={onShowUserMenu}/>
+              ) : (
+                <Button 
+                  invert 
+                  className={cx('login-button')}
+                  onClick={onLoginButtonClick}>
+                  로그인
+                </Button>
+              )
+            }
+          </div>
         </div>
         <UserMenu visible={userMenu} onHide={onHideUserMenu} eventTypes={["mouseup", "touchend"]} onLogout={onLogout}/>
       </div>

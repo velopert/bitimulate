@@ -1,0 +1,51 @@
+@charset "UTF-8";
+@import 'utils';
+
+.hamburger-wrapper {
+  position: fixed;
+  right: 16px;
+  top: 18px;
+  z-index: z-index-for('hamburger');
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+  
+  @include media(">=medium") {
+    display: none;
+  }
+}
+
+// Settings
+// ==================================================
+$hamburger-padding-x                       : 0px !default;
+$hamburger-padding-y                       : 0px !default;
+$hamburger-layer-width                     : 30px !default;
+$hamburger-layer-height                    : 4px !default;
+$hamburger-layer-spacing                   : 5px !default;
+$hamburger-layer-color                     : white !default;
+$hamburger-layer-border-radius             : 1px !default;
+$hamburger-hover-opacity                   : 0.7 !default;
+$hamburger-hover-transition-duration       : 0.15s !default;
+$hamburger-hover-transition-timing-function: linear !default;
+
+// To use CSS filters as the hover effect instead of opacity,
+// set $hamburger-hover-use-filter as true and
+// change the value of $hamburger-hover-filter accordingly.
+$hamburger-hover-use-filter: false !default;
+$hamburger-hover-filter    : opacity(50%) !default;
+
+// Types (Remove or comment out what you don’t need)
+// ==================================================
+$hamburger-types: (
+  elastic,
+) !default;
+
+:global {
+  // Base Hamburger (We need this)
+  // ==================================================
+  @import "~hamburgers/_sass/hamburgers/base";
+
+  // Hamburger types
+  // ==================================================
+  @import "~hamburgers/_sass/hamburgers/types/elastic";
+}
+

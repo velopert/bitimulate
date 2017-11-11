@@ -16,7 +16,17 @@
     align-items: center;
 
     .right-side {
-      display: flex;
+      .desktop-only {
+        display: flex;
+        @include media("<medium") {
+          display: none;
+        }
+      }
+      .mobile-only {
+        @include media(">=medium") {
+          display: none;
+        }
+      }
       margin-left: auto;
     }
   }

@@ -3381,6 +3381,10 @@ gzip-size@3.0.0:
   dependencies:
     duplexer "^0.1.1"
 
+hamburgers@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/hamburgers/-/hamburgers-0.9.1.tgz#49bc3bca667a693a8458388c9ef265ae611348d5"
+
 handle-thing@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/handle-thing/-/handle-thing-1.2.5.tgz#fd7aad726bf1a5fd16dfc29b2f7a6601d27139c4"
