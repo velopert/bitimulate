@@ -1,10 +1,26 @@
 const WebSocket = require('ws');
 const currencyPairs = require('lib/poloniex/currencyPairs');
+const log = require('lib/log');
 
 module.exports = (function() {
   let _client = null;
   let _messageHandler = (message) => { console.warn('messageHandler not defined'); };
   let _refreshHandler = () => { console.warn('refereshHandler not defined'); };
+
+  let _lastTime = null;
+
+  const ticker = () => {
+    const now = new Date();
+    if(!_lastTime) return;
+    const diff = now - _lastTime;
+    if(diff > 8000) {
+      log.error('websocket timeout');
+      _lastTime = null;
+      _client.close();
+    }
+  };
+
+  setInterval(ticker, 1000);
 
   const handlers = {
     open: async () => {
@@ -16,6 +32,8 @@ module.exports = (function() {
       // });
     },
     message: (message) => {
+      const current = new Date();
+      _lastTime = current;
       // console.log(message);
       _messageHandler(message);
       // console.log('received: %s', message);

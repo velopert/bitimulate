@@ -16,13 +16,13 @@ function log(...message) {
 log.info = (...message) => {
   const time = getTime();
   const type = chalk.bold(chalk.cyan('[INFO]'));
-  console.log(`${time}${type}`, ...message);
+  console.info(`${time}${type}`, ...message);
 };
 
 log.error = (...message) => {
   const time = getTime();
   const type = chalk.bold(chalk.red('[ERROR]'));
-  console.log(`${time}${type}`, ...message);
+  console.error(`${time}${type}`, ...message);
 };
 
 module.exports = log;
