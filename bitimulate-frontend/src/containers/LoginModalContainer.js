@@ -150,7 +150,8 @@ class LoginModalContainer extends Component {
       handleChangeInput,
       handleLogin,
       handleRegister,
-      handleSocialLogin
+      handleSocialLogin,
+      handleClose
     } = this;
 
     return (
@@ -165,6 +166,7 @@ class LoginModalContainer extends Component {
           onLogin={handleLogin}
           onRegister={handleRegister}
           onSocialLogin={handleSocialLogin}
+          onClose={handleClose}
         />
         <DimmerSpinner visible={pending}/>
       </div>

@@ -1,1 +1,39 @@
+@import 'utils';
 
+.upper-block {
+  height: 12rem;
+  background: #272727;
+  box-shadow: inset 0px -8px 8px -8px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 2rem;
+  .message {
+    font-weight: 200;
+    text-align: center;
+    color: white;
+    font-size: 1.25rem;
+  }
+  .sign-button {
+    margin-top: 1rem;
+  }
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid rgb(85, 85, 85);
+  .menu-item {
+    padding: 1rem;
+    padding-left: 1.5rem;
+    color: white;
+    font-size: 1.125rem;
+    &:active {
+      background: rgb(40, 40, 40);
+    }
+  }
+  .menu-item + .menu-item {
+    border-top: 1px solid rgb(85, 85, 85);
+  }
+}

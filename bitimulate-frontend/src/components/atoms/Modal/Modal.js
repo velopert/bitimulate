@@ -8,10 +8,10 @@ const cx = classNames.bind(styles);
 
 class ModalWrapper extends Component {
   render() {
-    const { visible, children } = this.props;
+    const { visible, children, mobileFullscreen } = this.props;
 
     return (
-      <div className={cx('modal-wrapper')}>
+      <div className={cx('modal-wrapper', { 'mobile-fullscreen': mobileFullscreen })}>
         <CSSTransitionGroup
         transitionEnterTimeout={400}
         transitionLeaveTimeout={400}

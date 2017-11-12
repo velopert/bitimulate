@@ -26,4 +26,19 @@
     top: 1rem;
     transform: translate(-50%);
   }
+
+  &.mobile-fullscreen {
+    @include media("<medium") {
+      top: 0;
+      left: 0;
+      transform: none;
+
+      .enter, .leave {
+        animation: none;
+      }
+      .leave {
+        display: none;
+      }
+    }
+  }
 }

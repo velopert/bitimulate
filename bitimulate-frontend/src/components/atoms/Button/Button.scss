@@ -25,13 +25,16 @@
     color: white;
     background: transparent;
     transition: box-shadow .15s ease-in;
-    &:hover {
+    @include hover() {
       background: white;
       color: material-color('grey', '800');
       @include material-shadow(2);
     }
     &:active {
       @include material-shadow(2, 2);
+      background: rgb(230,230,230);
+      border: 2px solid rgb(230,230,230);
+      color: material-color('grey', '800');
     }
   }
 

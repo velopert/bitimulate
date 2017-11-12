@@ -13,7 +13,8 @@ const LoginModal = ({
   onChangeMode,
   onLogin,
   onRegister,
-  onSocialLogin
+  onSocialLogin,
+  onClose
 }) => {
   const isLogin = mode === 'login';
   const modeText = isLogin ? '로그인' : '회원가입';
@@ -33,9 +34,10 @@ const LoginModal = ({
   const onButtonClick = isLogin ? onLogin : onRegister;
 
   return (
-    <Modal visible={visible}>
+    <Modal visible={visible} mobileFullscreen>
       <div className={cx('login-modal')}>
         <div className={cx('bar')}></div>
+        <div className={cx('close')} onClick={onClose}>✕</div>
         <div className={cx('content')}>
           <h3>이메일로 {modeText}</h3>
           <InputError error={localLoginError} noMarginTop/>

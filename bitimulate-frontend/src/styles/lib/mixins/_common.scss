@@ -3,3 +3,11 @@
   align-items: center;
   justify-content: center;
 }
+
+@mixin hover() {
+  @media (hover: hover) {
+    &:hover { 
+      @content;
+     }
+  }
+}
