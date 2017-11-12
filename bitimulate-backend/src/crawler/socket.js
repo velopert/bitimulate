@@ -34,9 +34,7 @@ module.exports = (function() {
     message: (message) => {
       const current = new Date();
       _lastTime = current;
-      // console.log(message);
       _messageHandler(message);
-      // console.log('received: %s', message);
     }
   };
 
