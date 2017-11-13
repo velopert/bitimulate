@@ -17,6 +17,12 @@
       padding-left: 1rem;
       padding-right: 1rem;
       @include responsive();
+      &.mobile-no-padding {
+        @include media("<medium") {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
     }
   }
 }

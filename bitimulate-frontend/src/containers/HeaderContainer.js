@@ -5,11 +5,29 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as baseActions from 'store/modules/base';
 import * as authActions from 'store/modules/auth';
+import { throttle } from 'lodash';
 
 import storage from 'lib/storage';
 
 class HeaderContainer extends Component {
+  state = {
+    shadow: false
+  }
 
+  handleScroll = throttle((e) => {
+    const { scrollTop } = document.documentElement;
+    const shadow = scrollTop !== 0;
+    if(this.state.shadow !== shadow) {
+      this.setState({
+        shadow
+      });
+    }
+  }, 500);
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+  
   handleShowUserMenu = () => {
     const { BaseActions } = this.props;
     BaseActions.showUserMenu();
@@ -42,6 +60,7 @@ class HeaderContainer extends Component {
   render() {
     const { handleLoginButtonClick, handleShowUserMenu, handleHideUserMenu, handleLogout } = this;
     const { user, solid, userMenu } = this.props;
+    const { shadow } = this.state;
 
     return (
       <Header 
@@ -52,6 +71,7 @@ class HeaderContainer extends Component {
         user={user}
         solid={solid}
         userMenu={userMenu}
+        shadow={shadow}
       />
     );
   }

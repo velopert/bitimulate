@@ -6,14 +6,20 @@
   }
 }
 
+.trade-history-table-wrapper {
+  overflow-x: auto;
+}
 .trade-history-table {
-
+  min-width: 340px;
   &.forPage {
     margin-top: 1.5rem;
     .head, .rows .row {
       padding-left: 0;
       padding-right: 0;
       font-size: 1rem;
+      @include media("<medium") {
+        font-size: 0.85rem;
+      }
     }
     .rows {
       height: auto;
@@ -23,6 +29,9 @@
       font-size: 1rem;
       font-weight: 700;
       color: material-color('grey', '800');
+      @include media("<medium") {
+        font-size: 0.85rem;
+      }
     }
   }
   .flicker {
@@ -85,9 +94,15 @@
     &.currency {
       width: 5rem;
       flex: none;
+      @include media("<medium") {
+        width: 3rem;
+      }
     }
     &.time {
       flex: 0.5;
+      @include media("<medium") {
+        display: none;
+      }
     }
     &.type {
       flex: 0.5;

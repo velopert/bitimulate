@@ -99,43 +99,45 @@ const TradeHistoryTable = ({data, personal, onCancelOrder, onScroll, hasNext, fo
     }
   )
   return (
-    <div className={cx('trade-history-table', { forPage })}>
-      { !forPage && <div className={cx('title')}>
-        {personal ? '나의 ' : '' }거래내역
-      </div> }
-      <div className={cx('head')}>
-        { forPage && <div className={cx('col', 'currency')}>
-          코인
+    <div className={cx('trade-history-table-wrapper')}>
+      <div className={cx('trade-history-table', { forPage })}>
+        { !forPage && <div className={cx('title')}>
+          {personal ? '나의 ' : '' }거래내역
         </div> }
-        <div className={cx('col', 'time')}>
-          시간
-        </div>
-        <div className={cx('col', 'type')}>
-          종류
-        </div>
-        <div className={cx('col')}>
-          가격
-        </div>
-        <div className={cx('col')}>
-          거래량
-        </div>
-        { personal && <div className={cx('col', 'status')}>
-          상태
-        </div>}
-      </div>
-      <div className={cx('rows')} {...tooltip} onScroll={onScroll}>
-        {rows}
-        { hasNext && (
-          <div className={cx('scroll-block')}>
-            <Spinner size="5rem"/>
+        <div className={cx('head')}>
+          { forPage && <div className={cx('col', 'currency')}>
+            코인
+          </div> }
+          <div className={cx('col', 'time')}>
+            시간
           </div>
-        )}
-        {
-          rows.isEmpty() && forPage && <div className={cx('empty')}>거래내역이 없습니다</div>
-        }
+          <div className={cx('col', 'type')}>
+            종류
+          </div>
+          <div className={cx('col')}>
+            가격
+          </div>
+          <div className={cx('col')}>
+            거래량
+          </div>
+          { personal && <div className={cx('col', 'status')}>
+            상태
+          </div>}
+        </div>
+        <div className={cx('rows')} {...tooltip} onScroll={onScroll}>
+          {rows}
+          { hasNext && (
+            <div className={cx('scroll-block')}>
+              <Spinner size="5rem"/>
+            </div>
+          )}
+          {
+            rows.isEmpty() && forPage && <div className={cx('empty')}>거래내역이 없습니다</div>
+          }
 
+        </div>
+        <ReactTooltip />
       </div>
-      <ReactTooltip />
     </div>
   );
 };

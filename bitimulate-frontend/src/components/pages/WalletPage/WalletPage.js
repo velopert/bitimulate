@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 
 const WalletPage = () => {
   return (
-    <PageTemplate header={<HeaderContainer solid/>} padding responsive>
+    <PageTemplate header={<HeaderContainer solid/>} padding responsive mobileNoPadding>
       <div className={cx('wallet-page')}>
         <div className={cx('side-menu')}>
           <WalletMenu/>

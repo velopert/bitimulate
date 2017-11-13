@@ -16,4 +16,26 @@
   a + a { 
     border-top: 1px solid material-color('grey', '300');
   }
+
+  @include media("<medium") {
+    display: flex;
+    flex-direction: row;
+    box-shadow: none;
+    text-align: center;
+
+    
+    a {
+      border-right: none;
+      background: rgb(240, 240, 240);
+      flex: 1;
+      &.active {
+        border-right: none;
+        background: white;
+      }
+    }
+    a + a {
+      border-top: none;
+      border-left: 1px solid material-color('grey', '300');
+    }
+  }
 }

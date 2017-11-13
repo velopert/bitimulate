@@ -33,6 +33,11 @@
     &.btc {
       flex: 11;
     }
+    @include media("<medium") {
+      &.waiting, &.btc {
+        display: none;
+      }
+    }
   }
   .row {
     height: 2rem;

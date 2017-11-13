@@ -1,15 +1,36 @@
+@import 'utils';
+
 .wallet-page {
   padding-top: 3rem;
   display: flex;
   flex-direction: row;
+  
+  @include media("<medium") {
+    flex-direction: column;
+    padding-top: 0;
+  }
+
   .side-menu {
     width: 10rem;
+    @include media("<medium") {
+      width: 100%;
+    }
   }
   .content {
     margin-left: 1rem;
+    @include media("<medium") {
+      margin-left: 0;
+    }
     flex: 1;
     .section-card { 
       margin-bottom: 3rem;
+      padding: 2.25rem;
+      @include media("<medium") {
+        margin-bottom: 0;
+        box-shadow: none;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
 
       h1 {
         font-size: 2rem;
@@ -25,8 +46,6 @@
         margin: 0;
         margin-top: 2.5rem;
       }
-
-      padding: 2.25rem;
     }
   }
 }

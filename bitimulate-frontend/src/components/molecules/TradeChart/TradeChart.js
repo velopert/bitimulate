@@ -164,7 +164,6 @@ class TradeChart extends Component {
         axisPointer: {
           label: {
             formatter: (object) => {
-              
               return isNaN(object.value)
                 ? moment(object.value).format('YYYY MMM DD HH:mm')
                 : object.value
@@ -181,11 +180,11 @@ class TradeChart extends Component {
         },
         position: function (pos, params, el, elRect, size) {
           var obj = {
-            top: 10
+            top: 32
           };
           obj[
             ['left', 'right'][+ (pos[0] < size.viewSize[0] / 2)]
-          ] = 30;
+          ] = 100;
           return obj;
         },
         extraCssText: 'width: 170px'

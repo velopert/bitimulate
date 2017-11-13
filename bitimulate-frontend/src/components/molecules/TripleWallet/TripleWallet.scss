@@ -4,6 +4,9 @@
   margin-top: 1rem;
   display: flex;
   flex-direction: row;
+  @include media("<medium") {
+    flex-direction: column;
+  }
   .wallet-box {
     height: 128px;
     border-radius: 2px;
@@ -15,6 +18,13 @@
       margin-left: 1rem;
     }
     flex-direction: column;
+
+    @include media("<medium") {
+      height: 6rem;
+      & + .wallet-box {
+        margin-left: 0;
+      }
+    }
     
     .currency {
       font-size: 1.25rem;
