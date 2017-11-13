@@ -12,10 +12,11 @@ const Header = ({
   onLogout,
   userMenu,
   user,
-  solid
+  solid,
+  shadow
 }) => {
   return (
-    <div className={cx('header', { solid })}>
+    <div className={cx('header', { solid, shadow })}>
       <div className={cx('responsive')}>
         <div className={cx('logo-wrapper')}>
           <Logo/>
