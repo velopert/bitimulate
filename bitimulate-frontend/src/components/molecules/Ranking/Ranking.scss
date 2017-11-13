@@ -25,8 +25,11 @@
 
     .num {
       width: 4rem;
+      @include media("<medium") {
+        width: 3rem;
+      }
     }
-    .username, .profit {
+    .username {
       flex: 1;
     }
     .profit {
