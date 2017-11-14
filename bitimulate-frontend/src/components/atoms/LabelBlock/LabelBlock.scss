@@ -1,6 +1,7 @@
 @import 'utils';
 
 .label-block {
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
 
@@ -15,8 +16,4 @@
     font-size: 0.95rem;
     font-weight: 300;
   }
-}
-
-.label-block + .label-block {
-  margin-left: 1rem;
 }

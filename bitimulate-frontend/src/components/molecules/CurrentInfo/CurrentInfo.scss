@@ -7,5 +7,7 @@
   padding: 1rem;
   display: flex;
   flex-direction: row;
-
+  @include media("<medium") {
+    flex-wrap: wrap;
+  }
 }

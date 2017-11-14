@@ -1,0 +1,58 @@
+@import 'utils';
+
+.question {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 768px;
+  color: white;
+  @include media("<large") {
+    width: calc(100% - 2rem);
+  }
+  h1 {
+    font-size: 2.8rem;
+    font-weight: 200;
+    text-align: justify;
+    line-height: 4rem;
+
+    @include media("<large") {
+      width: calc(100% - 2rem);
+      font-size: 2.5rem;
+      line-height: 3rem;
+    }
+    @include media("<medium") {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+  p {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 200;
+    @include media("<medium") {
+      font-size: 1rem;
+    }
+  }
+  .button {
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 1rem;
+    margin-top: 2rem;
+    background: rgba(white, 0.10);
+    cursor: pointer;
+    transition: all .25s;
+    @include media("<medium") {
+      font-size: 1.25rem;
+    }
+    @include material-shadow(1, 0.75);
+    @include hover() {
+      background: rgba(white, 0.2);
+      @include material-shadow(2, 0.75);
+    }
+    &:active {
+      background: rgba(black, 0.05);
+    }
+  }
+}
+

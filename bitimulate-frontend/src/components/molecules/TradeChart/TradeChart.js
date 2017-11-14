@@ -140,25 +140,25 @@ class TradeChart extends Component {
 
     const option = {
       backgroundColor: '#eeeeee',
-      legend: {
-        top: 0,
-        data: [
-          {
-            name: '가치변화',
-            icon: 'rect'
-          }, {
-            name: 'MA5',
-            icon: 'rect'
-          }, {
-            name: 'MA15',
-            icon: 'rect'
-          }, {
-            name: 'MA50',
-            icon: 'rect'
-          }
-        ],
-        inactiveColor: '#777'
-      },
+      // legend: {
+      //   top: 0,
+      //   data: [
+      //     {
+      //       name: '가치변화',
+      //       icon: 'rect'
+      //     }, {
+      //       name: 'MA5',
+      //       icon: 'rect'
+      //     }, {
+      //       name: 'MA15',
+      //       icon: 'rect'
+      //     }, {
+      //       name: 'MA50',
+      //       icon: 'rect'
+      //     }
+      //   ],
+      //   inactiveColor: '#777'
+      // },
       tooltip: {
         trigger: 'axis',
         axisPointer: {

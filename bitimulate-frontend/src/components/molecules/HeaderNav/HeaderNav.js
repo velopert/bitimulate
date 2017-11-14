@@ -5,16 +5,16 @@ import { FlexBox, NavItem } from 'components';
 
 const cx = classNames.bind(styles);
 
-const HeaderNav = () => {
+const HeaderNav = ({logged}) => {
   return (
     <FlexBox row
       className={cx('header-nav')}>
       <NavItem to="/trade">
         거래소
       </NavItem>
-      <NavItem to="/wallet">
+      {logged && <NavItem to="/wallet">
         내 지갑
-      </NavItem>
+      </NavItem> }
       <NavItem to="/ranking">
         랭킹
       </NavItem>

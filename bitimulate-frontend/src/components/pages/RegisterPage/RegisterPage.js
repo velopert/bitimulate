@@ -29,7 +29,7 @@ class RegisterPage extends Component {
     return (
       <PageTemplate 
         header={<HeaderContainer/>}>
-        <PolyBackground fixed half={half}>
+        <PolyBackground half={half}>
         </PolyBackground>
         <Paper>
           <RegisterTemplate>

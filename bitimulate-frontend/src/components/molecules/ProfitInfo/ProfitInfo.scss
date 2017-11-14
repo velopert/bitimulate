@@ -8,10 +8,19 @@
   .info {
     margin-top: 1rem;
     display: flex;
+    @include media("<medium") {
+      flex-direction: column;
+    }
     .info-box {
       padding: 1rem;
       padding-top: 0.5rem;
       padding-bottom: 0.5rem;
+      @include media("<medium") {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        padding-left: 0;
+        padding-right: 0;
+      }
       flex: 1;
       h4 {
         color: material-color('grey', '600');
@@ -34,16 +43,23 @@
           color: material-color('red', '700');
         }
       }
-      &:first-child {
-        padding-left: 0;
-      }
-      &:last-child {
-        padding-right: 0;
+      @include media(">=medium") {
+        &:first-child {
+          padding-left: 0;
+        }
+        &:last-child {
+          padding-right: 0;
+        }
       }
     }
     
     .info-box + .info-box {
-      border-left: 1px solid material-color('grey', '300');
+      @include media(">=medium") {
+        border-left: 1px solid material-color('grey', '300');
+      }
+      @include media("<medium") {
+        border-top: 1px solid material-color('grey', '300');
+      }
     }
   }
   

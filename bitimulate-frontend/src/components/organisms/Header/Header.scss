@@ -7,6 +7,7 @@
   }
   transition: all 0.3s ease-in;
   &.shadow {
+    background: linear-gradient(to right, #276caf, #30a1c1);
     @include material-shadow(2, 0.75);
   }
   // background: material-color('teal', '600');

@@ -13,8 +13,10 @@ const CurrentInfo = ({info}) => {
     high24hr,
     highestBid,
     lowestAsk,
-    baseVolume
+    baseVolume,
+    percentChange
   } = info.toJS();
+  
 
   function limitDigit(value, d = 10) {
     const digits = (d - Math.round(Math.log10(value)));
@@ -49,6 +51,9 @@ const CurrentInfo = ({info}) => {
       </LabelBlock>
       <LabelBlock label="매도호가">
         {limitDigit(highestBid)}
+      </LabelBlock>
+      <LabelBlock label="변화율 (24h)">
+        {percentChange < 0 ? '-' : '+' } {Math.round(percentChange * 1000) / 100}%
       </LabelBlock>
     </div>
   );

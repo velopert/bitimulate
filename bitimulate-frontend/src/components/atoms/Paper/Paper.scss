@@ -5,9 +5,16 @@
   padding: 2rem;
   background: white;
   @include material-shadow(3);
-  z-index: 10;
+  z-index: 4;
   position: fixed;
   top: 15%;
   left: 50%;
   transform: translate(-50%);
+  @include media("<medium") {
+    position: absolute;
+    left: 1rem;
+    transform: none;
+    top: 4.5rem;
+    width: calc(100% - 2rem);
+  }
 }

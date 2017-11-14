@@ -1,5 +1,9 @@
+@import 'utils';
 .trade-section {
   display: flex;
   margin-top: 1rem;
   flex-direction: row;
+  @include media("<medium") {
+    flex-direction: column;
+  }
 }

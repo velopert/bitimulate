@@ -33,8 +33,13 @@
     &.btc {
       flex: 11;
     }
+    @include media("<large") {
+      &.name {
+        display: none;
+      }
+    }
     @include media("<medium") {
-      &.waiting, &.btc {
+      &.btc {
         display: none;
       }
     }

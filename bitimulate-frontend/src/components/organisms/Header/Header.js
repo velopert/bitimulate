@@ -23,7 +23,7 @@ const Header = ({
         </div>
         <div className={cx('right-side')}>
           <div className={cx('desktop-only')}>
-            <HeaderNav/>
+            <HeaderNav logged={user}/>
             {
               user ? (
                 <UserButton displayName={user.get('displayName')} onClick={onShowUserMenu}/>

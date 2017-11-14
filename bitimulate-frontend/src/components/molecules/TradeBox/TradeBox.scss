@@ -78,7 +78,15 @@
   flex: 1
 }
 
+
 .trade-box + .trade-box {
-  margin-left: 1rem;
+  
+  @include media(">=medium") {
+    margin-left: 1rem;  
+  }
+  @include media("<medium") {
+    margin-top: 1rem;
+  }
+
 }
 
