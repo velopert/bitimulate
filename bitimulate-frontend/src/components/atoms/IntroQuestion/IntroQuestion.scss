@@ -2,10 +2,10 @@
 
 .question {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-  width: 768px;
+  width: 1024px;
   color: white;
   @include media("<large") {
     width: calc(100% - 2rem);
@@ -13,8 +13,9 @@
   h1 {
     font-size: 2.8rem;
     font-weight: 200;
-    text-align: justify;
+    word-break: keep-all;
     line-height: 4rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
 
     @include media("<large") {
       width: calc(100% - 2rem);
@@ -42,6 +43,7 @@
     background: rgba(white, 0.10);
     cursor: pointer;
     transition: all .25s;
+    user-select: none;
     @include media("<medium") {
       font-size: 1.25rem;
     }

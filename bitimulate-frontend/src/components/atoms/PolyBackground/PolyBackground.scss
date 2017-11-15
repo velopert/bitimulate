@@ -8,6 +8,9 @@
   clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
   position: relative;
   transition: all .7s ease-in-out;
+  @include media("<medium") {
+    height: 95vh;
+  }
   &.fixed {
     position: fixed;
   }

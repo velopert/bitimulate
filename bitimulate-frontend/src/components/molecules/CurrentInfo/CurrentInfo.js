@@ -53,7 +53,7 @@ const CurrentInfo = ({info}) => {
         {limitDigit(highestBid)}
       </LabelBlock>
       <LabelBlock label="변화율 (24h)">
-        {percentChange < 0 ? '-' : '+' } {Math.round(percentChange * 1000) / 100}%
+        {percentChange < 0 ? '' : '+' }{Math.round(percentChange * 1000) / 100}%
       </LabelBlock>
     </div>
   );
