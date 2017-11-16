@@ -70,3 +70,7 @@ export function compare(current, next, names) {
   }
   return false;
 }
+
+export function decimalToPercentString(decimal, toFixedParam = 2) {
+  return (Math.round(decimal * 10000) / 100).toFixed(toFixedParam)
+}

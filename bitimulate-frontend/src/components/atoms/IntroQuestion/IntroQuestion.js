@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-const IntroQuestion = () => (
+const IntroQuestion = ({onClick}) => (
   <div className={cx('question')}>          
   <div>
     <h1>
@@ -16,7 +16,7 @@ const IntroQuestion = () => (
       <br/>모의 거래를 해보세요!
     </p>
   </div>
-  <div className={cx('button')}>
+  <div className={cx('button')} onClick={onClick}>
     모의거래 시작하기
   </div>
 </div>

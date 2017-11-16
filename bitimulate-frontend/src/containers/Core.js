@@ -4,11 +4,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as commonActions from 'store/modules/common';
+import * as tradeActions from 'store/modules/trade';
 
 class Core extends Component {
   componentDidMount() {
-    const { CommonActions } = this.props;
+    const { CommonActions, TradeActions } = this.props;
     CommonActions.getCurrencyInfo();
+    TradeActions.getInitialRate();
   }
   
   render() {
@@ -21,6 +23,7 @@ export default connect(
 
     }),
     (dispatch) => ({
-        CommonActions: bindActionCreators(commonActions, dispatch)
+        CommonActions: bindActionCreators(commonActions, dispatch),
+        TradeActions: bindActionCreators(tradeActions, dispatch)
     })
 )(Core);

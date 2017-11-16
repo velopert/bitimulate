@@ -1,18 +1,44 @@
+@import 'utils';
+
 .block {
   width: 1024px;
   margin: 0 auto;
   margin-top: 4rem;
-  .message {
-    margin-top: 3rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    svg {
-      font-size: 4rem;
-    }
-    h2 {
-      margin-top: 3rem;
-      font-weight: 300;
+  padding: 1rem;
+  padding-bottom: 7rem;
+  @include media("<large") {
+    width: 768px;
+  }
+  @include media("<medium") {
+    width: 100%;
+    margin-top: 1rem;
+    padding-bottom: 4rem;
+  }
+  h2 {
+    font-weight: 300;
+    line-height: 2rem;
+  }
+  .more {
+    .more-button {
+      background: material-color('cyan', '600');
+      margin-top: 0.5rem;
+      padding: 1rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: white;
+      font-weight: 600;
+      transition: .2s all;
+      cursor: pointer;
+      @include material-shadow(1, 0.75);
+      @include hover() {
+        background: material-color('cyan' ,'500');
+        @include material-shadow(2, 0.5);
+      }
+      &:active {
+        background: material-color('cyan', '600');
+      }
     }
   }
 }

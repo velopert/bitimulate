@@ -9,12 +9,10 @@ class BgColor extends Component {
 
   setBackgroundColor = (color) => {
     document.body.style.background = color;
-    console.log('color', document.body.style.background);
   }
 
   componentDidMount() {
     const { color } = this.props;
-    console.log('hi');
     this.previousColor = document.body.style.background;
     this.setBackgroundColor(color);
   }

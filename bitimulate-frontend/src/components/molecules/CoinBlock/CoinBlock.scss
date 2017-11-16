@@ -3,12 +3,22 @@
 .coin-block-wrapper {
   width: 25%;
   padding: 0.5rem;
+  @include media("<large") {
+    width: 50%;
+  }
 }
 
 .coin-block {
+  padding: 0;
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+  @include hover() {
+    @include material-shadow(4, 0.5);
+  }
   .icon-wrapper {
     color: material-color('grey', '600');
     font-size: 4rem;
@@ -24,16 +34,31 @@
     font-weight: 700;
   }
   .price-info {
-    margin-top: 0.5rem;
+    background: rgb(245, 245, 245);
+    padding: 1rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    margin-top: 1rem;
     width: 100%;
     .description {
       font-size: 0.8rem;
       font-weight: 700;
+      span {
+        font-weight: 400;
+        margin-left: 0.5rem;
+        color: material-color('green', '600');
+        &.negative {
+          color: material-color('red', '600');
+        }
+      }
     }
     .value {
       margin-top: 0.15rem;
       font-size: 1.15rem;
       font-weight: 300;
+      @include media("<medium") {
+        font-size: 0.9rem;
+      }
     }
   }
 }

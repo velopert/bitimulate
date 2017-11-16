@@ -55,3 +55,14 @@ export const chartTypes = [
     unit: '하루'
   }
 ];
+
+export const coinsInHome = [
+  'BTC',
+  'BCH',
+  'ETH',
+  'ETC',
+  'LTC',
+  'XRP',
+  'DASH',
+  'XMR'
+];
