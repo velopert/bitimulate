@@ -4,10 +4,18 @@ import {bindActionCreators} from 'redux';
 import * as baseActions from 'store/modules/base';
 import * as authActions from 'store/modules/auth';
 import { IntroQuestion } from 'components';
+import { withRouter } from 'react-router-dom';
+
 
 class IntroQuestionContainer extends Component {
   handleClick = () => {
-    const { BaseActions, AuthActions } = this.props;
+    const { BaseActions, AuthActions, history, user } = this.props;
+
+    if (user) {
+      history.push('/trade');
+      return;
+    }
+
     AuthActions.toggleLoginModal();
     BaseActions.setScreenMaskVisibility(true);
     AuthActions.setModalMode('register');
@@ -21,9 +29,11 @@ class IntroQuestionContainer extends Component {
 }
 
 export default connect(
-  (state) => ({}),
+  (state) => ({
+    user: state.user.get('user')
+  }),
   (dispatch) => ({
     BaseActions: bindActionCreators(baseActions, dispatch),
     AuthActions: bindActionCreators(authActions, dispatch)
   })
-)(IntroQuestionContainer);
+)(withRouter(IntroQuestionContainer));
