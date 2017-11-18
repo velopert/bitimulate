@@ -10,6 +10,7 @@ const TradeSection = ({
   currencyType,
   buy,
   sell,
+  logged,
   onChangeInput,
   onRefreshPrice,
   onCreateOrder,
@@ -45,6 +46,7 @@ const TradeSection = ({
           });
         }}
         disabled={disableButton.get('buy')}
+        logged={logged}
       />
       <TradeBox 
         currencyType={currencyType} 
@@ -61,6 +63,7 @@ const TradeSection = ({
           });
         }}
         disabled={disableButton.get('sell')}
+        logged={logged}
       />      
     </div>
   );

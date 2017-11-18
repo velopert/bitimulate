@@ -17,7 +17,8 @@ const TradeBox = ({
   onChange,
   onRefreshPrice,
   onCreateOrder,
-  disabled
+  disabled,
+  logged
 }) => {
 
   const actionText = sell ? '매도' : '매수';
@@ -66,24 +67,29 @@ const TradeBox = ({
           name="amount"
         />
       </div>
-      <div className={cx('content', 'bright')}>
-        <div className={cx('text')}>총 {actionText} 가격</div>
-        <div className={cx('total')}>
-          <div>
-          {
-            limitDigit(
-              sell ? parseFloat(price) * parseFloat(amount) * 0.9985 : parseFloat(price) * parseFloat(amount) * 1.0015
-            )
-          }
-          <span className={cx('base')}>{secondaryCurrency}</span>
-          </div>
-          <div className={cx('fee')}>
-            <b>수수료</b> <span className={cx('value')}>{limitDigit(parseFloat(price) * parseFloat(amount) * 0.0015)} BTC</span>
+      <div className={cx('user-area')}>
+        {!logged && <div className={cx('dark-layer')}>
+          로그인 후 이용하실 수 있습니다.
+        </div>}
+        <div className={cx('content', 'bright')}>
+          <div className={cx('text')}>총 {actionText} 가격</div>
+          <div className={cx('total')}>
+            <div>
+            {
+              limitDigit(
+                sell ? parseFloat(price) * parseFloat(amount) * 0.9985 : parseFloat(price) * parseFloat(amount) * 1.0015
+              )
+            }
+            <span className={cx('base')}>{secondaryCurrency}</span>
+            </div>
+            <div className={cx('fee')}>
+              <b>수수료</b> <span className={cx('value')}>{limitDigit(parseFloat(price) * parseFloat(amount) * 0.0015)} BTC</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div className={cx('content', 'bright', 'bottom')}>
-        <Button flat color="teal" flex onClick={onCreateOrder} disabled={disabled}>{actionText}</Button>
+        <div className={cx('content', 'bright', 'bottom')}>
+          <Button flat color="teal" flex onClick={onCreateOrder} disabled={disabled}>{actionText}</Button>
+        </div>
       </div>
     </Card>
   );

@@ -59,6 +59,10 @@
       @include media("<medium") {
         font-size: 0.9rem;
       }
+      @include media("<small") {
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+      }
     }
   }
 }

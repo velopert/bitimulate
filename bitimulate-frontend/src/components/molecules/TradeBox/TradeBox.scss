@@ -22,6 +22,26 @@
     }
     
   }
+
+  .user-area {
+    position: relative;
+    .dark-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      background: rgba(50,50,50,0.7);
+      z-index: 2;
+      align-items: center;
+      justify-content: center;
+      color: material-color('grey', '200');
+      font-size: 1.25rem;
+      
+
+    }
+  }
   .content {
     padding: 1rem;
     background: material-color('grey', '100');
@@ -46,6 +66,7 @@
       padding-bottom: 1.5rem;
       display: flex;
       align-items: center;
+      position: relative;
       .text {
         font-weight: 600;
       }

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as commonActions from 'store/modules/common';
 import * as tradeActions from 'store/modules/trade';
+import { MsgboxContainer } from 'containers';
 
 class Core extends Component {
   componentDidMount() {
@@ -14,7 +15,9 @@ class Core extends Component {
   }
   
   render() {
-    return null;
+    return [
+      <MsgboxContainer key={0}/>
+    ];
   }
 }
 

@@ -76,7 +76,8 @@ exports.createOrder = async (ctx) => {
   if(currencyPairs.indexOf(currencyPair) === -1) {
     ctx.status = 400;
     ctx.body = {
-      msg: 'invalid currencypair'
+      msg: 'invalid currencypair',
+      name: 'INVALID_PAIR'
     };
     return;
   }
@@ -96,7 +97,8 @@ exports.createOrder = async (ctx) => {
     if(!sell && totalAmount * 1.0015 > (wallet[baseCurrency] || 0)) {
       ctx.status = 400;
       ctx.body = {
-        msg: 'exceeds available amount'
+        msg: 'exceeds available amount',
+        name: 'EXCEED_AMOUNT'
       };
       return;
     }
@@ -104,7 +106,8 @@ exports.createOrder = async (ctx) => {
     if(sell && amount > (wallet[baseCurrency] || 0)) {
       ctx.status = 400;
       ctx.body = {
-        msg: 'exceeds available amount'
+        msg: 'exceeds available amount',
+        name: 'EXCEED_AMOUNT'
       };
       return;
     }
@@ -172,7 +175,8 @@ exports.cancelOrder = async (ctx) => {
     if(order.status !== 'waiting') {
       ctx.status = 400;
       ctx.body = {
-        message: 'not cancellable'
+        message: 'not cancellable',
+        name: 'NOT_CANCELLABLE'
       };
       return;
     }
