@@ -73,10 +73,11 @@ const TradeHistoryTable = ({data, personal, onCancelOrder, onScroll, hasNext, fo
     'data-tip': "항목을 더블클릭하여 거래 취소",
     'data-effect': 'solid'
   } : {} 
-
+  
   const rows = data && data.map(
     row => {
       if(!personal) {
+        if(!row.get) return null;
         return <OptimizedRow id={row.get('tradeID')} key={row.get('tradeID')} {...row.toJS()}/>;
       } else {
         const { 

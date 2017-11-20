@@ -15,9 +15,9 @@ class Core extends Component {
   }
   
   render() {
-    return [
+    return <div>
       <MsgboxContainer key={0}/>
-    ];
+    </div>
   }
 }
 

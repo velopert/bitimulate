@@ -40,6 +40,7 @@ const GET_ORDERS = 'trade/GET_ORDERS';
 const ORDER_PROCESSED = 'trade/ORDER_PROCESSED';
 const CANCEL_ORDER = 'trade/CANCEL_ORDER';
 const GET_NEXT_ORDERS = 'trade/GET_NEXT_ORDERS';
+const GET_TOP_ORDER_BOOK = 'trade/GET_TOP_ORDER_BOOK';
 
 
 // action creator
@@ -53,6 +54,7 @@ export const setCurrencyType = createAction(SET_CURRENCY_TYPE);
 export const updateLastCandle = createAction(UPDATE_LAST_CANDLE);
 export const regularUpdate = createAction(REGULAR_UPDATE, ChartDataAPI.getChartData);
 export const getOrderBook = createAction(GET_ORDER_BOOK, PoloniexAPI.getOrderBook, meta => meta);
+export const getTopOrderBook = createAction(GET_TOP_ORDER_BOOK, PoloniexAPI.getTopOrderBook);
 export const resetOrderBook = createAction(RESET_ORDER_BOOK);
 export const getTradeHistory = createAction(GET_TRADE_HISTORY, PoloniexAPI.getTradeHistory, meta => meta);
 export const resetTradeHistory = createAction(RESET_TRADE_HISTORY);
@@ -79,6 +81,10 @@ const initialState = Map({
     chartType: 'year',
     currencyType: null,
     timebase: null,
+    topOrderBook: Map({
+      buy: 0,
+      sell: 0
+    }),
     orderBook: Map({
       buy: List(),
       sell: List()
@@ -195,7 +201,25 @@ export default handleActions({
       chartData = chartData.set(chartData.size - 1, lastCandle);
       return state.setIn(['detail', 'chartData'], chartData);
     },
-
+    ...pender({
+      type: GET_TOP_ORDER_BOOK,
+      onSuccess: (state, action) => {
+        const { data } = action.payload;
+        console.log(data);
+        if(data.bids.length === 0 || data.asks.length === 0) {
+          return state.setIn(['detail', 'topOrderBook'], Map({
+            buy: 0,
+            sell: 0
+          }));
+        }
+        const buy = fromJS(data.bids[0][0]);
+        const sell = fromJS(data.asks[0][0]);
+        return state.setIn(['detail', 'topOrderBook'], Map({
+          buy,
+          sell
+        }));
+      }
+    }),
     ...pender({
       type: GET_ORDER_BOOK,
       onSuccess: (state, action) => {

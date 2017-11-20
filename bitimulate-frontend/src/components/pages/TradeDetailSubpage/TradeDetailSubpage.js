@@ -25,7 +25,7 @@ class TradeDetailSubpage extends Component {
     return (
       <div>
         <TradeChartContainer currencyKey={currencyKey}/>
-        <TradeSectionContainer/>
+        <TradeSectionContainer currencyKey={currencyKey}/>
         <OrderBookContainer/>
         <TradeHistoryContainer/>
       </div>

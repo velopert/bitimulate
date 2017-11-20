@@ -3,12 +3,15 @@ const Order = require('db/models/Order');
 const User = require('db/models/User');
 const log = require('lib/log');
 const redis = require('redis');
+const poloniex = require('lib/poloniex');
+const cache = require('lib/cache');
 
 const generalPublisher = redis.createClient();
 
 module.exports = (() => {
   let syncTimeoutId = null;
   let currentExchangeRates = [];
+  const pending = new Map();
 
   const makeUserTransaction = async (userId, currencyPair, amount, price, sell) => {
     let [ base, target ] = currencyPair.split('_');
@@ -93,11 +96,13 @@ module.exports = (() => {
   };
 
   const findAvailableOrders = (rateInfo, sell) => {
+    const multiplier = sell ? 1.02 : 0.98;
+    
     return Order.find({
       status: 'waiting',
       currencyPair: rateInfo.name,
       price: {
-        [sell ? '$lte' : '$gte']: rateInfo.last
+        [sell ? '$lte' : '$gte']: rateInfo.last * multiplier
       },
       sell
     }).lean().exec();
@@ -105,6 +110,33 @@ module.exports = (() => {
 
   const processOrder = async (order) => {
     const { _id, amount, userId, price, currencyPair, sell } = order;
+
+    // find if it exists already in pending
+    const idString = _id.toString();
+    if(pending.get(idString)) {
+      console.log('ignored duplicated process');
+      return;
+    }
+
+    pending.set(idString, true);
+
+    const getOrderBookCached = cache.cachify(poloniex.getOrderBook, 1);
+    
+    try {
+      const orderbook = await getOrderBookCached(currencyPair, 3);
+      const compareKey = sell ? 'bids' : 'asks';
+      const orderPrice = parseFloat(orderbook[compareKey][0][0]);
+      const requirement = sell ? price <= orderPrice
+        : price >= orderPrice;
+      if (!requirement) {
+        pending.delete(idString);
+        return;
+      };
+    } catch (e) {
+      console.log(e);
+      pending.delete(idString);
+      return;
+    }
     try {
       const updatedOrder = await Order.findByIdAndUpdate(_id, { 
         status: 'processed',
@@ -121,6 +153,7 @@ module.exports = (() => {
     } catch (e) {
       console.log(e);
     }
+    pending.delete(idString);
   };
 
   const loopThroughCoins = async () => {
@@ -153,6 +186,8 @@ module.exports = (() => {
     availableOrders.map((order) => {
       processOrder(order);
     });
+
+    
   };
 
   return {

@@ -48,10 +48,16 @@ module.exports = (function () {
     return object;
   }
 
+  function getOrderBook(currencyPair, depth) {
+    return axios.get(`https://poloniex.com/public?command=returnOrderBook&currencyPair=${currencyPair}&depth=3`)
+      .then(response => response.data);
+  }
+
   return {
     getCurrencyPairName,
     getTickers,
     convertToTickerObject,
-    getChartData
+    getChartData,
+    getOrderBook
   };
 })();

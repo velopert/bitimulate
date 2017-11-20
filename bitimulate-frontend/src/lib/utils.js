@@ -45,7 +45,7 @@ export function limitDigit(value, d = 10, showComma, round) {
 
   if(!value) return (0).toFixed(10);
   const digits = (d - Math.floor(Math.log10(parsedValue)));
-  const fixed = parsedValue.toFixed(digits > d ? d : digits);
+  const fixed = parsedValue.toFixed(digits > d ? d : (digits > 0 ? digits : 0));
   const float = parseFloat(fixed);
   if(!showComma) {
     return fixed;

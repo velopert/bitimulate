@@ -13,11 +13,20 @@ import errors from 'lib/errors';
 
 class TradeSectionContainer extends Component {
 
-  initialize = () => {
-    const { currentPrice, TradeActions } = this.props;
+  initialize = async () => {
+    const { currentPrice, currencyType, currencyKey, TradeActions } = this.props;
     if(currentPrice) {
-      TradeActions.initializeTradeAction(currentPrice.toFixed(10));
+      TradeActions.initializeTradeAction('');
     }
+    console.log(currencyType);
+    try {
+      await TradeActions.getTopOrderBook(currencyType === 'BTC' ? 'USDT_BTC': `BTC_${currencyKey}`);
+      this.handleRefreshPrice('sell');
+      this.handleRefreshPrice('buy');
+    } catch (e) {
+
+    }
+
   }
 
   handleCreateOrder = async ({
@@ -27,6 +36,13 @@ class TradeSectionContainer extends Component {
     sell
   }) => {
     const { TradeActions, UserActions, BaseActions } = this.props;
+
+    if(amount === 0) {
+      return BaseActions.showMsgbox({
+        type: 'error',
+        text: `${sell?'매도':'매수'}량을 0 이상으로 입력하세요.`
+      });
+    }
     try {
       await TradeActions.createOrder({
         currencyPair, price, amount, sell
@@ -39,19 +55,20 @@ class TradeSectionContainer extends Component {
           text: '요청이 실패했습니다.'
         });
       }
-      if(e.response.status === 400) {
-        return BaseActions.showMsgbox({
-          type: 'error',
-          text: errors['BAD_REQUEST']
-        });
-      }
-      if(e.response) {
-        const errorText = errors[e.response.data.name];
+      const { name: errorName } = e.response.data;
+      if(errorName) {
+        const errorText = errors[errorName];
         BaseActions.showMsgbox({
           type: 'error',
           text: errorText
         })
+        return;
       }
+
+      return BaseActions.showMsgbox({
+        type: 'error',
+        text: errors['BAD_REQUEST']
+      });
     }
   }
 
@@ -65,11 +82,16 @@ class TradeSectionContainer extends Component {
   }
 
   handleRefreshPrice = (type) => {
-    const { TradeActions, currentPrice } = this.props;
+    const { TradeActions, topOrderBook } = this.props;
+    const selected = type === 'sell' ? topOrderBook.get('buy') : topOrderBook.get('sell');
+    if(!selected) {
+      console.log('!selected');
+      return;
+    }
     TradeActions.changeTradeBoxInput({
       type,
       name: 'price',
-      value: currentPrice.toFixed(10)
+      value: selected
     });
   }
 
@@ -125,7 +147,10 @@ export default connect(
       buy: state.trade.getIn(['detail', 'tradeSection', 'buy']),
       sell: state.trade.getIn(['detail', 'tradeSection', 'sell']),
       disableButton: state.trade.getIn(['detail', 'tradeSection', 'disableButton']),
-      wallet: state.user.get('wallet')
+      wallet: state.user.get('wallet'),
+      topOrderBook: state.trade.getIn(['detail', 'topOrderBook']),
+      buyTop: state.trade.getIn(['detail', 'orderBook', 'buy', 0]),
+      sellTop: state.trade.getIn(['detail', 'orderBook', 'sell', 0]),
     }
   },
   (dispatch) => ({

@@ -17,13 +17,11 @@ class Msgbox extends Component {
 
     const Icon = icons[type];
 
-    if(!Icon) return null;
-
     return (
       <Modal visible={visible}>
         <div className={cx('msgbox')}>
           <div className={cx('head', type)}>
-            <Icon/>
+            { Icon && <Icon/> }
           </div>
           <div className={cx('content')}>
             {text}

@@ -22,6 +22,19 @@ module.exports = (function() {
         if(!data) return null;
         return JSON.parse(data);
       });
+    },
+    cachify(fn, exp, prefix = '') {
+      return async (...params) => {
+        const key = `${prefix}${fn.name}:${JSON.stringify(params)}`;
+        const cached = await this.get(key);
+        if (cached) {
+          return cached;
+        }
+
+        const result = await fn(...params);
+        this.set(key, result, exp);
+        return result;
+      };
     }
   };
 })();
