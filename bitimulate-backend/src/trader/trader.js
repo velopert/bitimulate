@@ -120,8 +120,8 @@ module.exports = (() => {
 
     pending.set(idString, true);
 
-    const getOrderBookCached = cache.cachify(poloniex.getOrderBook, 1);
-    
+    const getOrderBookCached = cache.cachify(poloniex.getOrderBook, 3);
+
     try {
       const orderbook = await getOrderBookCached(currencyPair, 3);
       const compareKey = sell ? 'bids' : 'asks';
