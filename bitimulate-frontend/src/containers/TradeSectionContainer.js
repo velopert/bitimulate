@@ -21,8 +21,8 @@ class TradeSectionContainer extends Component {
     console.log(currencyType);
     try {
       await TradeActions.getTopOrderBook(currencyType === 'BTC' ? 'USDT_BTC': `BTC_${currencyKey}`);
-      this.handleRefreshPrice('sell');
-      this.handleRefreshPrice('buy');
+      this.handleRefreshPrice('sell', true);
+      this.handleRefreshPrice('buy', true);
     } catch (e) {
 
     }
@@ -81,17 +81,23 @@ class TradeSectionContainer extends Component {
     });
   }
 
-  handleRefreshPrice = (type) => {
-    const { TradeActions, topOrderBook } = this.props;
-    const selected = type === 'sell' ? topOrderBook.get('buy') : topOrderBook.get('sell');
-    if(!selected) {
-      console.log('!selected');
+  handleRefreshPrice = (type, initial) => {
+    const { TradeActions, topOrderBook, sellTop, buyTop } = this.props;
+    const selected = type === 'sell' ? buyTop : sellTop;
+    // make it DRY later on
+    if(initial) {
+      const initial = type === 'sell' ? topOrderBook.get('buy') : topOrderBook.get('sell');
+      TradeActions.changeTradeBoxInput({
+        type,
+        name: 'price',
+        value: initial
+      });
       return;
     }
     TradeActions.changeTradeBoxInput({
       type,
       name: 'price',
-      value: selected
+      value: selected.get(0)
     });
   }
 
