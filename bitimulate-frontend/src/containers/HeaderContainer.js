@@ -59,7 +59,7 @@ class HeaderContainer extends Component {
 
   render() {
     const { handleLoginButtonClick, handleShowUserMenu, handleHideUserMenu, handleLogout } = this;
-    const { user, solid, userMenu } = this.props;
+    const { user, solid, userMenu, isRegister } = this.props;
     const { shadow } = this.state;
 
     return (
@@ -72,6 +72,7 @@ class HeaderContainer extends Component {
         solid={solid}
         userMenu={userMenu}
         shadow={shadow}
+        isRegister={isRegister}
       />
     );
   }
