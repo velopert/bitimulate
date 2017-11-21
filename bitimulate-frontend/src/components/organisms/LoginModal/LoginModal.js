@@ -14,7 +14,8 @@ const LoginModal = ({
   onLogin,
   onRegister,
   onSocialLogin,
-  onClose
+  onClose,
+  onKeyPress
 }) => {
   const isLogin = mode === 'login';
   const modeText = isLogin ? '로그인' : '회원가입';
@@ -55,7 +56,8 @@ const LoginModal = ({
               name="password" 
               fullWidth big 
               placeholder="비밀번호" 
-              type="password"/>
+              type="password"
+              onKeyPress={onKeyPress}/>
               <InputError error={passwordError}/>
           </div>
           <Button 

@@ -18,6 +18,16 @@ import { withRouter } from 'react-router'
 
 class LoginModalContainer extends Component {
 
+  handleKeyPress = (e) => {
+    if(e.key !== 'Enter') return;
+    
+    const { mode } = this.props;
+    if(mode === 'login') {
+      return this.handleLogin();
+    }
+    this.handleRegister();
+  }
+
   handleClose = () => {
     const { visible, BaseActions, AuthActions } = this.props;
     if(!visible) return;
@@ -151,7 +161,8 @@ class LoginModalContainer extends Component {
       handleLogin,
       handleRegister,
       handleSocialLogin,
-      handleClose
+      handleClose,
+      handleKeyPress
     } = this;
 
     return (
@@ -167,6 +178,7 @@ class LoginModalContainer extends Component {
           onRegister={handleRegister}
           onSocialLogin={handleSocialLogin}
           onClose={handleClose}
+          onKeyPress={handleKeyPress}
         />
         <DimmerSpinner visible={pending}/>
       </div>
