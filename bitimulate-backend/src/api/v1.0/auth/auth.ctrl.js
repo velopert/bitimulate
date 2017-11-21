@@ -271,7 +271,7 @@ exports.socialRegister = async (ctx) => {
 
   // check schema
   const schema = Joi.object({
-    displayName: Joi.string().regex(/^[a-zA-Z0-9ㄱ-힣]{3,12}$/).required(),
+    displayName: Joi.string().regex(/^[a-zA-Z0-9ㄱ-ㅎ가-힣]{3,12}$/).required(),
     accessToken: Joi.string().required(),
     initialMoney: Joi.object({
       currency: Joi.string().allow('BTC', 'USD', 'BTC').required(),
