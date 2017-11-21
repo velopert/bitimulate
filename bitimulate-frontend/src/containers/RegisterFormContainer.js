@@ -10,6 +10,11 @@ import { withRouter } from 'react-router';
 
 class RegisterFormContainer extends Component {
 
+  componentDidMount() {
+    const { RegisterActions } = this.props;
+    RegisterActions.initialize();
+  }
+  
   handleChangeNickname = (e) => {
     const { value } = e.target;
     const { RegisterActions } = this.props;
@@ -45,6 +50,13 @@ class RegisterFormContainer extends Component {
       RegisterActions.setError('닉네임을 입력하세요')
       return;
     }
+
+    const nicknamePattern = /^[a-zA-Z0-9ㄱ-ㅎ가-힣]{3,12}$/;
+    if(!nicknamePattern.test(nickname)) {
+      RegisterActions.setError('닉네임은 3~12자의 영어/숫자/한글이 허용됩니다.')
+      return;
+    }
+
 
     // social register
     if(socialInfo) {

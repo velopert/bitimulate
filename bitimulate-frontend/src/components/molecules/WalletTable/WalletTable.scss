@@ -21,6 +21,18 @@
     &.coin {
       flex: 4;
     }
+    &.percent {
+      flex: 3;
+      @include media("<medium") {
+        display: none;
+      }
+      .negative {
+        color: material-color('red', '600');
+      }
+      .positive {
+        color: material-color('green', '600');
+      }
+    }
     &.name {
       flex: 10;
     }

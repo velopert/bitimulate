@@ -15,8 +15,10 @@ export const getCorrespondingRate = (aggregated, rate) => {
   aggregated.forEach(
     w => {
       if(w.currency === 'BTC') {
+        const btcRate = rate.find(r => r.get('currencyKey') === 'BTC');
         w.currencyName = 'Bitcoin';
         w.last = 1;
+        w.percentChange = btcRate.get('percentChange');
         return;
       }
       if(w.currency === 'USD') {
@@ -32,6 +34,7 @@ export const getCorrespondingRate = (aggregated, rate) => {
       if(!info) return w;
       w.last = info.get('last'); 
       w.currencyName = info.get('currencyName');
+      w.percentChange = info.get('percentChange');
     }
   );
   return aggregated;

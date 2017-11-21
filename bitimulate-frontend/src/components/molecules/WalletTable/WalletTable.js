@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './WalletTable.scss';
 import classNames from 'classnames/bind';
-import { limitDigit } from 'lib/utils';
+import { limitDigit, decimalToPercentString } from 'lib/utils';
 import {Link} from 'react-router-dom';
 
 const cx = classNames.bind(styles);
@@ -11,10 +11,15 @@ const Row = ({
   currencyName,
   value,
   valueOnOrder,
-  btcValue
+  btcValue,
+  percentChange
 }) => (
   <Link to={`/trade/${currency}`}  className={cx('row')}>
     <div className={cx('col', 'coin')}>{currency}</div>
+    <div className={cx('col', 'percent')}>{percentChange&&<span className={cx({
+      negative: percentChange < 0,
+      positive: percentChange > 0
+    })}>{percentChange > 0 && '+'}{decimalToPercentString(percentChange)}</span>}</div>
     <div className={cx('col', 'name')}>{currencyName}</div>
     <div className={cx('col', 'has')}>{limitDigit(value)}</div>
     <div className={cx('col', 'waiting')}>{limitDigit(valueOnOrder)}</div>
@@ -27,7 +32,7 @@ const WalletTable = ({data}) => {
   
   const rows = data.map(
     (wallet) => {
-      const { currency, currencyName, value, valueOnOrder, last } = wallet;
+      const { currency, currencyName, value, valueOnOrder, last, percentChange } = wallet;
       return (
         <Row
           key={currency}
@@ -36,6 +41,7 @@ const WalletTable = ({data}) => {
           value={value}
           valueOnOrder={valueOnOrder}
           btcValue={value * last}
+          percentChange={percentChange}
         />      
       )
     }
@@ -44,6 +50,7 @@ const WalletTable = ({data}) => {
     <div className={cx('wallet-table')}>
       <div className={cx('table-head')}>
         <div className={cx('col', 'coin')}>코인</div>
+        <div className={cx('col', 'perecent')}>변화율</div>
         <div className={cx('col', 'name')}>이름</div>
         <div className={cx('col', 'has')}>보유량</div>
         <div className={cx('col', 'waiting')}>거래 대기중</div>
