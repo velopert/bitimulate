@@ -137,7 +137,12 @@ module.exports = (() => {
       pending.delete(idString);
       return;
     }
+    
     try {
+      // check its status one more time
+      const currentOrder = await Order.findById(_id).exec();
+      if(currentOrder.status !== 'waiting') return;
+
       const updatedOrder = await Order.findByIdAndUpdate(_id, { 
         status: 'processed',
         processedDate: new Date(),
