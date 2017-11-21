@@ -28,7 +28,7 @@ class RegisterPage extends Component {
 
     return (
       <PageTemplate 
-        header={<HeaderContainer/>}>
+        header={<HeaderContainer isRegister/>}>
         <PolyBackground half={half}>
         </PolyBackground>
         <Paper>

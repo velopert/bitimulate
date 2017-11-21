@@ -13,7 +13,8 @@ const Header = ({
   userMenu,
   user,
   solid,
-  shadow
+  shadow,
+  isRegister
 }) => {
   return (
     <div className={cx('header', { solid, shadow })}>
@@ -21,7 +22,7 @@ const Header = ({
         <div className={cx('logo-wrapper')}>
           <Logo/>
         </div>
-        <div className={cx('right-side')}>
+        { !isRegister && <div className={cx('right-side')}>
           <div className={cx('desktop-only')}>
             <HeaderNav logged={user}/>
             {
@@ -37,7 +38,7 @@ const Header = ({
               )
             }
           </div>
-        </div>
+        </div> }
         <UserMenu visible={userMenu} onHide={onHideUserMenu} eventTypes={["mouseup", "touchend"]} onLogout={onLogout}/>
       </div>
     </div>
