@@ -12,7 +12,7 @@ const CHECK_DISPLAY_NAME = 'CHECK_DISPLAY_NAME';
 const SUBMIT = 'SUBMIT';
 const SOCIAL_REGISTER = 'SOCIAL_REGISTER';
 const SET_ERROR = 'SET_ERROR';
-
+const INITIALIZE = 'INITIALIZE';
 
 
 export const changeNickname = createAction(CHANGE_NICKNAME);
@@ -22,6 +22,7 @@ export const checkDisplayName = createAction(CHECK_DISPLAY_NAME, AuthAPI.checkDi
 export const submit = createAction(SUBMIT, AuthAPI.localRegister);
 export const setError = createAction(SET_ERROR);
 export const socialRegister = createAction(SOCIAL_REGISTER, AuthAPI.socialRegister);
+export const initialize = createAction(INITIALIZE);
 
 // initial state
 const initialState = Map({
@@ -35,6 +36,7 @@ const initialState = Map({
 
 // reducer
 export default handleActions({
+  [INITIALIZE]: (state, action) => initialState,
   [CHANGE_NICKNAME]: (state, action) => {
     const { payload: nickname } = action;
     return state.set('nickname', nickname);
@@ -61,8 +63,10 @@ export default handleActions({
       return state.set('result', user);
     },
     onFailure: (state, action) => {
-      const { status, data: { key } } = action.payload;
-      
+      const { status } = action.payload;
+      if(!action.payload.reponse) return state;
+
+      const { key } = action.payload.response.data;
       const handler = {
         displayName: () => {
           return state.set('displayNameExists', true);
