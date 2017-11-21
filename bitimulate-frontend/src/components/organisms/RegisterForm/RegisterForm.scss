@@ -5,9 +5,13 @@
     color: #757575;
     white-space: pre-wrap;
     margin-bottom: 0.5rem;
+    @include media("<medium") {
+      font-size: 0.9rem;
+    }
   }
 
   .error {
+    margin-top: 1rem;
     background: material-color('red', '600');
     color: white;
     margin-bottom: 0.5rem;
