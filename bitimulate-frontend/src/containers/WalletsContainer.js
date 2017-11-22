@@ -11,7 +11,6 @@ import compose from 'lodash/fp/compose';
 import { getAggregatedWallet, getCorrespondingRate } from 'lib/aggregateWallet';
 
 class WalletsContainer extends Component {
-
   getAggregatedWallet = () => {
     const { wallet, walletOnOrder } = this.props;
     return getAggregatedWallet(wallet, walletOnOrder);

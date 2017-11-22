@@ -1,6 +1,9 @@
 const Joi = require('joi');
 const User = require('db/models/User');
+const Order = require('db/models/Order');
 const EarningsHistory = require('db/models/EarningsHistory');
+const ObjectId = require('mongoose').Types.ObjectId;
+const queryString = require('query-string');
 
 exports.getMetaInfo = async (ctx) => {
   const { user } = ctx.request;
@@ -81,5 +84,56 @@ exports.getEarningsHistory = async (ctx) => {
     ctx.body = history;
   } catch (e) {
     ctx.throw(500, e);
+  }
+};
+
+exports.checkUserExists = async (ctx, next) => {
+  const { displayName } = ctx.params;
+  try {
+    const user = await User.findOne({displayName}).exec();
+    if(!user) {
+      ctx.status = 404;
+      ctx.body = {
+        name: 'NO_USER',
+        msg: 'user does not exist'
+      };
+      return;
+    }
+    ctx.selectedUser = user;
+    return next();
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+exports.getWalletOfUser = async (ctx) => {
+  const { selectedUser } = ctx;
+  const { wallet, walletOnOrder, metaInfo } = selectedUser;
+
+  ctx.body = {
+    wallet,
+    walletOnOrder,
+    initial: metaInfo.initial
+  };
+};
+
+exports.getOrdersOfUser = async (ctx) => {
+  const { selectedUser } = ctx;
+  const { cursor } = ctx.query;
+  // check user existancy
+  try {
+    const orders = await Order.findOrders(selectedUser._id, cursor);
+    ctx.body = orders;
+
+    if (orders.length === 20) {
+      const { path } = ctx;
+      const query = queryString.stringify({
+        cursor: orders[orders.length - 1]._id
+      });
+      const nextUrl = `${path}?${query}}`;
+      ctx.response.set('Link', `<${nextUrl}>; rel="next"`);
+    }
+  } catch (e) {
+    ctx.throw(e, 500);
   }
 };

@@ -114,7 +114,6 @@ module.exports = (() => {
     // find if it exists already in pending
     const idString = _id.toString();
     if(pending.get(idString)) {
-      console.log('ignored duplicated process');
       return;
     }
 
