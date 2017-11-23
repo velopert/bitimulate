@@ -46,6 +46,7 @@ app.use((ctx, next) => {
   ctx.set('Access-Control-Allow-Credentials', true);
   ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-timebase, Link');
   ctx.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PATCH, OPTIONS');
+  ctx.set('Access-Control-Expose-Headers', 'Link');
   return next();
 });
 
