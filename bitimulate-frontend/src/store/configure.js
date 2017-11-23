@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import penderMiddleware from 'redux-pender';
 import modules from './modules';
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development' || true;
 
 const devtools = isDev && window.devToolsExtension 
   ? window.devToolsExtension
