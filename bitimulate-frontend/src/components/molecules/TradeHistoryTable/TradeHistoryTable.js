@@ -6,6 +6,8 @@ import moment from 'moment';
 import scuize from 'lib/hoc/scuize';
 import ReactTooltip from 'react-tooltip';
 import { Spinner } from 'components';
+import { List } from 'immutable';
+
 
 const cx = classNames.bind(styles);
 
@@ -73,6 +75,8 @@ const TradeHistoryTable = ({data, personal, onCancelOrder, onScroll, hasNext, fo
     'data-tip': "항목을 더블클릭하여 거래 취소",
     'data-effect': 'solid'
   } : {} 
+
+  if(!data) return null;
   
   const rows = data && data.map(
     row => {
@@ -98,7 +102,7 @@ const TradeHistoryTable = ({data, personal, onCancelOrder, onScroll, hasNext, fo
           />
       }
     }
-  )
+  );
   return (
     <div className={cx('trade-history-table-wrapper')}>
       <div className={cx('trade-history-table', { forPage })}>

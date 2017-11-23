@@ -130,7 +130,7 @@ exports.getOrdersOfUser = async (ctx) => {
       const query = queryString.stringify({
         cursor: orders[orders.length - 1]._id
       });
-      const nextUrl = `${path}?${query}}`;
+      const nextUrl = `${path}?${query}`;
       ctx.response.set('Link', `<${nextUrl}>; rel="next"`);
     }
   } catch (e) {

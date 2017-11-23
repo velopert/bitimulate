@@ -1,0 +1,49 @@
+@import 'utils';
+
+.block {
+  background: linear-gradient(to right, #276caf, #30a1c1);
+  height: 25rem;
+  z-index: 1;
+  @include media("<medium") {
+    height: 50vh;
+  }
+}
+.ranking-box {
+  margin: 0 auto;
+  margin-top: -20rem;
+  width: 768px;
+
+  padding: 2rem;
+  padding-bottom: 4rem;
+  z-index: 10;
+  margin-bottom: 3rem;
+  @include material-shadow(3, 0.45);
+  
+  @include media("<medium") {
+    width: calc(100% - 2rem);
+    margin-top: calc(-50vh + 1rem);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 2rem;
+  }
+
+  
+  h1 {
+    margin: 0;
+    font-weight: 900;
+  }
+
+  .description {
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    margin-top: 2rem;
+    margin-left: -2rem;
+    margin-right: -2rem;
+    margin-bottom: 2rem;
+  }
+}

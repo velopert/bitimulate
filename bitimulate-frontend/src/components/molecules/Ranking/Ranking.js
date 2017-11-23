@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Ranking.scss';
 import classNames from 'classnames/bind';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -8,7 +9,7 @@ const RankItem = ({displayName, profit, rankNumber}) => {
   const percentage = Math.round(profit * 10000) / 100;
   
   return (
-    <div className={cx('rank-item')}>
+    <Link className={cx('rank-item')} to={`/report/${displayName}`}>
       <div className={cx('num')}>
         {rankNumber}위
       </div>
@@ -18,7 +19,7 @@ const RankItem = ({displayName, profit, rankNumber}) => {
       <div className={cx('profit', profit >= 0 ? 'positive' : 'negative')}>
         {profit > 0 && '+'}{percentage}%
       </div>
-    </div>
+    </Link>
   )
 }
 

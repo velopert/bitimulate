@@ -17,6 +17,9 @@
     }
 
     .rank-item {
+      @include hover() {
+        background: rgba(0,0,0,0.01);
+      }
       padding: 0.5rem;
       border-top: 1px solid material-color('grey', '300');
       color: material-color('grey', '600');
