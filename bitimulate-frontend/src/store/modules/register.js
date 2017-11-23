@@ -64,7 +64,7 @@ export default handleActions({
     },
     onFailure: (state, action) => {
       const { status } = action.payload;
-      if(!action.payload.reponse) return state;
+      if(!action.payload.response) return state;
 
       const { key } = action.payload.response.data;
       const handler = {
