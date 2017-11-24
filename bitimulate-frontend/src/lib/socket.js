@@ -19,12 +19,6 @@ const parseJSON = (str) => {
   return parsed;
 }
 
-const msgTypes = {
-  ticker: 1,
-  subscribe: 2,
-  unsubscribe: 3
-};
-
 const SUBSCRIBE = 'SUBSCRIBE';
 const UNSUBSCRIBE = 'UNSUBSCRIBE';
 
@@ -124,8 +118,8 @@ export default (function() {
     console.log('unscribing ' + key);
 
     _socket.send(JSON.stringify({
-      code: msgTypes.unsubscribe,
-      data: key
+      type: UNSUBSCRIBE,
+      payload: key
     }));
   }
 
