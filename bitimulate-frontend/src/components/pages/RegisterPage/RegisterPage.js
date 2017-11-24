@@ -8,6 +8,8 @@ import {
 import {HeaderContainer, RegisterFormContainer} from 'containers';
 import styles from './RegisterPage.scss';
 import classNames from 'classnames/bind';
+import { Helmet } from 'react-helmet';
+
 const cx = classNames.bind(styles);
 
 class RegisterPage extends Component {
@@ -30,6 +32,9 @@ class RegisterPage extends Component {
       <PageTemplate 
         header={<HeaderContainer isRegister/>}>
         <PolyBackground half={half}>
+        <Helmet>
+          <title>회원가입 :: Bitimulate</title>
+        </Helmet>
         </PolyBackground>
         <Paper>
           <RegisterTemplate>

@@ -8,11 +8,16 @@ import {
   UserLoader,
   Core
  } from 'containers';
+ import { Helmet } from 'react-helmet';
+
 
 class App extends Component {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>Bitimulate - 가상화폐 모의 거래소</title>
+        </Helmet>
         <Route exact path ="/" component={HomePage}/>
         <Route path="/trade" component={TradePage}/>
         <Route path="/register" component={RegisterPage}/>

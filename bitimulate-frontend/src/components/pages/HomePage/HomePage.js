@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import TrophyIcon from 'react-icons/lib/fa/trophy';
 import GithubIcon from 'react-icons/lib/go/mark-github';
 import EmailIcon from 'react-icons/lib/md/email';
+import { Helmet } from 'react-helmet';
 
 const cx = classNames.bind(styles);
 
@@ -17,6 +18,11 @@ const HomePage = () => {
   return (
     <PageTemplate 
       header={<HeaderContainer/>}>
+      <Helmet>
+        <title>Bitimulate - 가상화폐 모의 거래소</title>
+        <meta name="keywords" content="가상화폐, 암호화폐, 모의, 거래, 거래소, 비트코인, 이더리움, BTC, ETH"/>
+        <meta name="description" content="가상화폐 / 암호화폐 모의 거래소 Bitimulate (비티뮬레이트), 과연 당신은 가상화폐 시장에서 수익을 낼 수 있을까요? 모의거래를 통해 알아보세요."/>
+      </Helmet>
       <SocketSubscriber channel="TICKER"/>
       <PolyBackground home>
         <IntroQuestionContainer/>

@@ -3,11 +3,16 @@ import styles from './RankingPage.scss';
 import classNames from 'classnames/bind';
 import { PageTemplate, Card, PolyBackground } from 'components';
 import { HeaderContainer, RankingContainer } from 'containers';
+import { Helmet } from 'react-helmet';
 
 const cx = classNames.bind(styles);
 
 const RankingPage = () => (
   <PageTemplate header={<HeaderContainer solid/>} padding>
+    <Helmet>
+      <title>랭킹 :: Bitimulate</title>
+      <meta name="description" content="사용자들의 모의 거래 수익률 랭킹"/>
+    </Helmet>
     <div className={cx('block')}>
     </div>
     <Card className={cx('ranking-box')}>

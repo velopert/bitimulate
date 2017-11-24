@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './TradeDetailSubpage.scss';
 import classNames from 'classnames/bind';
 import { TradeChartContainer, OrderBookContainer, TradeSectionContainer, TradeHistoryContainer } from 'containers';
+import { Helmet } from 'react-helmet';
 
 const cx = classNames.bind(styles);
 
@@ -24,6 +25,12 @@ class TradeDetailSubpage extends Component {
 
     return (
       <div>
+        <div>
+          <Helmet>
+            <title>{`[${currencyKey}] 거래소 :: Bitimulate`}</title>
+            <meta name="description" content={`${currencyKey} 시세 확인 및 거래하기`}/>
+          </Helmet>
+        </div>
         <TradeChartContainer currencyKey={currencyKey}/>
         <TradeSectionContainer currencyKey={currencyKey}/>
         <OrderBookContainer/>
