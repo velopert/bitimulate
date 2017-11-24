@@ -8,7 +8,8 @@ const Wallets = ({
   sum,
   krwRate,
   btcMultiplier,
-  walletData
+  walletData,
+  hideName
 }) => (
   <div className={cx('wallets')}>
     <section>
@@ -23,7 +24,7 @@ const Wallets = ({
     </section>
     <section>
       <h2>화폐별 지갑</h2>
-      <WalletTable data={walletData}/>
+      <WalletTable data={walletData} hideName={hideName}/>
     </section>
   </div>
 );

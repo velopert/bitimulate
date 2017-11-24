@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as userActions from 'store/modules/user';
 import storage from 'lib/storage';
+import socket from 'lib/socket';
+
 
 class UserLoader extends Component {
 
@@ -36,6 +38,8 @@ class UserLoader extends Component {
 
     if(!prevProps.user && this.props.user) {
       this.checkLoginStatus();
+      // restart socket userchange
+      socket.close();
     }
   }
   

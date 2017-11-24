@@ -22,7 +22,9 @@
       flex: 4;
     }
     &.percent {
-      flex: 3;
+      font-size: 0.8rem;
+      text-align: right;
+      flex: 4.5;
       @include media("<medium") {
         display: none;
       }

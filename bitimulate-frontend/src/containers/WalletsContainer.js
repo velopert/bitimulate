@@ -48,10 +48,10 @@ class WalletsContainer extends Component {
   
   render() {
 
-    const { rate, krwRate } = this.props;
+    const { rate, krwRate, hideName, wallet} = this.props;
 
     
-    if(rate.isEmpty()) return null;
+    if(rate.isEmpty() || !wallet) return null;
     const walletData = this.getWalletData();
     const sum = walletData.reduce((acc, {value, last}) => {
       return acc + value * last;
@@ -71,19 +71,32 @@ class WalletsContainer extends Component {
         krwRate={krwRate}
         btcMultiplier={btcMultiplier}
         walletData={walletData}
+        hideName={hideName}
       />
     );
   }
 }
 
 export default connect(
-  state => ({
-    krwRate: state.common.get('krwRate'),
-    rate: state.trade.get('rate'),
-    wallet: state.user.get('wallet'),
-    walletOnOrder: state.user.get('walletOnOrder'),
-    currencyInfo: state.common.get('currencyInfo'),
-  }),
+  (state, ownProps) => {
+    const { isReport } = ownProps;
+    if(!isReport) {
+      return {
+        krwRate: state.common.get('krwRate'),
+        rate: state.trade.get('rate'),
+        wallet: state.user.get('wallet'),
+        walletOnOrder: state.user.get('walletOnOrder'),
+        currencyInfo: state.common.get('currencyInfo'),
+      }
+    } 
+    return {
+      krwRate: state.common.get('krwRate'),
+      rate: state.trade.get('rate'),
+      wallet: state.report.getIn(['walletData', 'wallet']),
+      walletOnOrder: state.report.getIn(['walletData', 'walletOnOrder']),
+      currencyInfo: state.common.get('currencyInfo'),
+    }
+  },
   dispatch => ({
     TradeActions: bindActionCreators(tradeActions, dispatch),
     UserActions: bindActionCreators(userActions, dispatch),

@@ -5,6 +5,8 @@ import { TradeHistoryTable, ReportTemplate, LoadMore } from 'components';
 import * as reportActions from 'store/modules/report';
 import * as baseActions from 'store/modules/base';
 import { withRouter } from 'react-router-dom';
+import { WalletsContainer } from 'containers';
+
 
 class ReportContainer extends Component {
   prev = null
@@ -60,7 +62,7 @@ class ReportContainer extends Component {
           ]
         )}
         wallet={(
-          <div></div>
+          <WalletsContainer hideName isReport/>
         )}
       />
     )

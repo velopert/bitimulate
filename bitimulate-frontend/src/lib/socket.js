@@ -139,12 +139,17 @@ export default (function() {
     connect(_uri);
   }
 
+  const close = () => {
+    _socket.close();
+  }
+
   return {
     initialize: (store, uri) => {
       _store = store;
       connect(uri);
     },
     subscribe,
-    unsubscribe
+    unsubscribe,
+    close
   }
 })();

@@ -2,7 +2,8 @@ import React from 'react';
 import styles from './ReportPage.scss';
 import classNames from 'classnames/bind';
 import { PageTemplate, Card } from 'components';
-import { HeaderContainer, ReportContainer } from 'containers';
+import { HeaderContainer, ReportContainer, SocketSubscriber } from 'containers';
+
 
 const cx = classNames.bind(styles);
 
@@ -18,6 +19,7 @@ const ReportPage = ({match}) => {
         <hr/>
         <ReportContainer displayName={displayName}/>
       </Card>
+      <SocketSubscriber channel="TICKER"/>
     </PageTemplate>
   );
 }

@@ -6,11 +6,11 @@ const cx = classNames.bind(styles);
 
 const ReportTemplate = ({tradeHistory, wallet}) => (
   <div className={cx('report-template')}>
+    <div className={cx('wallet')}>{wallet}</div>
     <div className={cx('trade-history')}>
-    <h3>거래내역</h3>
+    <h2>거래내역</h2>
     {tradeHistory}
     </div>
-    <div className={cx('wallet')}>{wallet}</div>
   </div>
 );
 
