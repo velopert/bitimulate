@@ -2,410 +2,347 @@ const currencyInfo = [
   {
     'key': 'AMP',
     'id': 275,
-    'name': 'Synereo AMP',
-    'txFee': '5.00000000'
+    'name': 'Synereo AMP'
   },
   {
     'key': 'ARDR',
     'id': 285,
-    'name': 'Ardor',
-    'txFee': '1.00000000'
+    'name': 'Ardor'
   },
   {
     'key': 'BCH',
     'id': 292,
-    'name': 'Bitcoin Cash',
-    'txFee': '0.00010000'
+    'name': 'Bitcoin Cash'
   },
   {
     'key': 'BCN',
     'id': 17,
-    'name': 'Bytecoin',
-    'txFee': '0.05000000'
+    'name': 'Bytecoin'
   },
   {
     'key': 'BCY',
     'id': 269,
-    'name': 'BitCrystals',
-    'txFee': '4.00000000'
+    'name': 'BitCrystals'
   },
   {
     'key': 'BELA',
     'id': 20,
-    'name': 'Bela',
-    'txFee': '0.01000000'
+    'name': 'Bela'
   },
   {
     'key': 'BLK',
     'id': 22,
-    'name': 'BlackCoin',
-    'txFee': '0.01000000'
+    'name': 'BlackCoin'
   },
   {
     'key': 'BTC',
     'id': 28,
-    'name': 'Bitcoin',
-    'txFee': '0.00010000'
+    'name': 'Bitcoin'
   },
   {
     'key': 'BTCD',
     'id': 29,
-    'name': 'BitcoinDark',
-    'txFee': '0.01000000'
+    'name': 'BitcoinDark'
   },
   {
     'key': 'BTM',
     'id': 31,
-    'name': 'Bitmark',
-    'txFee': '0.01000000'
+    'name': 'Bitmark'
   },
   {
     'key': 'BTS',
     'id': 32,
-    'name': 'BitShares',
-    'txFee': '5.00000000'
+    'name': 'BitShares'
   },
   {
     'key': 'BURST',
     'id': 34,
-    'name': 'Burst',
-    'txFee': '1.00000000'
+    'name': 'Burst'
   },
   {
     'key': 'CLAM',
     'id': 43,
-    'name': 'CLAMS',
-    'txFee': '0.00100000'
+    'name': 'CLAMS'
+  },
+  {
+    'key': 'CVC',
+    'id': 294,
+    'name': 'Civic'
   },
   {
     'key': 'DASH',
     'id': 60,
-    'name': 'Dash',
-    'txFee': '0.01000000'
+    'name': 'Dash'
   },
   {
     'key': 'DCR',
     'id': 277,
-    'name': 'Decred',
-    'txFee': '0.05000000'
+    'name': 'Decred'
   },
   {
     'key': 'DGB',
     'id': 53,
-    'name': 'DigiByte',
-    'txFee': '0.10000000'
+    'name': 'DigiByte'
   },
   {
     'key': 'DOGE',
     'id': 59,
-    'name': 'Dogecoin',
-    'txFee': '5.00000000'
+    'name': 'Dogecoin'
   },
   {
     'key': 'EMC2',
     'id': 69,
-    'name': 'Einsteinium',
-    'txFee': '0.01000000'
+    'name': 'Einsteinium'
   },
   {
     'key': 'ETC',
     'id': 283,
-    'name': 'Ethereum Classic',
-    'txFee': '0.01000000'
+    'name': 'Ethereum Classic'
   },
   {
     'key': 'ETH',
     'id': 267,
-    'name': 'Ethereum',
-    'txFee': '0.00500000'
+    'name': 'Ethereum'
   },
   {
     'key': 'EXP',
     'id': 270,
-    'name': 'Expanse',
-    'txFee': '0.01000000'
+    'name': 'Expanse'
   },
   {
     'key': 'FCT',
     'id': 271,
-    'name': 'Factom',
-    'txFee': '0.10000000'
+    'name': 'Factom'
   },
   {
     'key': 'FLDC',
     'id': 78,
-    'name': 'FoldingCoin',
-    'txFee': '150.00000000'
+    'name': 'FoldingCoin'
   },
   {
     'key': 'FLO',
     'id': 254,
-    'name': 'Florincoin',
-    'txFee': '0.01000000'
+    'name': 'Florincoin'
   },
   {
     'key': 'GAME',
     'id': 93,
-    'name': 'GameCredits',
-    'txFee': '0.01000000'
+    'name': 'GameCredits'
+  },
+  {
+    'key': 'GAS',
+    'id': 296,
+    'name': 'Gas'
   },
   {
     'key': 'GNO',
     'id': 291,
-    'name': 'Gnosis',
-    'txFee': '0.00500000'
+    'name': 'Gnosis'
   },
   {
     'key': 'GNT',
     'id': 290,
-    'name': 'Golem',
-    'txFee': '0.10000000'
+    'name': 'Golem'
   },
   {
     'key': 'GRC',
     'id': 261,
-    'name': 'Gridcoin Research',
-    'txFee': '0.01000000'
+    'name': 'Gridcoin Research'
   },
   {
     'key': 'HUC',
     'id': 105,
-    'name': 'Huntercoin',
-    'txFee': '0.01000000'
+    'name': 'Huntercoin'
   },
   {
     'key': 'LBC',
     'id': 280,
-    'name': 'LBRY Credits',
-    'txFee': '0.01000000'
+    'name': 'LBRY Credits'
   },
   {
     'key': 'LSK',
     'id': 278,
-    'name': 'Lisk',
-    'txFee': '0.10000000'
+    'name': 'Lisk'
   },
   {
     'key': 'LTC',
     'id': 125,
-    'name': 'Litecoin',
-    'txFee': '0.00100000'
+    'name': 'Litecoin'
   },
   {
     'key': 'MAID',
     'id': 127,
-    'name': 'MaidSafeCoin',
-    'txFee': '10.00000000'
-  },
-  {
-    'key': 'NAUT',
-    'id': 150,
-    'name': 'Nautiluscoin',
-    'txFee': '0.00000000'
+    'name': 'MaidSafeCoin'
   },
   {
     'key': 'NAV',
     'id': 151,
-    'name': 'NAVCoin',
-    'txFee': '0.01000000'
+    'name': 'NAVCoin'
   },
   {
     'key': 'NEOS',
     'id': 153,
-    'name': 'Neoscoin',
-    'txFee': '0.00010000'
+    'name': 'Neoscoin'
   },
   {
     'key': 'NMC',
     'id': 155,
-    'name': 'Namecoin',
-    'txFee': '0.01000000'
-  },
-  {
-    'key': 'NOTE',
-    'id': 157,
-    'name': 'DNotes',
-    'txFee': '0.01000000'
+    'name': 'Namecoin'
   },
   {
     'key': 'NXC',
     'id': 288,
-    'name': 'Nexium',
-    'txFee': '0.01000000'
+    'name': 'Nexium'
   },
   {
     'key': 'NXT',
     'id': 162,
-    'name': 'NXT',
-    'txFee': '1.00000000'
+    'name': 'NXT'
+  },
+  {
+    'key': 'OMG',
+    'id': 295,
+    'name': 'OmiseGO'
   },
   {
     'key': 'OMNI',
     'id': 143,
-    'name': 'Omni',
-    'txFee': '0.10000000'
+    'name': 'Omni'
   },
   {
     'key': 'PASC',
     'id': 289,
-    'name': 'PascalCoin',
-    'txFee': '0.01000000'
+    'name': 'PascalCoin'
   },
   {
     'key': 'PINK',
     'id': 168,
-    'name': 'Pinkcoin',
-    'txFee': '0.01000000'
+    'name': 'Pinkcoin'
   },
   {
     'key': 'POT',
     'id': 171,
-    'name': 'PotCoin',
-    'txFee': '0.01000000'
+    'name': 'PotCoin'
   },
   {
     'key': 'PPC',
     'id': 172,
-    'name': 'Peercoin',
-    'txFee': '0.01000000'
+    'name': 'Peercoin'
   },
   {
     'key': 'RADS',
     'id': 274,
-    'name': 'Radium',
-    'txFee': '0.01000000'
+    'name': 'Radium'
   },
   {
     'key': 'REP',
     'id': 284,
-    'name': 'Augur',
-    'txFee': '0.01000000'
+    'name': 'Augur'
   },
   {
     'key': 'RIC',
     'id': 183,
-    'name': 'Riecoin',
-    'txFee': '0.01000000'
+    'name': 'Riecoin'
   },
   {
     'key': 'SBD',
     'id': 282,
-    'name': 'Steem Dollars',
-    'txFee': '0.01000000'
+    'name': 'Steem Dollars'
   },
   {
     'key': 'SC',
     'id': 268,
-    'name': 'Siacoin',
-    'txFee': '10.00000000'
-  },
-  {
-    'key': 'SJCX',
-    'id': 189,
-    'name': 'Storjcoin X',
-    'txFee': '3.00000000'
+    'name': 'Siacoin'
   },
   {
     'key': 'STEEM',
     'id': 281,
-    'name': 'STEEM',
-    'txFee': '0.01000000'
+    'name': 'STEEM'
+  },
+  {
+    'key': 'STORJ',
+    'id': 297,
+    'name': 'Storj'
   },
   {
     'key': 'STR',
     'id': 198,
-    'name': 'Stellar',
-    'txFee': '0.00001000'
+    'name': 'Stellar'
   },
   {
     'key': 'STRAT',
     'id': 287,
-    'name': 'Stratis',
-    'txFee': '0.01000000'
+    'name': 'Stratis'
   },
   {
     'key': 'SYS',
     'id': 204,
-    'name': 'Syscoin',
-    'txFee': '0.01000000'
+    'name': 'Syscoin'
   },
   {
     'key': 'USDT',
     'id': 214,
-    'name': 'Tether USD',
-    'txFee': '2.00000000'
+    'name': 'Tether USD'
   },
   {
     'key': 'VIA',
     'id': 218,
-    'name': 'Viacoin',
-    'txFee': '0.01000000'
+    'name': 'Viacoin'
   },
   {
     'key': 'VRC',
     'id': 220,
-    'name': 'VeriCoin',
-    'txFee': '0.01000000'
+    'name': 'VeriCoin'
   },
   {
     'key': 'VTC',
     'id': 221,
-    'name': 'Vertcoin',
-    'txFee': '0.00100000'
+    'name': 'Vertcoin'
   },
   {
     'key': 'XBC',
     'id': 229,
-    'name': 'BitcoinPlus',
-    'txFee': '0.00010000'
+    'name': 'BitcoinPlus'
   },
   {
     'key': 'XCP',
     'id': 233,
-    'name': 'Counterparty',
-    'txFee': '0.20000000'
+    'name': 'Counterparty'
   },
   {
     'key': 'XEM',
     'id': 256,
-    'name': 'NEM',
-    'txFee': '15.00000000'
+    'name': 'NEM'
   },
   {
     'key': 'XMR',
     'id': 240,
-    'name': 'Monero',
-    'txFee': '0.05000000'
+    'name': 'Monero'
   },
   {
     'key': 'XPM',
     'id': 242,
-    'name': 'Primecoin',
-    'txFee': '0.01000000'
+    'name': 'Primecoin'
   },
   {
     'key': 'XRP',
     'id': 243,
-    'name': 'Ripple',
-    'txFee': '0.15000000'
+    'name': 'Ripple'
   },
   {
     'key': 'XVC',
     'id': 253,
-    'name': 'Vcash',
-    'txFee': '0.01000000'
+    'name': 'Vcash'
   },
   {
     'key': 'ZEC',
     'id': 286,
-    'name': 'Zcash',
-    'txFee': '0.00100000'
+    'name': 'Zcash'
   },
   {
     'key': 'ZRX',
     'id': 293,
-    'name': '0x',
-    'txFee': '0.00500000'
+    'name': '0x'
   }
 ];
 
