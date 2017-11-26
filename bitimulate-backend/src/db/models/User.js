@@ -35,6 +35,9 @@ const User = new Schema({
       value: Schema.Types.Double,
       usdRate: Schema.Types.Double
     },
+    monthly: {
+      usdValue: Schema.Types.Number
+    },
     pinned: [String]
   },
   wallet: {

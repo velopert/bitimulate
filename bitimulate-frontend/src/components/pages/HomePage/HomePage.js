@@ -29,7 +29,7 @@ const HomePage = () => {
       </PolyBackground>
       <BgColor color="#f6f6f6"/>
       <div className={cx('block', 'responsive')}>
-        <h2>비티뮬레이트에선, 현재 총 <b>68</b>개의 가상화폐를 지원합니다.</h2>
+        <h2>비티뮬레이트에선, 현재 총 <b>69</b>개의 가상화폐를 지원합니다.</h2>
         <CoinMainContainer/>
         <div className={cx('more')}>
           <Link className={cx('more-button')} to="/trade">
@@ -38,7 +38,7 @@ const HomePage = () => {
         </div>
       </div>
       <div className={cx('third')}>
-        <div className={cx('responsive')}>
+        <div className={cx('responsive', 'grid')}>
           <Link to="/ranking" className={cx('column')}>
             <TrophyIcon/>
             <div className={cx('description')}>
@@ -53,6 +53,12 @@ const HomePage = () => {
               <p>비티뮬레이트는 오픈소스 프로젝트 입니다. <br/>Pull Request는 언제나 환영입니다.</p>
             </div>
           </a>
+        </div>
+        <div className={cx('my-message', 'responsive')}>
+          <div>
+          상금은 페이지 내의 광고비를 통해 충당됩니다.<br/>
+          여러분들이 이 서비스를 더 자주 사용해주시면, 상금이 더 높아집니다.
+          </div>
         </div>
       </div>
       <div className={cx('footer')}>

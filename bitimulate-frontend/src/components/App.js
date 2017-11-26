@@ -8,10 +8,21 @@ import {
   UserLoader,
   Core
  } from 'containers';
- import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet';
+import ReactGA from 'react-ga';
 
+function logPageView() {
+  ReactGA.set({ page: window.location.pathname + window.location.search });
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}
 
 class App extends Component {
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.location !== this.props.location) {
+      logPageView();
+    }
+  }
+  
   render() {
     return (
       <div>

@@ -116,11 +116,15 @@ export default (function() {
 
     _subscribed.splice(index, 1);
     console.log('unscribing ' + key);
-
-    _socket.send(JSON.stringify({
-      type: UNSUBSCRIBE,
-      payload: key
-    }));
+    try {
+      _socket.send(JSON.stringify({
+        type: UNSUBSCRIBE,
+        payload: key
+      }));
+    } catch (e) {
+      console.log(e);
+    }
+    
   }
 
   const resubscribe = () => {

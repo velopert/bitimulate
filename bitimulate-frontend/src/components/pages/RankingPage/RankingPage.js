@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './RankingPage.scss';
 import classNames from 'classnames/bind';
-import { PageTemplate, Card, PolyBackground } from 'components';
+import { PageTemplate, Card, PolyBackground, ResponsiveAd } from 'components';
 import { HeaderContainer, RankingContainer } from 'containers';
 import { Helmet } from 'react-helmet';
 
@@ -23,6 +23,9 @@ const RankingPage = () => (
       </div>
       <hr/>
       <RankingContainer/>
+      <div className={cx('ads-area')}>
+        <ResponsiveAd/>
+      </div>
     </Card>
   </PageTemplate>
 );

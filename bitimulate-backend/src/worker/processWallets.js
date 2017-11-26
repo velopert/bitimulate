@@ -42,7 +42,9 @@ function convertToBTC(wallet, rates) {
   let btc = 0;
   for(let currency in wallet) {
     const btcPrice = getPrice(rates, currency);
-    btc += wallet[currency] * btcPrice;
+    if(btcPrice) {
+      btc += wallet[currency] * btcPrice;
+    }
   }
   return btc;
 }

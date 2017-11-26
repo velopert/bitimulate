@@ -5,6 +5,9 @@
   display: flex;
   flex-direction: row;
   
+  .ad-area-mobile {
+    width: 300px;
+  }
   @include media("<medium") {
     flex-direction: column;
     padding-top: 0;
@@ -16,12 +19,22 @@
       width: 100%;
     }
   }
+
+  .mobile-ads {
+    margin-top: 1rem;
+    display: none;
+    @include media("<medium") {
+      display: block;
+    }
+  }
+  
   .content {
     margin-left: 1rem;
     @include media("<medium") {
       margin-left: 0;
     }
     flex: 1;
+
     .section-card { 
       margin-bottom: 3rem;
       padding: 2.25rem;

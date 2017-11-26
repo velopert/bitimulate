@@ -8,7 +8,6 @@
     flex-direction: column;
   }
   .wallet-box {
-    height: 128px;
     border-radius: 2px;
     flex: 1;
     background: material-color('grey', '200');
@@ -20,7 +19,7 @@
     flex-direction: column;
 
     @include media("<large") {
-      height: 6rem;
+      min-height: 6rem;
       & + .wallet-box {
         margin-left: 0;
       }

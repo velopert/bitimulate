@@ -12,13 +12,15 @@ export const getAggregatedWallet = (wallet, walletOnOrder) => {
 }
 
 export const getCorrespondingRate = (aggregated, rate) => {
+
+
   aggregated.forEach(
     w => {
       if(w.currency === 'BTC') {
         const btcRate = rate.find(r => r.get('currencyKey') === 'BTC');
         w.currencyName = 'Bitcoin';
         w.last = 1;
-        w.percentChange = btcRate.get('percentChange');
+        w.percentChange = btcRate && btcRate.get('percentChange');
         return;
       }
       if(w.currency === 'USD') {

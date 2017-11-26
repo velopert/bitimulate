@@ -3,6 +3,7 @@ import styles from './TradeDetailSubpage.scss';
 import classNames from 'classnames/bind';
 import { TradeChartContainer, OrderBookContainer, TradeSectionContainer, TradeHistoryContainer } from 'containers';
 import { Helmet } from 'react-helmet';
+import { ResponsiveAd } from 'components';
 
 const cx = classNames.bind(styles);
 
@@ -35,6 +36,9 @@ class TradeDetailSubpage extends Component {
         <TradeSectionContainer currencyKey={currencyKey}/>
         <OrderBookContainer/>
         <TradeHistoryContainer/>
+        <div className="ad-area">
+          <ResponsiveAd/>
+        </div>
       </div>
     );
   }

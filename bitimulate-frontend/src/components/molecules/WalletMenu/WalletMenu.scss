@@ -1,5 +1,6 @@
 @import 'utils';
 .wallet-menu {
+  position: relative;
   a {
     display: block;
     padding: 1rem;
@@ -37,5 +38,16 @@
       border-top: none;
       border-left: 1px solid material-color('grey', '300');
     }
+  }
+
+  .ad-area {
+    position: absolute;
+    left: 0;
+    margin-top: 1rem;
+    width: 160px;
+    height: 400px;
+    @include media("<medium") {
+      display: none;
+    } 
   }
 }

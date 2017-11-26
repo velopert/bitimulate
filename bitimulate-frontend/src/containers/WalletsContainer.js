@@ -53,7 +53,9 @@ class WalletsContainer extends Component {
     
     if(rate.isEmpty() || !wallet) return null;
     const walletData = this.getWalletData();
+
     const sum = walletData.reduce((acc, {value, last}) => {
+      if(!value) return acc;
       return acc + value * last;
     }, 0);
 

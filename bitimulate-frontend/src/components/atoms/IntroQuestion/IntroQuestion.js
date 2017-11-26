@@ -8,12 +8,13 @@ const IntroQuestion = ({onClick}) => (
   <div className={cx('question')}>          
   <div>
     <h1>
-      당신에게 100 비트코인, 혹은 10만 달러의 자본금이 있다면,
-      얼마나 수익을 낼 수 있을 것 같나요?
+      도전! 가상화폐 모의거래!<br/>
+      <b>300 리플</b> 쏜다!
     </h1>
     <p>
       실제 거래소의 실시간 데이터에 기반하여 
       <br/>모의 거래를 해보세요!
+      <br/><br/>매달 수익률 랭킹 1위에게 상금이 지급됩니다.
     </p>
   </div>
   <div className={cx('button')} onClick={onClick}>
