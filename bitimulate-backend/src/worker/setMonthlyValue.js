@@ -29,6 +29,10 @@ function getPrice(rates, name) {
     return rate.name.split('_')[1] === name;
   });
 
+  if(!currentRate) {
+    console.log(name);
+  }
+  if(!currentRate) return 0;
   return currentRate.last;
 }
 
