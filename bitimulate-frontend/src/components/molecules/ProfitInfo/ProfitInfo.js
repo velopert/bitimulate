@@ -27,9 +27,12 @@ const ProfitInfo = ({initial, current}) => {
 
   return (
     <div className={cx('profit-info')}>
-      <h2>초기 자금 및 현재 자산</h2>
+      <h2>자금 및 현재 자산</h2>
       <div className={cx('description')}>
-        수익률은 USD를 기반으로 계산됩니다.
+        <ul>
+          <li>USD를 기반으로 계산됩니다.</li>
+          <li>월 수익률 랭킹 1위에겐 상금이 지급됩니다.</li>
+        </ul>
       </div>
       <div className={cx('info')}>
         <InfoBox

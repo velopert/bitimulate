@@ -110,7 +110,7 @@ class ProfitChart extends Component {
     
     return (
       <div>
-      <h2>수익률 차트</h2>
+      <h2>전체 수익률 차트</h2>
         { earningsHistory.isEmpty() ? 
         (
           <div className={cx('not-available')}>

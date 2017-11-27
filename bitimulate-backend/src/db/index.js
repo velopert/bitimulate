@@ -20,6 +20,9 @@ module.exports = (function () {
       ).catch(e => {
         console.error(e);
       });
+    },
+    disconnect () {
+      return mongoose.disconnect();
     }
   };
 })();

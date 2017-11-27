@@ -16,6 +16,9 @@ const RankingPage = () => (
     <div className={cx('block')}>
     </div>
     <Card className={cx('ranking-box')}>
+      <div className={cx('ads-area')}>
+        <ResponsiveAd/>
+      </div>
       <h1>수익률 랭킹</h1>
       <div className={cx('description')}>
         수익률은 USD를 기반으로 계산됩니다.
@@ -23,9 +26,6 @@ const RankingPage = () => (
       </div>
       <hr/>
       <RankingContainer/>
-      <div className={cx('ads-area')}>
-        <ResponsiveAd/>
-      </div>
     </Card>
   </PageTemplate>
 );

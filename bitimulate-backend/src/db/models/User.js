@@ -36,7 +36,8 @@ const User = new Schema({
       usdRate: Schema.Types.Double
     },
     monthly: {
-      usdValue: Schema.Types.Number
+      usdValue: Schema.Types.Double,
+      usdRate: Schema.Types.Double
     },
     pinned: [String]
   },
@@ -117,6 +118,11 @@ User.statics.localRegister = async function({ displayName, email, password, init
   const usdRate = await ExchangeRate.getUSDRate();
   user.metaInfo.initial.usdRate = usdRate;
 
+  user.metaInfo.monthly = {
+    usdRate,
+    usdValue: initial.currency === 'BTC' ? initial.value / usdRate : initial.value
+  };
+
   return user.save();
 };
 
@@ -148,6 +154,11 @@ User.statics.socialRegister = async function({
 
   const usdRate = await ExchangeRate.getUSDRate();
   user.metaInfo.initial.usdRate = usdRate;
+
+  user.metaInfo.monthly = {
+    usdRate: usdRate,
+    usdValue: initial.currency === 'BTC' ? initial.value / usdRate : initial.value
+  };
   
   return user.save();
 };
@@ -199,6 +210,16 @@ User.methods.saveEarnings = function(ratio) {
 
 User.statics.getTopRanking = function() {
   return this.find({}, { _id: false, displayName: true, earningsRatio: true }).sort({ earningsRatio: -1 }).limit(100).exec();
+};
+
+User.methods.saveMonthlyUSD = function(usdValue, usdRate) {
+  return this.update({
+    $set: {
+      'metaInfo.monthly': {
+        usdValue, usdRate
+      }
+    }
+  });
 };
 
 // User.methods.saveEarnings = function(balance) {
