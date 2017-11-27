@@ -51,6 +51,7 @@
     "start": "npm-run-all workers server",
     "reload:workers": "pm2 reload workers.config.json",
     "reload:server": "pm2 reload deploy.config.json",
-    "reload": "npm-run-all reload:workers reload:server"
+    "reload": "npm-run-all reload:workers reload:server",
+    "monthly": "NODE_PATH=src node src/worker/setMonthlyValue"
   }
 }
