@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 const RankItem = ({displayName, profit, rankNumber}) => {
+
   const percentage = Math.round(profit * 10000) / 100;
   
   return (
@@ -28,10 +29,11 @@ const Ranking = ({data, count, monthly}) => {
   const rankList = data.map(
     (rank, i) => {
       const { displayName, earningsRatio, monthlyRatio } = rank.toJS();
+
       return (
         <RankItem 
           displayName={displayName} 
-          profit={earningsRatio || monthlyRatio}
+          profit={earningsRatio !== undefined ? earningsRatio : monthlyRatio}
           key={displayName}
           rankNumber={i+1}
         />
