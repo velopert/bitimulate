@@ -381,12 +381,27 @@ exports.socialRegister = async (ctx) => {
   }
 };
 
-exports.check = (ctx) => {
+exports.check = async (ctx) => {
   const { user } = ctx.request;
   
   if(!user) {
-    ctx.status = 403;
+    ctx.status = 401;
     return;
+  }
+
+  try {
+    const exists = await User.findById(user._id);
+    if(!exists) {
+      // invalid user
+      ctx.cookies.set('access_token', null, {
+        maxAge: 0,
+        httpOnly: true
+      });
+      ctx.status = 401;
+      return;
+    }
+  } catch (e) {
+    ctx.throw(500, e);
   }
   
   ctx.body = {
