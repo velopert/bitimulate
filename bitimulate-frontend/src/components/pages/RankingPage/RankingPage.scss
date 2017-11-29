@@ -44,7 +44,34 @@
     margin-top: 2rem;
     margin-left: -2rem;
     margin-right: -2rem;
+    margin-bottom: 0;
+  }
+
+  .type-selector {
+    display: flex;
     margin-bottom: 2rem;
+    border-bottom: 1px solid material-color('grey', '200');
+    margin-left: -2rem;
+    margin-right: -2rem;
+    .type {
+      height: 4rem;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: material-color('grey', '500');
+      transition: transform 0.3s, color 0.3s;
+      cursor: pointer;
+      @include hover() {
+        color: material-color('grey', '900');
+        font-weight: 600;
+      }
+      &.active, &:active {
+        transform: scale(1.1, 1.1);
+        color: material-color('cyan', '500');
+        font-weight: 600;
+      }
+    }
   }
 }
 

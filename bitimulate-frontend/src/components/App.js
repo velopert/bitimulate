@@ -33,7 +33,7 @@ class App extends Component {
         <Route path="/trade" component={TradePage}/>
         <Route path="/register" component={RegisterPage}/>
         <Route path="/wallet" component={WalletPage}/>
-        <Route path="/ranking" component={RankingPage}/>
+        <Route path="/ranking/:type?" component={RankingPage}/>
         <Route path="/report/:displayName" component={ReportPage}/>
         <ScreenMaskContainer/>
         <LoginModalContainer/>

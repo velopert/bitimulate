@@ -21,7 +21,7 @@
   }
 
   .mobile-ads {
-    margin-top: 1rem;
+    margin-bottom: 2rem;
     display: none;
     @include media("<medium") {
       display: block;

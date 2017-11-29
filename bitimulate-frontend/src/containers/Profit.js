@@ -49,7 +49,7 @@ class Profit extends Component {
   }
 
   render() {
-    const { rate, initial, earningsHistory } = this.props;
+    const { rate, initial, earningsHistory, monthly } = this.props;
     
     if(rate.isEmpty()) return null;
     const btcRate = rate.find(r => r.get('currencyKey') === 'BTC');
@@ -65,6 +65,7 @@ class Profit extends Component {
       <div>
         <ProfitInfo
           initial={initial}
+          monthly={monthly}
           current={{
             btc: sum,
             usd: sum * btcRate.get('last')
@@ -84,6 +85,7 @@ export default connect(
     walletOnOrder: state.user.get('walletOnOrder'),
     currencyInfo: state.common.get('currencyInfo'),
     initial: state.user.getIn(['metaInfo', 'initial']),
+    monthly: state.user.getIn(['metaInfo', 'monthly']),
     earningsHistory: state.user.get('earningsHistory')
   }),
   (dispatch) => ({

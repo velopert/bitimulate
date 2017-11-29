@@ -20,14 +20,14 @@ const WalletPage = () => {
         </div>
         <section className={cx('content')}>
           <Card className={cx('section-card')}>
+            <div className={cx('mobile-ads')}>
+              <ResponsiveAd/>
+            </div>
             <Route path="/wallet" exact component={WalletSubpage}/>
             <Route path="/wallet/history" component={WalletHistorySubpage}/>
             <Route path="/wallet/profit" component={WalletProfitSubpage}/>
           </Card>
         </section>
-        <div className={cx('mobile-ads')}>
-          <ResponsiveAd/>
-        </div>
       </div>
       <SocketSubscriber channel="TICKER"/>
       <SocketSubscriber channel="ORDER_PROCESSED"/>

@@ -18,9 +18,11 @@ exports.getKrwRate = async (ctx) => {
 };
 
 exports.getRanking = async (ctx) => {
+  const { type } = ctx.query;
+
   try {
     const count = await User.count().exec();
-    const ranking = await User.getTopRanking();
+    const ranking = await User.getTopRanking(type === 'monthly' || !type);
     ctx.body = {
       count, ranking
     };

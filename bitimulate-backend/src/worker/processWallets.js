@@ -76,7 +76,10 @@ async function processWallets() {
         const initialUSD = getInitialUSDAmount(initial);
         const currentUSD = btc / usdRate;
         const earnings = (currentUSD - initialUSD) / initialUSD;
-        user.saveEarnings(earnings);
+        const monthlyUSD = user.metaInfo.monthly.usdValue;
+
+        const monthly = (currentUSD - monthlyUSD) / monthlyUSD;
+        user.saveEarnings(earnings, monthly);
       });
       // users.forEach(user => {
       //   user.balanceHistory = [];

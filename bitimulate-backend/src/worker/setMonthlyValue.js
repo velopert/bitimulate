@@ -78,6 +78,7 @@ async function processWallets() {
         const combined = combineWallet(user.wallet, user.walletOnOrder);
         const btc = convertToBTC(combined, rates);
         const currentUSD = btc / usdRate;
+        console.log(currentUSD);
         return user.saveMonthlyUSD(currentUSD, usdRate);
       });
       await Promise.all(promises);

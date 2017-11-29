@@ -73,6 +73,11 @@ const User = new Schema({
     type: Schema.Types.Double,
     default: 0,
     index: true
+  },
+  monthlyRatio: {
+    type: Schema.Types.Double,
+    default: 0,
+    index: true
   }
 });
 
@@ -186,30 +191,21 @@ User.methods.updateEarningsRatio = function(ratio) {
   });
 };
 
-User.methods.saveEarnings = function(ratio) {
-  if(!this.earningsHistory) {
-    return this.update({
-      $set: {
-        earningsRatio: ratio,
-        earningsHistory: [{
-          date: new Date(),
-          value: ratio
-        }]
-      }
-    }).exec();
-  }
-
-  EarningsHistory.create(this._id, ratio);
+User.methods.saveEarnings = function(ratio, monthly) {
+  EarningsHistory.create(this._id, monthly);
 
   this.update({
     $set: {
-      earningsRatio: ratio
+      earningsRatio: ratio,
+      monthlyRatio: monthly
     }
   }).exec();
 };
 
-User.statics.getTopRanking = function() {
-  return this.find({}, { _id: false, displayName: true, earningsRatio: true }).sort({ earningsRatio: -1 }).limit(100).exec();
+User.statics.getTopRanking = function(monthly) {
+  const key = monthly ? 'monthlyRatio' : 'earningsRatio';
+
+  return this.find({}, { _id: false, displayName: true, [key]: true }).sort({ [key]: -1 }).limit(100).exec();
 };
 
 User.methods.saveMonthlyUSD = function(usdValue, usdRate) {

@@ -4,6 +4,9 @@
     margin-top: 0.5rem;
     color: material-color('grey', '800');
     font-size: 0.85rem;
+    ul {
+      padding-left: 2rem;
+    }
   }
   .info {
     margin-top: 1rem;
@@ -15,13 +18,18 @@
       padding: 1rem;
       padding-top: 0.5rem;
       padding-bottom: 0.5rem;
+      width: 250px;
+      @include media("<huge") {
+        width: 200px;
+      }
       @include media("<medium") {
         padding-top: 1rem;
         padding-bottom: 1rem;
         padding-left: 0;
         padding-right: 0;
+        width: 100%;
       }
-      flex: 1;
+
       h4 {
         color: material-color('grey', '600');
         margin: 0;

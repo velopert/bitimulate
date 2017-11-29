@@ -23,15 +23,15 @@ const RankItem = ({displayName, profit, rankNumber}) => {
   )
 }
 
-const Ranking = ({data, count}) => {
+const Ranking = ({data, count, monthly}) => {
 
   const rankList = data.map(
     (rank, i) => {
-      const { displayName, earningsRatio } = rank.toJS();
+      const { displayName, earningsRatio, monthlyRatio } = rank.toJS();
       return (
         <RankItem 
           displayName={displayName} 
-          profit={earningsRatio}
+          profit={earningsRatio || monthlyRatio}
           key={displayName}
           rankNumber={i+1}
         />
