@@ -15,7 +15,7 @@ const Row = ({
   percentChange,
   hideName
 }) => (
-  <Link to={`/trade/${currency}`}  className={cx('row')}>
+  <Link to={`/trade/${currency === 'USD' ? 'BTC' : currency}`}  className={cx('row')}>
     <div className={cx('col', 'coin')}>{currency}</div>
     <div className={cx('col', 'percent')}>{percentChange&&<span className={cx({
       negative: percentChange < 0,

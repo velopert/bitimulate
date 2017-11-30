@@ -23,6 +23,7 @@ const GET_ORDERS = 'user/GET_ORDERS';
 const GET_NEXT_ORDERS = 'user/GET_NEXT_ORDERS';
 const CANCEL_ORDER = 'trade/CANCEL_ORDER';
 const GET_EARNINGS_HISTORY = 'trade/GET_EARNINGS_HISTORY';
+const SAVE_REWARD_WALLET = 'trade/SAVE_REWARD_WALLET';
 
 
 
@@ -41,6 +42,11 @@ export const getOrders = createAction(GET_ORDERS, OrdersAPI.getOrders, meta => m
 export const getNextOrders = createAction(GET_NEXT_ORDERS, ({status, url}) => CommonAPI.getNext(url), meta => meta);
 export const cancelOrder = createAction(CANCEL_ORDER, OrdersAPI.cancelOrder, meta => meta);
 export const getEarningsHistory = createAction(GET_EARNINGS_HISTORY, UserAPI.getEarningsHistory);
+export const saveRewardWallet = createAction(SAVE_REWARD_WALLET, ({
+  address, destinationTag
+}) => UserAPI.patchMetaInfo({
+  rewardWallet: { address, destinationTag }
+}));
 
 // initial state
 const initialState = Map({

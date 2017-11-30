@@ -26,11 +26,16 @@ exports.patchMetaInfo = async (ctx) => {
   const { _id } = user;
 
   const availableFields = {
-    pinned: true
+    pinned: true,
+    rewardWallet: true
   };
   
   const schema = Joi.object({
-    pinned: Joi.array().items(Joi.string())
+    pinned: Joi.array().items(Joi.string()),
+    rewardWallet: Joi.object({
+      address: Joi.string(),
+      destinationTag: Joi.string()
+    })
   });
 
   const { body: patchData } = ctx.request;
@@ -57,7 +62,6 @@ exports.patchMetaInfo = async (ctx) => {
   try {
     const userData = await User.findById(_id).exec();
 
-    console.log(userData);
     if(!userData) {
       ctx.status = 403;
       return;

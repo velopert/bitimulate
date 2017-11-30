@@ -39,7 +39,11 @@ const User = new Schema({
       usdValue: Schema.Types.Double,
       usdRate: Schema.Types.Double
     },
-    pinned: [String]
+    pinned: [String],
+    rewardWallet: {
+      address: String,
+      destinationTag: String
+    }
   },
   wallet: {
     type: Schema.Types.Mixed,
@@ -200,6 +204,17 @@ User.methods.saveEarnings = function(ratio, monthly) {
       monthlyRatio: monthly
     }
   }).exec();
+};
+
+User.methods.updateRewardWallet = function({address, destinationTag}) {
+  this.update({
+    $set: {
+      'metaInfo.rewardWallet': {
+        address,
+        destinationTag
+      }
+    }
+  });
 };
 
 User.statics.getTopRanking = function(monthly) {

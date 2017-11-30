@@ -122,5 +122,5 @@
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6"
   },
-  "proxy": "https://api.bitimulate.com/"
+  "proxy": "http://localhost:4000/"
 }

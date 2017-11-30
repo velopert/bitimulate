@@ -1,0 +1,24 @@
+@import 'utils';
+.reward-wallet-form {
+  width: 600px;
+  @include media("<medium") {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .form {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .button-container {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

@@ -43,6 +43,7 @@
   .card {
     @include material-shadow(2, 0.5);
     .menu-item {
+      display: block;
       padding: 1rem;
       padding-top: 0.5rem;
       padding-bottom: 0.5rem;

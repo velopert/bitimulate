@@ -3,6 +3,7 @@ import styles from './UserMenu.scss';
 import classNames from 'classnames/bind';
 import { Card } from 'components';
 import onClickOutside from 'react-onclickoutside';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 // 클래스형태로 바꾸기
@@ -69,11 +70,12 @@ class UserMenu extends Component {
     const { animate, closed } = this.state;
     const effect = animate ? (closed ? 'leave' : 'enter') : null;
     if(closed && !animate) return <div/>;
-    const { onLogout } = this.props;
+    const { onLogout, onHide } = this.props;
 
     return (
       <div className={cx('user-menu')}>
         <Card className={cx('card', effect)} noPadding>
+          <Link to="/reward" onClick={onHide} className={cx('menu-item')}>상금용 지갑 설정</Link>
           <div onClick={onLogout} className={cx('menu-item')}>로그아웃</div>
         </Card>
       </div>
