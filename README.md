@@ -89,6 +89,6 @@ To run the webpack-dev-server for frontend, execute following command inside bit
 $ yarn start
 ```
 
-### Questions / PR
+### Questions
 
 Feel free to submit new issue when you have questions or find some bugs.
