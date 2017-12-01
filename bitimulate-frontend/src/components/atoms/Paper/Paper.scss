@@ -6,8 +6,9 @@
   background: white;
   @include material-shadow(3);
   z-index: 4;
-  position: fixed;
+  position: absolute;
   top: 15%;
+  margin-bottom: 3rem;
   left: 50%;
   transform: translate(-50%);
   @include media("<medium") {

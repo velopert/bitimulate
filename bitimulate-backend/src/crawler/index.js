@@ -12,7 +12,7 @@ const publisher = redis.createClient();
 
 const initialize = async () => {
   await db.connect();
-  // await registerInitialExchangeRate();
+  await registerInitialExchangeRate();
   socket.connect();
 };
 

@@ -62,7 +62,8 @@ class AnimatedRow extends Component {
 
 const OrdersTable = ({type, currency, data}) => {
 
-  const rows = data.map(
+
+  const rows = data && data.map(
     order => {
       const [price, volume] = order.toJS();
       return <AnimatedRow key={price} price={price} volume={volume}/>
@@ -86,7 +87,7 @@ const OrdersTable = ({type, currency, data}) => {
           {type}량 ({currency})
         </div>
       </div>
-      {data.isEmpty() ? emptyRows : rows}
+      {(!data || data.isEmpty()) ? emptyRows : rows}
     </div>
   );
 };

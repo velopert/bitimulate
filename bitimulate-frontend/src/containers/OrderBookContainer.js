@@ -32,14 +32,18 @@ class OrderBookContainer extends Component {
   }
 
   work = async () => {
+    console.log('i am working');
     try {
       await this.getOrderBook();
+      if(this.cancel) {
+        this.timeoutId = setTimeout(() => {
+          this.work();
+        }, 500)
+      }
+
     } catch (e) {
 
     }
-    this.timeoutId = setTimeout(() => {
-      this.work();
-    }, 500)
   }
   
   componentDidMount() {
@@ -58,6 +62,7 @@ class OrderBookContainer extends Component {
 
     if(this.cancel) {
       this.cancel();
+      this.cancel = null;
     }
     if(this.timeoutId) {
       clearTimeout(this.timeoutId);

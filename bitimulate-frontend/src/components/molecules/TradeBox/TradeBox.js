@@ -83,7 +83,7 @@ const TradeBox = ({
             <span className={cx('base')}>{secondaryCurrency}</span>
             </div>
             <div className={cx('fee')}>
-              <b>수수료</b> <span className={cx('value')}>{limitDigit(parseFloat(price) * parseFloat(amount) * 0.0015)} BTC</span>
+              <b>수수료</b> <span className={cx('value')}>{limitDigit(parseFloat(price) * parseFloat(amount) * 0.0015)} {currencyType === 'BTC' && sell ? 'USD' : 'BTC'}</span>
             </div>
           </div>
         </div>
