@@ -223,6 +223,16 @@ User.statics.getTopRanking = function(monthly) {
   return this.find({}, { _id: false, displayName: true, [key]: true }).sort({ [key]: -1 }).limit(100).exec();
 };
 
+User.methods.getRank = function(monthly) {
+  const key = monthly ? 'monthlyRatio' : 'earningsRatio';
+
+  return this.model('User').count({
+    [key]: {
+      $gt: this[key]
+    }
+  }).exec();
+};
+
 User.methods.saveMonthlyUSD = function(usdValue, usdRate) {
   return this.update({
     $set: {

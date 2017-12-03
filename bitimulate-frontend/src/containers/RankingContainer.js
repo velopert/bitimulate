@@ -21,18 +21,19 @@ class RankingContainer extends Component {
   
   
   render() {
-    const { ranking, count, loading, type } = this.props;
+    const { ranking, count, loading, type, me } = this.props;
 
     if(ranking.isEmpty() || loading) return <SpinnerBlock/>;
 
     return (
-      <Ranking data={ranking} count={count} monthly={type !== 'total'}/>
+      <Ranking data={ranking} count={count} monthly={type !== 'total'} me={me}/>
     )
   }
 }
 
 export default connect(
   (state) => ({
+    me: state.ranking.get('me'),
     count: state.ranking.get('count'),
     ranking: state.ranking.get('ranking'),
     loading: state.pender.pending['ranking/GET_TOP_RANKING']

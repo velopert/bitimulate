@@ -24,7 +24,7 @@ const RankItem = ({displayName, profit, rankNumber}) => {
   )
 }
 
-const Ranking = ({data, count, monthly}) => {
+const Ranking = ({data, count, monthly, me}) => {
 
   const rankList = data.map(
     (rank, i) => {
@@ -42,9 +42,12 @@ const Ranking = ({data, count, monthly}) => {
   )
   return (
     <div className={cx('ranking')}>
-      <div className={cx('user-number')}>
+      <div className={cx('rank-meta')}>
         <b>트레이더 수:</b> {count}명
       </div>
+      { me && <div className={cx('rank-meta')}>
+        <b>내 랭킹:</b> {me}위 <span className={cx('mini')}>(상위 {(Math.round(me / count * 10000) / 100).toFixed(2)}%)</span>
+      </div> }
       <div className={cx('ranking-list')}>
         <div className={cx('row-desc')}>
           <div className={cx('num')}>순위</div>
