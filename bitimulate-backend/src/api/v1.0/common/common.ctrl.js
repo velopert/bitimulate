@@ -31,7 +31,7 @@ exports.getRanking = async (ctx) => {
       myRank = await u.getRank();
     }
     ctx.body = {
-      count, ranking, me: myRank + 1
+      count, ranking, me: user && (myRank + 1)
     };
   } catch (e) {
     ctx.throw(e, 500);
