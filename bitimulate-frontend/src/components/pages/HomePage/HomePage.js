@@ -68,6 +68,9 @@ const HomePage = () => {
         <div className={cx('copyright')}>
           Copyright © 2017 Bitimulate
         </div>
+        <div className={cx('copyright')}>
+        <Link to="/terms">개인정보취급방침</Link>
+      </div>
       </div>
     </PageTemplate>
   );

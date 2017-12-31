@@ -22,13 +22,14 @@ exports.getRanking = async (ctx) => {
   const { user } = ctx.request;
 
   let myRank = null;
+  const monthly = type === 'monthly' || !type;
 
   try {
     const count = await User.count().exec();
-    const ranking = await User.getTopRanking(type === 'monthly' || !type);
+    const ranking = await User.getTopRanking(monthly);
     if(user) {
       const u = await User.findById(user._id).exec();
-      myRank = await u.getRank();
+      myRank = await u.getRank(monthly);
     }
     ctx.body = {
       count, ranking, me: user && (myRank + 1)

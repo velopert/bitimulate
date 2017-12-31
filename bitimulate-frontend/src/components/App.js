@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { HomePage, TradePage, RegisterPage, WalletPage, RankingPage, ReportPage, RewardPage } from 'components';
+import { HomePage, TradePage, RegisterPage, WalletPage, RankingPage, ReportPage, RewardPage, TermsPage } from 'components';
 import { Route } from 'react-router-dom';
 import { 
   ScreenMaskContainer, 
@@ -36,6 +36,7 @@ class App extends Component {
         <Route path="/ranking/:type?" component={RankingPage}/>
         <Route path="/report/:displayName" component={ReportPage}/>
         <Route path="/reward" component={RewardPage}/>
+        <Route path="/terms" component={TermsPage}/>
         <ScreenMaskContainer/>
         <LoginModalContainer/>
         <UserLoader/>

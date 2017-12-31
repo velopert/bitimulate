@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './RegisterForm.scss';
 import classNames from 'classnames/bind';
-
+import { Link } from 'react-router-dom';
 import {
   SectionWithTitle,
   Input,
@@ -50,6 +50,9 @@ const RegisterForm = ({
             <AlignRight><div className={cx('error')}>{ error }</div></AlignRight>
           )
       }
+      <AlignRight>
+        <Link className={cx('terms')} to="/terms">개인정보 취급방침</Link>
+      </AlignRight>
       <AlignRight>
         <Button disabled={displayNameExists} flat color="teal" className={cx('register-button')} xPadding="2rem" onClick={onSubmit}>가입</Button>
       </AlignRight>
