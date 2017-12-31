@@ -14,6 +14,7 @@ const EarningsHistory = new Schema({
 }, { timestamps: true });
 
 EarningsHistory.index({ createdAt: 1 }, {expireAfterSeconds: 60 * 60 * 24 * 30});
+EarningsHistory.index({ userId: 1 });
 
 EarningsHistory.statics.create = function(userId, ratio) {
   const earnings = new this({
