@@ -84,8 +84,8 @@ exports.getEarningsHistory = async (ctx) => {
   const { _id } = user;
   
   try {
-    const history = await EarningsHistory.find({ userId: _id }, { userId: false, updatedAt: false, _id: false }).lean().exec();
-    ctx.body = history;
+    const history = await EarningsHistory.find({ userId: _id }, { userId: false, updatedAt: false, _id: false }).sort({ _id: -1 }).limit(300).lean().exec();
+    ctx.body = history ? history.reverse() : [];
   } catch (e) {
     ctx.throw(500, e);
   }
