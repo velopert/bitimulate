@@ -41,11 +41,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 
 // Tools like Cloud9 rely on this.
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
-<<<<<<< HEAD
 const HOST = process.env.HOST || '221.148.121.120';
-=======
-const HOST = process.env.HOST || '0.0.0.0';
->>>>>>> a8235ced9547451a275e6c361a28ab6d74217408
 
 // We attempt to use the default port but if it is busy, we offer the user to
 // run on a different port. `detect()` Promise resolves to the next free port.
