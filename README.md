@@ -1,6 +1,6 @@
 # bitimulate
 
-> Bitimulate is closed; the service is not available anymore. 
+> This service is now available at https://bitimulate.com/
 
 ## About
 

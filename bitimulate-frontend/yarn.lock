@@ -2436,11 +2436,20 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
 
+<<<<<<< HEAD
+echarts@^4.2.0-rc.2:
+  version "4.2.0-rc.2"
+  resolved "https://registry.yarnpkg.com/echarts/-/echarts-4.2.0-rc.2.tgz#6a98397aafa81b65cbf0bc15d9afdbfb244df91e"
+  integrity sha512-5Y4Kyi4eNsRM9Cnl7Q8C6PFVjznBJv1VIiMm/VSQ9zyqeo+ce1695GqUd9v4zfVx+Ow1gnwMJX67h0FNvarScw==
+  dependencies:
+    zrender "4.0.5"
+=======
 echarts@^3.7.1:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/echarts/-/echarts-3.7.1.tgz#fad25d4b1cbb7ec28f1b0fa890e9a0d86056b2d5"
   dependencies:
     zrender "^3.6.1"
+>>>>>>> a8235ced9547451a275e6c361a28ab6d74217408
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -7861,6 +7870,13 @@ yargs@~3.10.0:
     decamelize "^1.0.0"
     window-size "0.1.0"
 
+<<<<<<< HEAD
+zrender@4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/zrender/-/zrender-4.0.5.tgz#6e8f738971ce2cd624aac82b2156729b1c0e5a82"
+  integrity sha512-SintgipGEJPT9Sz2ABRoE4ZD7Yzy7oR7j7KP6H+C9FlbHWnLUfGVK7E8UV27pGwlxAMB0EsnrqhXx5XjAfv/KA==
+=======
 zrender@^3.6.1:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/zrender/-/zrender-3.6.1.tgz#362e8c4eb6c970a8d97c84daa8d65f37921b826b"
+>>>>>>> a8235ced9547451a275e6c361a28ab6d74217408

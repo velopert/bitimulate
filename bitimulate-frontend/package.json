@@ -16,7 +16,11 @@
     "classnames": "^2.2.5",
     "css-loader": "0.28.4",
     "dotenv": "4.0.0",
+<<<<<<< HEAD
+    "echarts": "^4.2.0-rc.2",
+=======
     "echarts": "^3.7.1",
+>>>>>>> a8235ced9547451a275e6c361a28ab6d74217408
     "eslint": "3.19.0",
     "eslint-config-react-app": "^1.0.5",
     "eslint-loader": "1.7.1",
@@ -122,5 +126,9 @@
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6"
   },
+<<<<<<< HEAD
+  "proxy": "http://221.148.121.120:4000"
+=======
   "proxy": "https://api.bitimulate.com/"
+>>>>>>> a8235ced9547451a275e6c361a28ab6d74217408
 }
