@@ -2,6 +2,8 @@
 
 > Bitimulate is closed; the service is not available anymore. 
 
+![](https://i.imgur.com/DQUz2Bb.png)
+
 ## About
 
 Bitimulate is compound word of **Bit**coin and S**imulate**. This service provides a simulated cryptocurrency trading system. Data used in this service rely on realtime information at [Poloniex](https://poloniex.com).
