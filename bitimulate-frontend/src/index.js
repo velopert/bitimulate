@@ -11,12 +11,12 @@ import axios from 'axios';
 
 window.axios = axios;
 const socketURI = process.env.NODE_ENV === 'production'
-                    ? 'wss://api.bitimulate.com/ws'
-                    : 'ws://localhost:4000/ws'
+                    ? 'wss://221.148.121.120/ws'
+                    : 'ws://221.148.121.120:4000/ws'
 
 if(process.env.NODE_ENV === 'production') {
   axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = 'https://api.bitimulate.com';
+  axios.defaults.baseURL = 'https://221.148.121.120:4000';
 }
 
 console.log(socketURI);
